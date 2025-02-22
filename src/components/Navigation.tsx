@@ -44,7 +44,7 @@ const Navigation: React.FC = () => {
                   href="#"
                   className="text flex h-full w-full items-center gap-4"
                 >
-                  <span className="sr-only">ScapFX</span>
+                  <span className="sr-only">Scap Creative</span>
                   <Image
                     src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                     alt="subaccount logo"
@@ -53,7 +53,7 @@ const Navigation: React.FC = () => {
                     className="rounded-md"
                   />
                   <span className="text-primary-foreground text-2xl font-medium">
-                    ScapFX
+                    Scap Creative
                   </span>
                 </Link>
               </div>

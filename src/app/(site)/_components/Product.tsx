@@ -1,20 +1,32 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { plans, supportedSoftwares } from "@/data";
-import React, { useState } from "react";
+import { presets, supportedSoftwares } from "@/data";
+import React, { useEffect, useState, useMemo } from "react";
 import Plan from "./Plan";
+import { useRouter } from "next/navigation";
+import { type Preset } from "@/types";
 
 type ProductProps = {
-  x?: string;
+  currentPreset: Preset;
 };
 
-const Product: React.FC<ProductProps> = () => {
-  const [selectedPlan, setSelectedPlan] = useState<string>(
-    plans.find((plan) => plan.selected)?.name ?? "",
+const Product: React.FC<ProductProps> = ({ currentPreset }) => {
+  const router = useRouter();
+  const [selectedPreset, setSelectedPreset] = useState<string>(
+    currentPreset.name,
   );
 
-  const handlePlanChange = (name: string) => setSelectedPlan(name);
+  // useMemo ensures that the router path is calculated once when selectedPreset changes
+  const path = useMemo(() => "/shop/" + selectedPreset, [selectedPreset]);
+
+  useEffect(() => {
+    router.push(path);
+  }, [path, router]);
+
+  const handlePresetChange = (name: string) => {
+    setSelectedPreset(name);
+  };
 
   return (
     <section className="mt-[-30px] flex w-full flex-col sm:flex-row">
@@ -33,23 +45,26 @@ const Product: React.FC<ProductProps> = () => {
           </p>
         </div>
       </div>
+
       <div className="flex flex-1 flex-col gap-4 px-6 pt-6 pb-6 sm:pt-14">
         <span className="text-sm">Available Packs</span>
         <fieldset
           aria-label="Available Packs"
           className="bg-background relative max-w-2xl -space-y-px rounded-md"
         >
-          {plans.map((plan) => (
+          {presets.map((plan, index) => (
             <Plan
               key={plan.name}
-              plan={plan}
-              selectedPlan={selectedPlan}
-              onChange={handlePlanChange}
+              preset={plan}
+              selectedPreset={selectedPreset}
+              onChange={handlePresetChange}
+              index={index + 1}
             />
           ))}
         </fieldset>
 
         <Button className="mt-8 h-12 max-w-2xl">ADD TO CART</Button>
+
         <div className="border-muted mt-10 border-t pt-10">
           <h3 className="text-primary text-sm font-medium">
             Supported Software

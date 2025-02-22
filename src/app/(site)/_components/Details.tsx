@@ -15,6 +15,10 @@ const whatsIncluded = [
     name: "Video Tutorial",
     description: "See exactly how I use these presets to get the look.",
   },
+  {
+    name: "Camera Settings",
+    description: "I'll show you the camera settings.",
+  },
 ];
 
 type DetailsProps = {

@@ -16,6 +16,7 @@ const Hero: React.FC<HeroProps> = () => {
             src="https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-01-hero-full-width.jpg"
             className="size-full object-cover"
             fill
+            priority
           />
         </div>
         <div

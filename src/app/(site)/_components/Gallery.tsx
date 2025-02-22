@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import GalleryModal from "../modal/Gallery";
+import { presets } from "@/data";
 
 type GalleryProps = {
   x?: string;
@@ -38,7 +39,7 @@ const Gallery: React.FC<GalleryProps> = () => {
           </h2>
         </div>
         <div className="my-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {images.map((img, index) => (
+          {presets[0]!.gallery!.map((img, index) => (
             <div
               key={index}
               className="relative aspect-5/6 cursor-pointer"

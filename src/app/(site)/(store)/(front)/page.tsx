@@ -1,12 +1,12 @@
 import React from "react";
 import Navigation from "../../_components/Navigation";
-import StorefrontImage from "../../_components/Hero";
 import Product from "../../_components/Product";
 import ComparisonSlider from "../../_components/ComparisonSlider";
 import Container from "@/components/Container";
 import Details from "../../_components/Details";
 import Gallery from "../../_components/Gallery";
 import Footer from "../../_components/Footer";
+import Hero from "../../_components/Hero";
 
 type StoreFrontType = {
   children: React.ReactNode;
@@ -16,9 +16,8 @@ const StoreFront: React.FC<StoreFrontType> = () => {
   return (
     <>
       <Navigation />
-      <StorefrontImage img="https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-01-hero-full-width.jpg" />
+      <Hero />
       <Product />
-      {/* Comparison Slider */}
       <Container maxWidth="lg" bgColor="bg-secondary">
         <div className="flex w-full flex-col items-center">
           <div className="mx-auto my-16 max-w-2xl text-center lg:max-w-4xl">

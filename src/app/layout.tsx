@@ -1,9 +1,14 @@
 import "@/styles/globals.css";
-
-import { GeistSans } from "geist/font/sans";
+import { Poppins } from "next/font/google"; // Import Poppins
 import { type Metadata } from "next";
 import { siteConfig } from "config/site";
 import { cn } from "@/lib/utils";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: ["400", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: `${siteConfig.name} Innovations`,
@@ -24,11 +29,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${GeistSans.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={poppins.variable} suppressHydrationWarning>
       <body className={cn("min-h-screen font-sans", "bg-background")}>
         {children}
       </body>

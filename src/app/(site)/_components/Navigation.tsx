@@ -12,7 +12,6 @@ const Navigation: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY === 0) {
-        console.log("User is at the top of the page!"); // Trigger function
         setIsAtTop(true);
       } else {
         setIsAtTop(false);
@@ -29,7 +28,7 @@ const Navigation: React.FC = () => {
     <div
       className={cn(
         "sticky top-0 z-50 w-full",
-        isAtTop ? "bg-transparent" : "bg-foreground/30",
+        isAtTop ? "bg-transparent" : "bg-foreground/30 backdrop-blur-sm",
       )}
     >
       <header className="relative">
@@ -63,7 +62,7 @@ const Navigation: React.FC = () => {
                 {/* Search */}
                 <Link href="#" className="text-primary-foreground p-2">
                   <span className="sr-only">Search</span>
-                  <Search aria-hidden="true" className="size-6 stroke-2" />
+                  <Search aria-hidden="true" className="size-6 stroke-1" />
                 </Link>
 
                 {/* Cart */}
@@ -74,7 +73,7 @@ const Navigation: React.FC = () => {
                   >
                     <ShoppingBasket
                       aria-hidden="true"
-                      className="size-6 shrink-0 stroke-2"
+                      className="size-6 shrink-0 stroke-1"
                     />
                     <span className="ml-2 text-sm font-medium">0</span>
                     <span className="sr-only">items in cart, view bag</span>

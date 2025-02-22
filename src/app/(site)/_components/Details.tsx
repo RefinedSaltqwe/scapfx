@@ -1,6 +1,6 @@
 import React from "react";
 
-const features = [
+const whatsIncluded = [
   {
     name: "Desktop and Mobile Presets",
     description: "11 Presets in .xmp and .dng format",
@@ -32,7 +32,7 @@ const Details: React.FC<DetailsProps> = () => {
         </div>
 
         <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:max-w-none lg:grid-cols-3 lg:gap-x-8">
-          {features.map((feature) => (
+          {whatsIncluded.map((feature) => (
             <div key={feature.name} className="border-muted border-t pt-4">
               <dt className="text-primary text-sm font-medium">
                 {feature.name}

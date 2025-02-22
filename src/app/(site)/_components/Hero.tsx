@@ -1,11 +1,10 @@
-import Image from "next/image";
 import React from "react";
-
-type StorefrontImageProps = {
-  img: string;
+import Image from "next/image";
+type HeroProps = {
+  img?: string;
 };
 
-const StorefrontImage: React.FC<StorefrontImageProps> = ({ img }) => {
+const Hero: React.FC<HeroProps> = () => {
   return (
     <div className="z-5 mt-[-60px] bg-white">
       <div className="relative bg-gray-900">
@@ -14,7 +13,7 @@ const StorefrontImage: React.FC<StorefrontImageProps> = ({ img }) => {
           <Image
             alt=""
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            src={img}
+            src="https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-01-hero-full-width.jpg"
             className="size-full object-cover"
             fill
           />
@@ -34,4 +33,4 @@ const StorefrontImage: React.FC<StorefrontImageProps> = ({ img }) => {
     </div>
   );
 };
-export default StorefrontImage;
+export default Hero;

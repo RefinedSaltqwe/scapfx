@@ -17,7 +17,7 @@ const whatsIncluded = [
   },
   {
     name: "Camera Settings",
-    description: "I'll show you the camera settings.",
+    description: "Tips on how to shoot. I'll show you the camera settings.",
   },
 ];
 

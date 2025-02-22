@@ -1,9 +1,17 @@
 "use client";
+import OptimizedImage from "@/components/OptimizedImage";
 import { MoveHorizontal } from "lucide-react";
-import Image from "next/image";
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
-const ComparisonSlider: React.FC = () => {
+type ComparisonSliderProp = {
+  beforeImage: string;
+  afterImage: string;
+};
+
+const ComparisonSlider: React.FC<ComparisonSliderProp> = ({
+  beforeImage,
+  afterImage,
+}) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -53,33 +61,19 @@ const ComparisonSlider: React.FC = () => {
     <div className="relative w-full">
       <div
         ref={sliderRef}
-        className="relative mx-auto aspect-[80/45] w-full max-w-[700px] overflow-hidden rounded-md select-none"
+        className="relative mx-auto aspect-3/2 w-full max-w-[1500px] overflow-hidden rounded-md select-none"
         onMouseDown={() => setIsDragging(true)}
         onTouchStart={() => setIsDragging(true)}
       >
-        {/* Before Image */}
-        <Image
-          alt="Before"
-          fill
-          draggable={false}
-          priority
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          src="https://images.unsplash.com/photo-1523435324848-a7a613898152?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1769&q=80"
-        />
-
         {/* After Image */}
+        <OptimizedImage src={afterImage} alt="Before" />
+
+        {/* Before Image */}
         <div
           className="absolute inset-0 overflow-hidden select-none"
           style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
         >
-          <Image
-            fill
-            priority
-            draggable={false}
-            alt="After"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            src="https://images.unsplash.com/photo-1598875791852-8bb153e713f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2010&q=80"
-          />
+          <OptimizedImage src={beforeImage} alt="After" />
         </div>
 
         {/* Slider Handle */}

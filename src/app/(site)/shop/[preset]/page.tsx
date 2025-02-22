@@ -15,27 +15,29 @@ type StoreType = {
   };
 };
 
-// Server-side code to fetch the preset by parameter
-export async function generateMetadata({
-  params,
-}: {
-  params: { preset: string };
-}) {
-  // No need to await params, it should be synchronous
-  const presetName = params.preset; // Ensure params.preset is already a string
-  const currentPreset = presets.find((preset) => preset.name === presetName);
-  return {
-    title: currentPreset ? currentPreset.name : "Preset Not Found",
-    description: currentPreset
-      ? currentPreset.description
-      : "No description available",
-  };
-}
+// // Updated `generateMetadata` function to handle async properly
+// export async function generateMetadata({
+//   params,
+// }: {
+//   params: { preset: string };
+// }) {
+//   // Find the preset asynchronously (if needed)
+//   const presetName = params.preset; // No await needed for accessing params, but in some cases, you may need to handle async logic here
+//   const currentPreset = presets.find((preset) => preset.name === presetName);
 
-const Store: React.FC<StoreType> = ({ params }) => {
-  // Ensure params is already available before usage, if it's coming from the router
+//   return {
+//     title: currentPreset ? currentPreset.name : "Preset Not Found",
+//     description: currentPreset
+//       ? currentPreset.description
+//       : "No description available",
+//   };
+// }
+
+const Store: React.FC<StoreType> = async ({ params }) => {
+  // Ensure params.preset is handled synchronously, or use async logic if required
+  const selectedPreset = params.preset;
   const currentPreset: Preset = presets.find(
-    (preset) => preset.name === params.preset,
+    (preset) => preset.name === selectedPreset,
   ) ?? {
     productId: "",
     name: "",
@@ -49,11 +51,14 @@ const Store: React.FC<StoreType> = ({ params }) => {
     gallery: [""], // Ensure no undefined values here
   };
 
+  const currenPresetIndex =
+    presets.findIndex((preset) => preset.name === selectedPreset) + 1;
+
   return (
     <>
       <Hero />
-      <Product currentPreset={currentPreset} />
-      <Container maxWidth="lg" bgColor="bg-secondary">
+      <Product currentPreset={currentPreset} index={currenPresetIndex} />
+      <Container maxWidth="full" bgColor="bg-secondary">
         <div className="flex w-full flex-col items-center">
           <div className="mx-auto my-16 max-w-2xl text-center lg:max-w-4xl">
             <h2 className="text-primary text-xl font-bold tracking-tight sm:text-2xl">
@@ -67,18 +72,21 @@ const Store: React.FC<StoreType> = ({ params }) => {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-4 pb-10 sm:grid-cols-2">
-          <ComparisonSlider />
-          <ComparisonSlider />
-          <ComparisonSlider />
-          <ComparisonSlider />
+        <div className="grid grid-cols-1 gap-4 pb-10 lg:grid-cols-2">
+          {currentPreset.beforeAfterImages.map((group, index) => (
+            <ComparisonSlider
+              key={index}
+              beforeImage={group.beforeImage}
+              afterImage={group.afterImage}
+            />
+          ))}
         </div>
       </Container>
       <Container maxWidth="lg">
         <Details />
       </Container>
       <Container maxWidth="lg">
-        <Gallery />
+        <Gallery currentPreset={currentPreset} />
       </Container>
       <Footer />
     </>

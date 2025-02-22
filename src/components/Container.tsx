@@ -3,7 +3,7 @@ import React from "react";
 
 type ContainerProps = {
   children: React.ReactNode;
-  maxWidth: "sm" | "md" | "lg";
+  maxWidth: "sm" | "md" | "lg" | "full";
   bgColor?: string;
 };
 
@@ -21,7 +21,9 @@ const Container: React.FC<ContainerProps> = ({
             ? "max-w-6xl"
             : maxWidth == "md"
               ? "max-w-7xl"
-              : "max-w-[1550px]",
+              : maxWidth == "lg"
+                ? "max-w-[1550px]"
+                : "max-w-full",
         )}
       >
         {children}

@@ -9,9 +9,10 @@ import { type Preset } from "@/types";
 
 type ProductProps = {
   currentPreset: Preset;
+  index: number;
 };
 
-const Product: React.FC<ProductProps> = ({ currentPreset }) => {
+const Product: React.FC<ProductProps> = ({ currentPreset, index }) => {
   const router = useRouter();
   const [selectedPreset, setSelectedPreset] = useState<string>(
     currentPreset.name,
@@ -28,6 +29,11 @@ const Product: React.FC<ProductProps> = ({ currentPreset }) => {
     setSelectedPreset(name);
   };
 
+  const labelNumber = useMemo(
+    () => "NO. " + index.toString().padStart(2, "0"),
+    [index],
+  );
+
   return (
     <section className="mt-[-30px] flex w-full flex-col sm:flex-row">
       <div className="bg-primary relative !z-20 flex flex-1 justify-end rounded-t-md border-t-5 border-amber-700 p-6 pb-4 sm:rounded-tl-none sm:rounded-r-md">
@@ -36,12 +42,12 @@ const Product: React.FC<ProductProps> = ({ currentPreset }) => {
           <AvatarFallback>SC</AvatarFallback>
         </Avatar>
         <div className="mt-8 flex max-w-2xl flex-col justify-center gap-4 sm:mt-0">
-          <span className="text-primary-foreground text-sm">NO. 01</span>
-          <span className="text-muted-foreground text-5xl font-bold">
-            ZENITH
+          <span className="text-primary-foreground text-sm">{labelNumber}</span>
+          <span className="text-muted-foreground text-5xl font-bold uppercase">
+            {currentPreset.name}
           </span>
           <p className="text-muted-foreground text-md">
-            {`This pack is a nod to the past and present. It is the perfect blend between an older film-style aesthetic and a newer cinematic softness, bringing story to your photos. Both presets are versatile and allow you to edit to your liking while keeping that distinctive style it gives. Whether you'd like to fine-tune your color foundation or transition to black and white, these presets will propel your work into a developed style.`}
+            {currentPreset.description}
           </p>
         </div>
       </div>

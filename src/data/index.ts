@@ -6,13 +6,35 @@ export const presets = [
     heroImg:
       "https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-01-hero-full-width.jpg",
     description:
-      "The Etherea offers a cinematic mood that deepens the undertone of the photo while shifting the colors to a more stylistic one. The black and whites are a bit more punched and sharp delivering a cleaner feel to the image. Clean is beautiful and offers flexibility to adjust and freestyle how you want this Baseset to work for you in the future.",
+      "The Zenith offers a cinematic mood that deepens the undertone of the photo while shifting the colors to a more stylistic one. The black and whites are a bit more punched and sharp delivering a cleaner feel to the image. Clean is beautiful and offers flexibility to adjust and freestyle how you want this Baseset to work for you in the future.",
     price: "$15.00",
     prevPrice: "$35.00",
     selected: true,
     beforeAfterImages: [
-      { beforeImage: "", afterImage: "" },
-      { beforeImage: "", afterImage: "" },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54342930442_709fd4279c_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54342930437_1ec3fd1402_b.jpg",
+      },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54343822761_d1a7be8073_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54344053928_7e05886ff9_b.jpg",
+      },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54343822761_d1a7be8073_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54344053928_7e05886ff9_b.jpg",
+      },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54342930442_709fd4279c_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54342930437_1ec3fd1402_b.jpg",
+      },
     ],
     whatsIncluded: [
       {
@@ -50,8 +72,18 @@ export const presets = [
     prevPrice: "$35.00",
     selected: false,
     beforeAfterImages: [
-      { beforeImage: "", afterImage: "" },
-      { beforeImage: "", afterImage: "" },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54342930442_709fd4279c_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54342930437_1ec3fd1402_b.jpg",
+      },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54343822761_d1a7be8073_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54344053928_7e05886ff9_b.jpg",
+      },
     ],
     whatsIncluded: [
       {
@@ -84,13 +116,23 @@ export const presets = [
     heroImg:
       "https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-01-hero-full-width.jpg",
     description:
-      "This pack is a nod to the past and present. It is the perfect blend between an older film-style aesthetic and a newer cinematic softness, bringing story to your photos. Both presets are versatile and allow you to edit to your liking while keeping that distinctive style it gives. Whether you'd like to fine-tune your color foundation or transition to black and white, these presets will propel your work into a developed style.",
+      "Etherea pack is a nod to the past and present. It is the perfect blend between an older film-style aesthetic and a newer cinematic softness, bringing story to your photos. Both presets are versatile and allow you to edit to your liking while keeping that distinctive style it gives. Whether you'd like to fine-tune your color foundation or transition to black and white, these presets will propel your work into a developed style.",
     price: "$15.00",
     prevPrice: "$35.00",
     selected: false,
     beforeAfterImages: [
-      { beforeImage: "", afterImage: "" },
-      { beforeImage: "", afterImage: "" },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54342930442_709fd4279c_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54342930437_1ec3fd1402_b.jpg",
+      },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54343822761_d1a7be8073_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54344053928_7e05886ff9_b.jpg",
+      },
     ],
     whatsIncluded: [
       {

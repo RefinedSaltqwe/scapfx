@@ -29,7 +29,9 @@ export default function RootLayout({
       className={`${GeistSans.variable}`}
       suppressHydrationWarning
     >
-      <body className={cn("min-h-screen font-sans")}>{children}</body>
+      <body className={cn("min-h-screen font-sans", "bg-background")}>
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import GalleryModal from "../modal/Gallery";
+import GalleryModal from "./modal/Gallery";
 import { presets } from "@/data";
 import { type Preset } from "@/types";
 

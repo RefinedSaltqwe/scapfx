@@ -1,5 +1,6 @@
 "use client";
 
+import { useCart } from "@/hooks/stores/useCart";
 import { cn } from "@/lib/utils";
 import { Search, ShoppingBasket } from "lucide-react";
 import Image from "next/image";
@@ -8,6 +9,10 @@ import React, { useEffect, useState } from "react";
 
 const Navigation: React.FC = () => {
   const [isAtTop, setIsAtTop] = useState(true);
+  const openCart = useCart((state) => state.onOpen);
+  const presets = useCart((state) => state.presets);
+
+  const cartCounter = presets.length;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +49,7 @@ const Navigation: React.FC = () => {
                   href="#"
                   className="text flex h-full w-full items-center gap-4"
                 >
-                  <span className="sr-only">Scap Creative</span>
+                  <span className="sr-only">ScapCreative</span>
                   <Image
                     src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                     alt="subaccount logo"
@@ -52,8 +57,8 @@ const Navigation: React.FC = () => {
                     height={32}
                     className="rounded-md"
                   />
-                  <span className="text-primary-foreground text-2xl font-medium">
-                    Scap Creative
+                  <span className="text-primary-foreground text-2xl font-bold">
+                    ScapCreative
                   </span>
                 </Link>
               </div>
@@ -67,17 +72,19 @@ const Navigation: React.FC = () => {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-8">
-                  <Link
-                    href="#"
-                    className="text-primary-foreground group -m-2 flex items-center p-2"
+                  <span
+                    onClick={() => openCart()}
+                    className="text-primary-foreground group -m-2 flex cursor-pointer items-center p-2"
                   >
                     <ShoppingBasket
                       aria-hidden="true"
                       className="size-6 shrink-0 stroke-1"
                     />
-                    <span className="ml-2 text-sm font-medium">0</span>
+                    <span className="ml-2 text-sm font-normal">
+                      {cartCounter}
+                    </span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </Link>
+                  </span>
                 </div>
               </div>
             </div>

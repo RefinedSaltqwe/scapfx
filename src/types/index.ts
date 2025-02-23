@@ -3,9 +3,9 @@ export type Preset = {
   name: string;
   heroImg: string;
   description: string;
-  price: string;
-  prevPrice: string;
-  selected: boolean;
+  price: number;
+  prevPrice: number;
+  color: string;
   beforeAfterImages: { beforeImage: string; afterImage: string }[];
   whatsIncluded: {
     name: string;

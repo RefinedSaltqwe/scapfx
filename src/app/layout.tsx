@@ -2,9 +2,11 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { siteConfig } from "config/site";
 import { type Metadata } from "next";
-import { Poppins } from "next/font/google"; // Import Poppins
+import { Poppins } from "next/font/google";
 import Script from "next/script";
 import Navigation from "../components/Navigation";
+import Footer from "@/components/Footer";
+import ModalProvider from "@/components/providers/ModalProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -61,8 +63,10 @@ export default function RootLayout({
         />
       </head>
       <body className={cn("min-h-screen font-sans", "bg-background")}>
+        <ModalProvider />
         <Navigation />
         {children}
+        <Footer />
       </body>
     </html>
   );

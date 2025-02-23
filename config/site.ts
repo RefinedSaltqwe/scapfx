@@ -2,6 +2,7 @@ export const siteConfig = {
   name: "Scap Creative",
   description: "@scapranger's presets and luts",
   icon: "/favicon.ico",
+  currency: "CAD",
   theme_color: "#0d1117",
   color_scheme: "dark only",
   twitter_image: "/assets/images/preview-dark.jpg",

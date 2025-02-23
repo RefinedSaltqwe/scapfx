@@ -6,10 +6,10 @@ export const presets = [
     heroImg:
       "https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-01-hero-full-width.jpg",
     description:
-      "The Zenith offers a cinematic mood that deepens the undertone of the photo while shifting the colors to a more stylistic one. The black and whites are a bit more punched and sharp delivering a cleaner feel to the image. Clean is beautiful and offers flexibility to adjust and freestyle how you want this Baseset to work for you in the future.",
-    price: "$15.00",
-    prevPrice: "$35.00",
-    selected: true,
+      "The Zenith gives your photos a cinematic vibe, enhancing the depth and adding a stylish twist to the colors. The blacks and whites are more pronounced, giving the image a clean, sharp look. It's all about that clean aesthetic, offering you plenty of freedom to tweak and make the preset work however you want.",
+    price: 15.99,
+    prevPrice: 35,
+    color: "border-sky-900",
     beforeAfterImages: [
       {
         beforeImage:
@@ -66,11 +66,10 @@ export const presets = [
     name: "aether",
     heroImg:
       "https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-01-hero-full-width.jpg",
-    description:
-      "The Aether offers a more flattened and deepened cinematic mood that also alters the undertones of the image by flattening it out. It too has a stylistic approach to the colors and mood. Similar to the Clean Baseset, this one proves to be a bit softer in the overall look rather than the hard clean aesthetic.",
-    price: "$15.00",
-    prevPrice: "$35.00",
-    selected: false,
+    description: `The Aether gives your photos a laid-back cinematic feel, softening the image and giving it a deeper, more muted vibe. It's similar to the Zenith but with a smoother, more relaxed look, ditching that sharp, clean finish.`,
+    price: 15,
+    prevPrice: 35,
+    color: "border-emerald-700",
     beforeAfterImages: [
       {
         beforeImage:
@@ -116,10 +115,10 @@ export const presets = [
     heroImg:
       "https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-01-hero-full-width.jpg",
     description:
-      "Etherea pack is a nod to the past and present. It is the perfect blend between an older film-style aesthetic and a newer cinematic softness, bringing story to your photos. Both presets are versatile and allow you to edit to your liking while keeping that distinctive style it gives. Whether you'd like to fine-tune your color foundation or transition to black and white, these presets will propel your work into a developed style.",
-    price: "$15.00",
-    prevPrice: "$35.00",
-    selected: false,
+      "The Etherea pack combines a nostalgic film look with a modern cinematic softness, giving your photos a storytelling touch. Both presets are flexible, so you can edit however you like while still keeping that distinct vibe. Whether you're adjusting your colors or going for black and white, these presets will refine your work into a more developed style.",
+    price: 15,
+    prevPrice: 35,
+    color: "border-yellow-700",
     beforeAfterImages: [
       {
         beforeImage:
@@ -165,4 +164,32 @@ export const supportedSoftwares = [
   "Adobe® Lightroom® 4 or later (Classic)",
   "Adobe® Camera Raw 10.3 or later",
   "Adobe® Lightroom® CC Desktop 1.4 or later and Mobile (Non-Classic)",
+];
+
+export const cartProducts = [
+  {
+    id: 1,
+    name: "Throwback Hip Bag",
+    href: "#",
+    color: "Salmon",
+    price: 90,
+    quantity: 1,
+    imageSrc:
+      "https://tailwindui.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
+    imageAlt:
+      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
+  },
+  {
+    id: 2,
+    name: "Medium Stuff Satchel",
+    href: "#",
+    color: "Blue",
+    price: 32,
+    quantity: 1,
+    imageSrc:
+      "https://tailwindui.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
+    imageAlt:
+      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
+  },
+  // More products...
 ];

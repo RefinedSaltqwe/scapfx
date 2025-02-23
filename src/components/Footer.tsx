@@ -84,6 +84,7 @@ const navigation = {
 };
 
 const Footer: React.FC = () => {
+  const year = new Date().getFullYear();
   return (
     <footer className="bg-white">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
@@ -114,7 +115,10 @@ const Footer: React.FC = () => {
           ))}
         </div>
         <p className="mt-10 text-center text-sm/6 text-gray-600">
-          &copy; 2025 ScapFX. All rights reserved.
+          &copy; {year} ScapCreative. All rights reserved.
+        </p>
+        <p className="mt-10 text-center text-xs/6 text-gray-600">
+          Developed by Scapranger.
         </p>
       </div>
     </footer>

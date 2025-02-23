@@ -47,9 +47,9 @@ const Navigation: React.FC = () => {
               <div className="flex flex-1">
                 <Link
                   href="#"
-                  className="text flex h-full w-full items-center gap-4"
+                  className="text flex h-full w-full items-center gap-1"
                 >
-                  <span className="sr-only">ScapCreative</span>
+                  <span className="sr-only">scap.</span>
                   <Image
                     src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                     alt="subaccount logo"
@@ -57,8 +57,8 @@ const Navigation: React.FC = () => {
                     height={32}
                     className="rounded-md"
                   />
-                  <span className="text-primary-foreground text-2xl font-bold">
-                    ScapCreative
+                  <span className="text-primary-foreground text-2xl font-medium">
+                    scap.
                   </span>
                 </Link>
               </div>

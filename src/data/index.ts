@@ -124,7 +124,7 @@ export const presets = [
     name: "etherea",
     heroImg: "https://live.staticflickr.com/65535/54344779576_eeaa3cc1c6_b.jpg",
     description:
-      "The Etherea pack combines a nostalgic film look with a modern cinematic softness, giving your photos a storytelling touch. Both presets are flexible, so you can edit however you like while still keeping that distinct vibe. Whether you're adjusting your colors or going for black and white, these presets will refine your work into a more developed style.",
+      "The Etherea pack combines a nostalgic film look with a modern cinematic softness, giving your photos a storytelling touch. All presets are flexible, so you can edit however you like while still keeping that distinct vibe. Whether you're adjusting your colors or going for black and white, these presets will refine your work into a more developed style.",
     price: 15,
     prevPrice: 35,
     color: "#e0b277",

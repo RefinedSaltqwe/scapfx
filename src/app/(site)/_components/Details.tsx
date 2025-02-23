@@ -38,11 +38,6 @@ const Details: React.FC<DetailsProps> = () => {
             <p className="text-primary text-xl font-bold tracking-tight sm:text-2xl">
               {`What's included?`}
             </p>
-            <p className="text-muted-foreground mt-6 text-base/7">
-              {`These presets have been fine-tuned over 1 year, making them
-              perfect for anyone, whether you're just starting out or a seasoned
-              pro.`}
-            </p>
           </div>
           <dl className="text-muted-foreground col-span-3 grid grid-cols-1 gap-x-8 gap-y-10 text-base/7 sm:grid-cols-2 lg:gap-y-16">
             {whatsIncluded.map((feature) => (

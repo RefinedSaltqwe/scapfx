@@ -16,13 +16,26 @@ const Product: React.FC<ProductProps> = ({ currentPreset, index }) => {
   const onOpen = useCart((state) => state.onOpen);
   const cartPresets = useCart((state) => state.presets);
   const addPreset = useCart((state) => state.addPreset);
-  const borderColorStyle = { borderColor: currentPreset.color };
-  const textColorStyle = { color: currentPreset.color };
 
-  const isPresetExists = cartPresets.some(
-    (preset) =>
-      preset.productId === currentPreset.productId &&
-      preset.name === currentPreset.name,
+  // Memoize the text color style to avoid recalculating on every render
+  const borderColorStyle = useMemo(
+    () => ({ borderColor: currentPreset.color }),
+    [currentPreset.color],
+  );
+  const textColorStyle = useMemo(
+    () => ({ color: currentPreset.color }),
+    [currentPreset.color],
+  );
+
+  // Check if the preset already exists in the cart
+  const isPresetExists = useMemo(
+    () =>
+      cartPresets.some(
+        (preset) =>
+          preset.productId === currentPreset.productId &&
+          preset.name === currentPreset.name,
+      ),
+    [cartPresets, currentPreset],
   );
 
   const labelNumber = useMemo(

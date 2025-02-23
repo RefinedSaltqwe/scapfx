@@ -8,6 +8,7 @@ import Details from "../../_components/Details";
 import Gallery from "../../_components/Gallery";
 import Hero from "../../_components/Hero";
 import Product from "../../_components/Product";
+import CallToAction from "../../_components/CallToAction";
 
 type StoreType = {
   params: {
@@ -69,6 +70,8 @@ const Store: React.FC<StoreType> = ({ params }) => {
       <Container maxWidth="lg">
         <Details />
       </Container>
+
+      <CallToAction currentPreset={currentPreset} />
 
       <Container maxWidth="lg">
         <Gallery currentPreset={currentPreset} />

@@ -27,7 +27,7 @@ const Gallery: React.FC<GalleryProps> = ({ currentPreset }) => {
   return (
     <>
       <GalleryModal isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="flex w-full flex-col">
+      <div className="mt-7 flex w-full flex-col">
         <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
           <h2 className="text-primary text-xl font-bold tracking-tight sm:text-2xl">
             {`Gallery`}

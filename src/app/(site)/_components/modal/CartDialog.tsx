@@ -60,6 +60,7 @@ const CartDialog: React.FC<CartDialogProps> = () => {
 
   // Stripe checkout session
   const handleCheckout = async () => {
+    if (cartItemsCount == 0) return;
     setLoading(true);
     const res = await fetch("/api/stripe/checkout_sessions", {
       method: "POST",
@@ -202,6 +203,7 @@ const CartDialog: React.FC<CartDialogProps> = () => {
                     <Button
                       className="mt-8 h-12 w-full uppercase"
                       onClick={handleCheckout}
+                      disabled={loading || cartItemsCount == 0}
                     >
                       {loading ? "Redirecting to Stripe" : "Checkout"}
                     </Button>

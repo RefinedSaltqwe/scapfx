@@ -5,10 +5,10 @@ export const presets = [
     name: "zenith",
     heroImg: "https://live.staticflickr.com/65535/54344779581_2c566fe641_b.jpg",
     description:
-      "The Zenith gives your photos a cinematic vibe, enhancing the depth and adding a stylish twist to the colors. The blacks and whites are more pronounced, giving the image a clean, sharp look. It's all about that clean aesthetic, offering you plenty of freedom to tweak and make the preset work however you want.",
+      "The Zenith pack gives your photos a cinematic vibe, enhancing the depth and adding a stylish twist to the colors. The blacks and whites are more pronounced, giving the image a clean, sharp look. It's all about that clean aesthetic, offering you plenty of freedom to tweak and make the preset work however you want.",
     price: 15.99,
     prevPrice: 35,
-    color: "border-[#4d7354]",
+    color: "#4d7354",
     beforeAfterImages: [
       {
         beforeImage:
@@ -64,10 +64,10 @@ export const presets = [
     productId: "scap-aether-7967", //stripe and put inside env
     name: "aether",
     heroImg: "https://live.staticflickr.com/65535/54345201790_59afb99b53_b.jpg",
-    description: `The Aether gives your photos a laid-back cinematic feel, softening the image and giving it a deeper, more muted vibe. It's similar to the Zenith but with a smoother, more relaxed look, ditching that sharp, clean finish.`,
+    description: `The Aether pack gives your photos a laid-back cinematic feel, softening the image and giving it a deeper, more muted vibe. It's similar to the Zenith pack but with a smoother, more relaxed look, ditching that sharp, clean finish.`,
     price: 15,
     prevPrice: 35,
-    color: "border-[#6e8695]",
+    color: "#6e8695",
     beforeAfterImages: [
       {
         beforeImage:
@@ -127,13 +127,13 @@ export const presets = [
       "The Etherea pack combines a nostalgic film look with a modern cinematic softness, giving your photos a storytelling touch. Both presets are flexible, so you can edit however you like while still keeping that distinct vibe. Whether you're adjusting your colors or going for black and white, these presets will refine your work into a more developed style.",
     price: 15,
     prevPrice: 35,
-    color: "border-[#e0b277]",
+    color: "#e0b277",
     beforeAfterImages: [
       {
         beforeImage:
-          "https://live.staticflickr.com/65535/54344958274_aa0e953ac4_b.jpg",
+          "https://live.staticflickr.com/65535/54344744366_a6bfef5d37_b.jpg",
         afterImage:
-          "https://live.staticflickr.com/65535/54344958284_f4523121a0_b.jpg",
+          "https://live.staticflickr.com/65535/54343854357_e31db82db9_b.jpg",
       },
       {
         beforeImage:

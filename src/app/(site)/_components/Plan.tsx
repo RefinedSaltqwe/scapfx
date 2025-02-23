@@ -52,7 +52,7 @@ const Plan: React.FC<PlanProps> = ({ preset, selectedPreset, index }) => {
           className="border-border checked:border-primary checked:bg-primary focus-visible:outline-primary disabled:border-border bg-background disabled:bg-muted relative size-4 appearance-none rounded-full border before:absolute before:inset-1 before:rounded-full before:bg-white focus-visible:outline focus-visible:outline-offset-2 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
         />
         <span className="group-has-[:checked]:text-primary text-muted-foreground font-medium uppercase">
-          {presetName}
+          {`${presetName}`}
         </span>
       </span>
       <div className="flex flex-col items-end">

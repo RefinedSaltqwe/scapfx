@@ -28,9 +28,9 @@ const Hero: React.FC<HeroProps> = ({ currentPreset }) => {
         {/* Text Content */}
         <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center sm:pt-64 sm:pb-36 lg:px-0">
           <h1 className="text-2xl font-medium tracking-tight text-white lg:text-5xl">
-            @scapranger
+            {/* @scapranger */}
           </h1>
-          <p className="text-md text-white md:mt-2">Preset Packs</p>
+          {/* <p className="text-md text-white md:mt-2">Preset Packs</p> */}
         </div>
       </div>
     </section>

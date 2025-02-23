@@ -3,7 +3,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { presets, supportedSoftwares } from "@/data";
 import { useCart } from "@/hooks/stores/useCart";
-import { cn } from "@/lib/utils";
 import { type Preset } from "@/types";
 import React, { useMemo } from "react";
 import Plan from "./Plan";
@@ -17,6 +16,8 @@ const Product: React.FC<ProductProps> = ({ currentPreset, index }) => {
   const onOpen = useCart((state) => state.onOpen);
   const cartPresets = useCart((state) => state.presets);
   const addPreset = useCart((state) => state.addPreset);
+  const borderColorStyle = { borderColor: currentPreset.color };
+  const textColorStyle = { color: currentPreset.color };
 
   const isPresetExists = cartPresets.some(
     (preset) =>
@@ -30,18 +31,14 @@ const Product: React.FC<ProductProps> = ({ currentPreset, index }) => {
   );
 
   return (
-    <section className="mt-[-30px] flex w-full flex-col sm:flex-row">
+    <section className="mt-[-30px] flex w-full flex-col md:flex-row">
       <div
-        className={cn(
-          "bg-primary relative !z-20 flex flex-1 justify-end border-t-5 p-6 pb-4 sm:rounded-tl-none sm:rounded-r-md",
-          currentPreset.color,
-        )}
+        className="bg-primary relative !z-20 flex flex-1 justify-end border-t-5 p-6 sm:rounded-tl-none sm:rounded-r-md"
+        style={borderColorStyle}
       >
         <Avatar
-          className={cn(
-            "absolute top-[-60px] left-1/2 z-30 h-28 w-28 -translate-x-1/2 transform border-5",
-            currentPreset.color,
-          )}
+          className="absolute top-[-60px] left-1/2 z-30 h-28 w-28 -translate-x-1/2 transform border-5"
+          style={borderColorStyle}
         >
           <AvatarImage
             src="https://live.staticflickr.com/65535/54344995695_1dd728d26d_b.jpg"
@@ -51,7 +48,10 @@ const Product: React.FC<ProductProps> = ({ currentPreset, index }) => {
         </Avatar>
         <div className="mt-8 flex max-w-2xl flex-col justify-center gap-4 sm:mt-0">
           <span className="text-primary-foreground text-sm">{labelNumber}</span>
-          <span className="text-muted-foreground text-5xl font-bold uppercase">
+          <span
+            className="text-muted-foreground text-5xl font-bold uppercase"
+            style={textColorStyle}
+          >
             {currentPreset.name}
           </span>
           <p className="text-muted-foreground text-md">
@@ -60,7 +60,7 @@ const Product: React.FC<ProductProps> = ({ currentPreset, index }) => {
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-4 px-6 pt-6 pb-6 sm:pt-14">
+      <div className="flex flex-1 flex-col gap-4 p-6 sm:pt-14">
         <h3 className="text-primary text-sm font-medium">Available Packs</h3>
         <fieldset
           aria-label="Available Packs"
@@ -89,7 +89,7 @@ const Product: React.FC<ProductProps> = ({ currentPreset, index }) => {
 
         <div className="border-muted mt-10 border-t pt-10">
           <h3 className="text-primary text-sm font-medium">
-            Supported Softwares
+            Supported Software
           </h3>
           <div className="mt-4">
             <ul

@@ -3,37 +3,36 @@ export const presets = [
   {
     productId: "scap-zenith-7967", //stripe and put inside env
     name: "zenith",
-    heroImg:
-      "https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-01-hero-full-width.jpg",
+    heroImg: "https://live.staticflickr.com/65535/54344779581_2c566fe641_b.jpg",
     description:
       "The Zenith gives your photos a cinematic vibe, enhancing the depth and adding a stylish twist to the colors. The blacks and whites are more pronounced, giving the image a clean, sharp look. It's all about that clean aesthetic, offering you plenty of freedom to tweak and make the preset work however you want.",
     price: 15.99,
     prevPrice: 35,
-    color: "border-sky-900",
+    color: "border-emerald-700",
     beforeAfterImages: [
       {
         beforeImage:
-          "https://live.staticflickr.com/65535/54342930442_709fd4279c_b.jpg",
+          "https://live.staticflickr.com/65535/54343854312_6814450850_b.jpg",
         afterImage:
-          "https://live.staticflickr.com/65535/54342930437_1ec3fd1402_b.jpg",
+          "https://live.staticflickr.com/65535/54344979368_5e5a674851_b.jpg",
       },
       {
         beforeImage:
-          "https://live.staticflickr.com/65535/54343822761_d1a7be8073_b.jpg",
+          "https://live.staticflickr.com/65535/54343854297_71a06712bd_b.jpg",
         afterImage:
-          "https://live.staticflickr.com/65535/54344053928_7e05886ff9_b.jpg",
+          "https://live.staticflickr.com/65535/54343854292_5d70006cb4_b.jpg",
       },
       {
         beforeImage:
-          "https://live.staticflickr.com/65535/54343822761_d1a7be8073_b.jpg",
+          "https://live.staticflickr.com/65535/54344958169_033d9e8d13_b.jpg",
         afterImage:
-          "https://live.staticflickr.com/65535/54344053928_7e05886ff9_b.jpg",
+          "https://live.staticflickr.com/65535/54343854242_c20d5a610a_b.jpg",
       },
       {
         beforeImage:
-          "https://live.staticflickr.com/65535/54342930442_709fd4279c_b.jpg",
+          "https://live.staticflickr.com/65535/54344958219_84bfb8901d_b.jpg",
         afterImage:
-          "https://live.staticflickr.com/65535/54342930437_1ec3fd1402_b.jpg",
+          "https://live.staticflickr.com/65535/54343854317_f214d4d296_b.jpg",
       },
     ],
     whatsIncluded: [
@@ -64,24 +63,35 @@ export const presets = [
   {
     productId: "scap-aether-7967", //stripe and put inside env
     name: "aether",
-    heroImg:
-      "https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-01-hero-full-width.jpg",
+    heroImg: "https://live.staticflickr.com/65535/54345201790_59afb99b53_b.jpg",
     description: `The Aether gives your photos a laid-back cinematic feel, softening the image and giving it a deeper, more muted vibe. It's similar to the Zenith but with a smoother, more relaxed look, ditching that sharp, clean finish.`,
     price: 15,
     prevPrice: 35,
-    color: "border-emerald-700",
+    color: "border-sky-900",
     beforeAfterImages: [
       {
         beforeImage:
-          "https://live.staticflickr.com/65535/54342930442_709fd4279c_b.jpg",
+          "https://live.staticflickr.com/65535/54343854482_17cb625a35_b.jpg",
         afterImage:
-          "https://live.staticflickr.com/65535/54342930437_1ec3fd1402_b.jpg",
+          "https://live.staticflickr.com/65535/54343866802_67ac04c8df_b.jpg",
       },
       {
         beforeImage:
-          "https://live.staticflickr.com/65535/54343822761_d1a7be8073_b.jpg",
+          "https://live.staticflickr.com/65535/54344958369_6d1c810178_b.jpg",
         afterImage:
-          "https://live.staticflickr.com/65535/54344053928_7e05886ff9_b.jpg",
+          "https://live.staticflickr.com/65535/54345166055_2bf5727c36_b.jpg",
+      },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54344979553_5edc400b04_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54344958379_61232b02e5_b.jpg",
+      },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54345166020_ffef7c9a78_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54344744516_8664c98158_b.jpg",
       },
     ],
     whatsIncluded: [
@@ -112,25 +122,36 @@ export const presets = [
   {
     productId: "scap-etherea-7967", //stripe and put inside env
     name: "etherea",
-    heroImg:
-      "https://tailwindui.com/plus-assets/img/ecommerce-images/home-page-01-hero-full-width.jpg",
+    heroImg: "https://live.staticflickr.com/65535/54344779576_eeaa3cc1c6_b.jpg",
     description:
       "The Etherea pack combines a nostalgic film look with a modern cinematic softness, giving your photos a storytelling touch. Both presets are flexible, so you can edit however you like while still keeping that distinct vibe. Whether you're adjusting your colors or going for black and white, these presets will refine your work into a more developed style.",
     price: 15,
     prevPrice: 35,
-    color: "border-yellow-700",
+    color: "border-amber-500",
     beforeAfterImages: [
       {
         beforeImage:
-          "https://live.staticflickr.com/65535/54342930442_709fd4279c_b.jpg",
+          "https://live.staticflickr.com/65535/54344958274_aa0e953ac4_b.jpg",
         afterImage:
-          "https://live.staticflickr.com/65535/54342930437_1ec3fd1402_b.jpg",
+          "https://live.staticflickr.com/65535/54344958284_f4523121a0_b.jpg",
       },
       {
         beforeImage:
-          "https://live.staticflickr.com/65535/54343822761_d1a7be8073_b.jpg",
+          "https://live.staticflickr.com/65535/54344958299_820dcecb12_b.jpg",
         afterImage:
-          "https://live.staticflickr.com/65535/54344053928_7e05886ff9_b.jpg",
+          "https://live.staticflickr.com/65535/54344744456_3be2bdde4e_b.jpg",
+      },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54345165890_539462e3e0_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54344958244_137bf4a391_b.jpg",
+      },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54344979388_c495f4b7de_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54344958259_fe89bde920_b.jpg",
       },
     ],
     whatsIncluded: [

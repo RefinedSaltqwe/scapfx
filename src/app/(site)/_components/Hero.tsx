@@ -15,21 +15,22 @@ const Hero: React.FC<HeroProps> = ({ currentPreset }) => {
           <Image
             alt=""
             src={currentPreset.heroImg} // Use dynamic image from the preset
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="size-full object-cover"
-            fill
+            width={4000}
+            height={2667}
             priority
             quality={100}
           />
-          <div className="absolute inset-0 bg-black/10" /> {/* Overlay */}
+          {/* Bottom-to-Center Shadow Effect */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/5 to-transparent" />
         </div>
 
         {/* Text Content */}
-        <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center sm:py-64 lg:px-0">
-          <h1 className="text-4xl font-bold tracking-tight text-white lg:text-5xl">
+        <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center sm:pt-64 sm:pb-36 lg:px-0">
+          <h1 className="text-2xl font-medium tracking-tight text-white lg:text-5xl">
             @scapranger
           </h1>
-          <p className="mt-4 text-lg text-white">Preset Packs</p>
+          <p className="text-md text-white md:mt-2">Preset Packs</p>
         </div>
       </div>
     </section>

@@ -30,7 +30,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ isOpen, setIsOpen }) => {
   const handleImageNavigation = (direction: "prev" | "next") => {
     setIsOpen((prev) => {
       const newIdx = direction === "prev" ? prev.idx - 1 : prev.idx + 1;
-      if (newIdx < 0 || newIdx >= prev.length) return prev;
+      if (newIdx < 0 || newIdx >= prev.length + 1) return prev;
       return { ...prev, idx: newIdx };
     });
   };
@@ -62,12 +62,10 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ isOpen, setIsOpen }) => {
           <span className="p-2">/</span>
           <button
             className={`cursor-pointer p-2 ${
-              isOpen.idx >= isOpen.length - 1
-                ? "cursor-not-allowed opacity-50"
-                : ""
+              isOpen.idx >= isOpen.length ? "cursor-not-allowed opacity-50" : ""
             }`}
             onClick={() => handleImageNavigation("next")}
-            disabled={isOpen.idx >= isOpen.length - 1}
+            disabled={isOpen.idx >= isOpen.length}
           >
             Next
           </button>

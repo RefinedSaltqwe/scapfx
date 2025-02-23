@@ -33,12 +33,20 @@ const Product: React.FC<ProductProps> = ({ currentPreset, index }) => {
     <section className="mt-[-30px] flex w-full flex-col sm:flex-row">
       <div
         className={cn(
-          "bg-primary relative !z-20 flex flex-1 justify-end rounded-t-md border-t-5 p-6 pb-4 sm:rounded-tl-none sm:rounded-r-md",
+          "bg-primary relative !z-20 flex flex-1 justify-end border-t-5 p-6 pb-4 sm:rounded-tl-none sm:rounded-r-md",
           currentPreset.color,
         )}
       >
-        <Avatar className="border-border absolute top-[-60px] left-1/2 z-30 h-28 w-28 -translate-x-1/2 transform border-5">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <Avatar
+          className={cn(
+            "absolute top-[-60px] left-1/2 z-30 h-28 w-28 -translate-x-1/2 transform border-5",
+            currentPreset.color,
+          )}
+        >
+          <AvatarImage
+            src="https://live.staticflickr.com/65535/54344995695_1dd728d26d_b.jpg"
+            alt="@shadcn"
+          />
           <AvatarFallback>SC</AvatarFallback>
         </Avatar>
         <div className="mt-8 flex max-w-2xl flex-col justify-center gap-4 sm:mt-0">

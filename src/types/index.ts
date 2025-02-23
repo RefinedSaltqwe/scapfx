@@ -13,3 +13,7 @@ export type Preset = {
   }[];
   gallery: string[];
 };
+
+export interface CartItemsStripe {
+  productId: string;
+}

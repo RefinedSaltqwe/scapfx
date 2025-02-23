@@ -39,8 +39,8 @@ const CallToAction: React.FC<CallToActionProps> = ({ currentPreset }) => {
           >
             Elevate your edits in just a few clicks.
           </h2>
-          <p className="text-muted-foreground mx-auto mt-6 max-w-xl text-lg/8 text-pretty">
-            {`These presets have been fine-tuned over 1 year, making them perfect
+          <p className="text-secondary mx-auto mt-6 max-w-xl text-lg/8 text-pretty">
+            {`These presets have been fine-tuned for over 1 year, making them perfect
             for anyone, whether you're just starting out or a seasoned pro.`}
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">

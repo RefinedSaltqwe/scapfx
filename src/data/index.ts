@@ -1,12 +1,12 @@
 // Plan data
 export const presets = [
   {
-    productId: "scap-zenith-7967", //stripe and put inside env
+    productId: "price_1Qvm8t4cQY4LArYfMP4gk07w", //stripe and put inside env
     name: "zenith",
     heroImg: "https://live.staticflickr.com/65535/54344779581_2c566fe641_b.jpg",
     description:
       "The Zenith pack gives your photos a cinematic vibe, enhancing the depth and adding a stylish twist to the colors. The blacks and whites are more pronounced, giving the image a clean, sharp look. It's all about that clean aesthetic, offering you plenty of freedom to tweak and make the preset work however you want.",
-    price: 15.99,
+    price: 14.99,
     prevPrice: 35,
     color: "#4d7354",
     beforeAfterImages: [
@@ -61,11 +61,11 @@ export const presets = [
     ],
   },
   {
-    productId: "scap-aether-7967", //stripe and put inside env
+    productId: "price_1Qvm7p4cQY4LArYfSWrAL64t", //stripe and put inside env
     name: "aether",
     heroImg: "https://live.staticflickr.com/65535/54345201790_59afb99b53_b.jpg",
     description: `The Aether pack gives your photos a laid-back cinematic feel, softening the image and giving it a deeper, more muted vibe. It's similar to the Zenith pack but with a smoother, more relaxed look, ditching that sharp, clean finish.`,
-    price: 15,
+    price: 14.99,
     prevPrice: 35,
     color: "#6e8695",
     beforeAfterImages: [
@@ -120,12 +120,12 @@ export const presets = [
     ],
   },
   {
-    productId: "scap-etherea-7967", //stripe and put inside env
+    productId: "price_1Qvm754cQY4LArYflVy57MsJ", //stripe and put inside env
     name: "etherea",
     heroImg: "https://live.staticflickr.com/65535/54344779576_eeaa3cc1c6_b.jpg",
     description:
       "The Etherea pack combines a nostalgic film look with a modern cinematic softness, giving your photos a storytelling touch. All presets are flexible, so you can edit however you like while still keeping that distinct vibe. Whether you're adjusting your colors or going for black and white, these presets will refine your work into a more developed style.",
-    price: 15,
+    price: 14.99,
     prevPrice: 35,
     color: "#e0b277",
     beforeAfterImages: [
@@ -152,6 +152,12 @@ export const presets = [
           "https://live.staticflickr.com/65535/54344979388_c495f4b7de_b.jpg",
         afterImage:
           "https://live.staticflickr.com/65535/54344958259_fe89bde920_b.jpg",
+      },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54344979398_13d4d66abf_o.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54344744446_91d30aed6a_o.jpg",
       },
     ],
     whatsIncluded: [

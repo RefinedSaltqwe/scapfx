@@ -8,7 +8,7 @@ export const presets = [
       "The Zenith gives your photos a cinematic vibe, enhancing the depth and adding a stylish twist to the colors. The blacks and whites are more pronounced, giving the image a clean, sharp look. It's all about that clean aesthetic, offering you plenty of freedom to tweak and make the preset work however you want.",
     price: 15.99,
     prevPrice: 35,
-    color: "border-emerald-700",
+    color: "border-[#4d7354]",
     beforeAfterImages: [
       {
         beforeImage:
@@ -67,7 +67,7 @@ export const presets = [
     description: `The Aether gives your photos a laid-back cinematic feel, softening the image and giving it a deeper, more muted vibe. It's similar to the Zenith but with a smoother, more relaxed look, ditching that sharp, clean finish.`,
     price: 15,
     prevPrice: 35,
-    color: "border-sky-900",
+    color: "border-[#6e8695]",
     beforeAfterImages: [
       {
         beforeImage:
@@ -127,7 +127,7 @@ export const presets = [
       "The Etherea pack combines a nostalgic film look with a modern cinematic softness, giving your photos a storytelling touch. Both presets are flexible, so you can edit however you like while still keeping that distinct vibe. Whether you're adjusting your colors or going for black and white, these presets will refine your work into a more developed style.",
     price: 15,
     prevPrice: 35,
-    color: "border-amber-500",
+    color: "border-[#e0b277]",
     beforeAfterImages: [
       {
         beforeImage:

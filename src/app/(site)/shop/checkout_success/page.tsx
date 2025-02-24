@@ -1,12 +1,13 @@
 "use client";
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import { presets } from "@/data";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 
-const SuccessStripePage: React.FC = () => {
+const SuccessStripePageContent: React.FC = () => {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const [sessionData, setSessionData] = useState({
@@ -195,4 +196,11 @@ const SuccessStripePage: React.FC = () => {
     </main>
   );
 };
+
+const SuccessStripePage = () => (
+  <Suspense fallback={<Loader />}>
+    <SuccessStripePageContent />
+  </Suspense>
+);
+
 export default SuccessStripePage;

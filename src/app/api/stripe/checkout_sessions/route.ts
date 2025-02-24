@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     const headersList = req.headers;
     const origin = headersList.get("origin") ?? "https://scapcreative.com"; // Ensure it's always a string
 
-    // Store sent data from the checkout button in client
+    // Store data (stripeProductIds) sent from the checkout in client-side
     const { items } = (await req.json()) as { items: CartItemsStripe[] };
 
     // Convert cart items to Stripe's required format
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       cancel_url: `${origin}/?canceled=true`,
     });
 
-    // Return the session ID back to the client using NextResponse
+    // Return the sessionId back to the client using NextResponse
     return NextResponse.json({ sessionId: session.id }, { status: 200 });
   } catch (err) {
     if (err instanceof Error) {

@@ -131,6 +131,18 @@ export const presets = [
     beforeAfterImages: [
       {
         beforeImage:
+          "https://live.staticflickr.com/65535/54344979398_13d4d66abf_o.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54344744446_91d30aed6a_o.jpg",
+      },
+      {
+        beforeImage:
+          "https://live.staticflickr.com/65535/54344979388_c495f4b7de_b.jpg",
+        afterImage:
+          "https://live.staticflickr.com/65535/54344958259_fe89bde920_b.jpg",
+      },
+      {
+        beforeImage:
           "https://live.staticflickr.com/65535/54344744366_a6bfef5d37_b.jpg",
         afterImage:
           "https://live.staticflickr.com/65535/54343854357_e31db82db9_b.jpg",
@@ -149,15 +161,9 @@ export const presets = [
       },
       {
         beforeImage:
-          "https://live.staticflickr.com/65535/54344979388_c495f4b7de_b.jpg",
+          "https://live.staticflickr.com/65535/54344979438_9fcb8f20ef_o.jpg",
         afterImage:
-          "https://live.staticflickr.com/65535/54344958259_fe89bde920_b.jpg",
-      },
-      {
-        beforeImage:
-          "https://live.staticflickr.com/65535/54344979398_13d4d66abf_o.jpg",
-        afterImage:
-          "https://live.staticflickr.com/65535/54344744446_91d30aed6a_o.jpg",
+          "https://live.staticflickr.com/65535/54344979453_953df3378f_o.jpg",
       },
     ],
     whatsIncluded: [

@@ -16,11 +16,7 @@ import { env } from "@/env";
 
 const stripePromise = loadStripe(env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-type CartDialogProps = {
-  x?: string;
-};
-
-const CartDialog: React.FC<CartDialogProps> = () => {
+const CartDialog: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const open = useCart((state) => state.isOpen);
   const onClose = useCart((state) => state.onClose);
@@ -53,7 +49,7 @@ const CartDialog: React.FC<CartDialogProps> = () => {
     [removePreset],
   );
 
-  //  Extract productId from presets object
+  // Extract productIds from presets object
   const stripeProductIds = presets.map((item) => ({
     productId: item.productId,
   }));
@@ -68,16 +64,16 @@ const CartDialog: React.FC<CartDialogProps> = () => {
       body: JSON.stringify({ items: stripeProductIds }), //Send data to api
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const data = await res.json();
+    // Extract the response data (sessionId) from api/stripe/checkout_sessions
+    const data = (await res.json()) as { sessionId: string };
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { sessionId }: { sessionId: string } = data;
 
     if (!sessionId) {
       throw new Error("Session ID is missing in the response.");
     }
 
+    //Redirect to Stripe checkout
     const stripe = await stripePromise;
     await stripe?.redirectToCheckout({ sessionId });
     setLoading(false);

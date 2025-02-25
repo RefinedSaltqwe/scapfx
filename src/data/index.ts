@@ -198,31 +198,3 @@ export const supportedSoftwares = [
   "Adobe® Camera Raw 10.3 or later",
   "Adobe® Lightroom® CC Desktop 1.4 or later and Mobile (Non-Classic)",
 ];
-
-export const cartProducts = [
-  {
-    id: 1,
-    name: "Throwback Hip Bag",
-    href: "#",
-    color: "Salmon",
-    price: 90,
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-    imageAlt:
-      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-  },
-  {
-    id: 2,
-    name: "Medium Stuff Satchel",
-    href: "#",
-    color: "Blue",
-    price: 32,
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-    imageAlt:
-      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-  },
-  // More products...
-];

@@ -141,8 +141,14 @@ const SuccessStripePageContent: React.FC = () => {
                         {product.description}
                       </p>
                     </div>
-                    <Button type="button" className="mt-5 ml-auto font-normal">
-                      Download<span aria-hidden="true"> &rarr;</span>
+                    <Button
+                      type="button"
+                      className="mt-5 ml-auto font-normal"
+                      asChild
+                    >
+                      <a href={"/api/download-zenith-zip"}>
+                        Download<span aria-hidden="true"> &rarr;</span>
+                      </a>
                     </Button>
                     <div className="mt-5 flex flex-1 items-end">
                       <dl className="divide-muted flex divide-x text-sm">

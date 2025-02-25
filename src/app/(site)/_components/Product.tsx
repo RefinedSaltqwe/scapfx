@@ -55,7 +55,7 @@ const Product: React.FC<ProductProps> = ({ currentPreset, index }) => {
         >
           <AvatarImage
             src="https://live.staticflickr.com/65535/54344995695_1dd728d26d_b.jpg"
-            alt="@shadcn"
+            alt="author's image"
           />
           <AvatarFallback>SC</AvatarFallback>
         </Avatar>

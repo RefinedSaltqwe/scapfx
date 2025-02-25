@@ -50,7 +50,7 @@ const Navigation: React.FC = () => {
               {/* Logo */}
               <div className="flex flex-1">
                 <Link
-                  href="#"
+                  href="/shop/zenith"
                   className="text flex h-full w-full items-center gap-1"
                 >
                   <span className="sr-only">scap.</span>

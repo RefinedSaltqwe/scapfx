@@ -18,6 +18,7 @@ type StoreType = {
 
 // Optimized `generateMetadata`
 export async function generateMetadata({ params }: StoreType) {
+  if (!params.preset) return;
   const currentPreset = presets.find((preset) => preset.name === params.preset);
 
   return {
@@ -70,12 +71,9 @@ const Store: React.FC<StoreType> = ({ params }) => {
       <Container maxWidth="lg">
         <Details />
       </Container>
+      <Gallery currentPreset={currentPreset} />
 
       <CallToAction currentPreset={currentPreset} />
-
-      <Container maxWidth="lg">
-        <Gallery currentPreset={currentPreset} />
-      </Container>
     </>
   );
 };

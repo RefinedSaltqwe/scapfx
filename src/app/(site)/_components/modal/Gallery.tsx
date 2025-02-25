@@ -22,16 +22,26 @@ type GalleryModalProps = {
       length: number;
     }>
   >;
+  gallery: string[];
 };
 
-const GalleryModal: React.FC<GalleryModalProps> = ({ isOpen, setIsOpen }) => {
+const GalleryModal: React.FC<GalleryModalProps> = ({
+  isOpen,
+  setIsOpen,
+  gallery,
+}) => {
   const onClose = () => setIsOpen((prev) => ({ ...prev, open: false }));
 
   const handleImageNavigation = (direction: "prev" | "next") => {
     setIsOpen((prev) => {
-      const newIdx = direction === "prev" ? prev.idx - 1 : prev.idx + 1;
-      if (newIdx < 0 || newIdx >= prev.length + 1) return prev;
-      return { ...prev, idx: newIdx };
+      let newIdx = direction === "prev" ? prev.idx - 1 : prev.idx + 1;
+      // Loop to last image:
+      // If index is less than -1 then set the index of the last image's index
+      if (newIdx < 0) newIdx = prev.length;
+      // Loop to first image:
+      // If index is greater than the number of the last image's index then set the index of the first image's index
+      if (newIdx > prev.length) newIdx = 0;
+      return { ...prev, idx: newIdx, img: gallery[newIdx] ?? "#" };
     });
   };
 
@@ -51,21 +61,15 @@ const GalleryModal: React.FC<GalleryModalProps> = ({ isOpen, setIsOpen }) => {
         </div>
         <div className="text-primary-foreground absolute -bottom-10 flex w-full flex-row justify-center gap-6">
           <button
-            className={`cursor-pointer p-2 ${
-              isOpen.idx <= 0 ? "cursor-not-allowed opacity-50" : ""
-            }`}
+            className="cursor-pointer p-2"
             onClick={() => handleImageNavigation("prev")}
-            disabled={isOpen.idx <= 0}
           >
             Prev
           </button>
           <span className="p-2">/</span>
           <button
-            className={`cursor-pointer p-2 ${
-              isOpen.idx >= isOpen.length ? "cursor-not-allowed opacity-50" : ""
-            }`}
+            className="cursor-pointer p-2"
             onClick={() => handleImageNavigation("next")}
-            disabled={isOpen.idx >= isOpen.length}
           >
             Next
           </button>

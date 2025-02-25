@@ -20,7 +20,7 @@ const OptimizedImage: React.FC<OptimizedImageProp> = ({ src, alt }) => {
       alt={alt}
       width={1500}
       height={1000}
-      priority
+      loading="lazy"
       quality={100}
       draggable={false}
       className={loaded ? "opacity-100 transition-all" : "opacity-0"}

@@ -57,7 +57,7 @@ export const authConfig = {
         // Compare the entered password with the stored password hash
         const isPasswordValid = await compare(
           credentials.password as string,
-          user.password as string,
+          user.password,
         );
         if (!isPasswordValid) {
           throw new Error("Invalid password");

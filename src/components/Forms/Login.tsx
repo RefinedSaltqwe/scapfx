@@ -1,10 +1,17 @@
 "use client";
+import { FetchUserSchema } from "@/server/queries/fetch-login-details/schema";
+import { Input } from "@headlessui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FetchUserSchema } from "@/server/queries/fetch-login-details/schema";
+import { toast } from "sonner";
+import { type z } from "zod";
+import Loader from "../Loader";
+import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
@@ -13,20 +20,12 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { Button } from "../ui/button";
-import Loader from "../Loader";
-import { cn } from "@/lib/utils";
-import { Input } from "@headlessui/react";
-import { type z } from "zod";
-import { Eye, EyeOff } from "lucide-react";
-import Link from "next/link";
 
 type LoginFormProps = {
   s?: string;
 };
 
 const LoginForm: React.FC<LoginFormProps> = () => {
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -35,12 +34,6 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     defaultValues: { email: "", password: "" },
   });
 
-  // const handleSubmit = async (event: React.FormEvent) => {
-  //   event.preventDefault();
-  //   console.log(email);
-
-  // };
-
   const onSubmit = async (values: z.infer<typeof FetchUserSchema>) => {
     const res = await signIn("credentials", {
       email: values.email,
@@ -48,7 +41,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
       redirect: false,
     });
     if (res?.error) {
-      setError(res.error);
+      toast.error(res.error);
     } else {
       router.push("/account/testId"); // Redirect on successful login
     }

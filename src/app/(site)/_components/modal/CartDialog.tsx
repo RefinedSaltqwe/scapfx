@@ -13,6 +13,7 @@ import Image from "next/image";
 import { siteConfig } from "config/site";
 import { loadStripe } from "@stripe/stripe-js";
 import { env } from "@/env";
+import Loader from "@/components/Loader";
 
 const stripePromise = loadStripe(env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -201,7 +202,14 @@ const CartDialog: React.FC = () => {
                       onClick={handleCheckout}
                       disabled={loading || cartItemsCount == 0}
                     >
-                      {loading ? "Redirecting to Stripe" : "Checkout"}
+                      {loading ? (
+                        <>
+                          <Loader classNames="h-4 w-4 border-2 border-white/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+                          Redirecting to Stripe
+                        </>
+                      ) : (
+                        "Checkout"
+                      )}
                     </Button>
                   </div>
                   <div className="text-muted-foreground mt-6 flex justify-center text-center text-sm">

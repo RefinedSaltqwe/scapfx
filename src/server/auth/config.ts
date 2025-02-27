@@ -1,7 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
-
+import CredentialsProvider from "next-auth/providers/credentials";
+import { compare } from "bcryptjs"; // For password comparison
 import { db } from "@/server/db";
 
 /**
@@ -32,16 +32,41 @@ declare module "next-auth" {
  */
 export const authConfig = {
   providers: [
-    DiscordProvider,
-    /**
-     * ...add more providers here.
-     *
-     * Most other providers require a bit more work than the Discord provider. For example, the
-     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
-     *
-     * @see https://next-auth.js.org/providers/github
-     */
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. "Sign in with...").
+      name: "Credentials",
+      // The credentials object defines the fields on the sign-in form.
+      credentials: {
+        email: { label: "Email", type: "text", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Username and password are required");
+        }
+
+        // Look up the user by username (adjust based on your Prisma schema)
+        const user = await db.user.findUnique({
+          where: { email: credentials.email as string },
+        });
+
+        if (!user) {
+          throw new Error("No user found with that username");
+        }
+
+        // Compare the entered password with the stored password hash
+        const isPasswordValid = await compare(
+          credentials.password as string,
+          user.password as string,
+        );
+        if (!isPasswordValid) {
+          throw new Error("Invalid password");
+        }
+
+        // If the user is valid, return the user object to be stored in the session
+        return { id: user.id, name: user.name, email: user.email };
+      },
+    }),
   ],
   adapter: PrismaAdapter(db),
   callbacks: {

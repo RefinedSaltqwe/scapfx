@@ -2,15 +2,22 @@
 
 import { useCart } from "@/hooks/stores/useCart";
 import { cn } from "@/lib/utils";
-import { Search, ShoppingBasket } from "lucide-react";
+import { ShoppingBasket, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 const Navigation: React.FC = () => {
+  const { data: session, status } = useSession();
+
   const pathname = usePathname();
-  const checkout_success_page = pathname.includes("checkout_success");
+  const pages =
+    pathname.includes("checkout_success") ||
+    pathname.includes("login") ||
+    pathname.includes("signup") ||
+    pathname.includes("create_account");
 
   const [isAtTop, setIsAtTop] = useState(true);
   const openCart = useCart((state) => state.onOpen);
@@ -32,6 +39,10 @@ const Navigation: React.FC = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  if (status === "loading") {
+    //!! FIX THIS WITH SKELETON
+    return <p>Loading...Navigation.tsx</p>;
+  }
 
   return (
     <div
@@ -51,7 +62,7 @@ const Navigation: React.FC = () => {
               <div className="flex flex-1">
                 <Link
                   href="/shop/zenith"
-                  className="text flex h-full w-full items-center gap-1"
+                  className="text flex h-full items-center gap-1"
                 >
                   <span className="sr-only">scap.</span>
                   <Image
@@ -64,7 +75,7 @@ const Navigation: React.FC = () => {
                   <span
                     className={cn(
                       "text-primary-foreground text-2xl font-medium",
-                      checkout_success_page && "text-primary",
+                      pages && "text-primary",
                       !isAtTop && "text-primary-foreground!",
                     )}
                   >
@@ -76,14 +87,22 @@ const Navigation: React.FC = () => {
               <div
                 className={cn(
                   "flex flex-1 items-center justify-end",
-                  checkout_success_page && "hidden",
+                  pages && "hidden",
                 )}
               >
-                {/* Search */}
-                <Link href="#" className="text-primary-foreground p-2">
-                  <span className="sr-only">Search</span>
-                  <Search aria-hidden="true" className="size-6 stroke-1" />
-                </Link>
+                {/* Login */}
+
+                {session ? (
+                  <Link href="#" className="text-primary-foreground p-2">
+                    <span className="sr-only">Account</span>
+                    <User aria-hidden="true" className="size-6 stroke-1" />
+                  </Link>
+                ) : (
+                  <Link href="/login" className="text-primary-foreground p-2">
+                    <span className="sr-only">Login</span>
+                    Login
+                  </Link>
+                )}
 
                 {/* Cart */}
                 <div className={"ml-4 flow-root lg:ml-8"}>

@@ -58,13 +58,8 @@ const SuccessStripePageContent: React.FC = () => {
             {`Your file(s) are ready for download.`}
           </p>
           <p className="text-muted-foreground mt-2 text-base">
-            {`We've also sent you an email with a downloadable link, or you can download your files from the Order History page.`}
+            {`We've also emailed you the link to this page, or you can download your files from the Order History page.`}
           </p>
-
-          <dl className="mt-12 text-sm font-medium">
-            <dt className="text-primary">Order number</dt>
-            <dd className="text-primary mt-2">51547878755545848512</dd>
-          </dl>
         </div>
 
         <section
@@ -146,7 +141,7 @@ const SuccessStripePageContent: React.FC = () => {
                       className="mt-5 ml-auto font-normal"
                       asChild
                     >
-                      <a href={"/api/download-zenith-zip"}>
+                      <a href={`/api/download-${product.name}-zip`}>
                         Download<span aria-hidden="true"> &rarr;</span>
                       </a>
                     </Button>
@@ -165,28 +160,7 @@ const SuccessStripePageContent: React.FC = () => {
               ))
           )}
           <div className="sm:ml-40 sm:pl-6">
-            <h3 className="sr-only">Summary</h3>
-
-            <dl className="space-y-6 pt-10 text-sm">
-              <div className="flex justify-between">
-                <dt className="text-primary font-medium">Subtotal</dt>
-                <dd className="text-secondary-foreground">$36.00</dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-primary flex font-medium">
-                  Discount
-                  <span className="bg-muted ml-2 rounded-full px-2 py-0.5 text-xs text-gray-600">
-                    STUDENT50
-                  </span>
-                </dt>
-                <dd className="text-secondary-foreground">-$18.00 (50%)</dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-primary font-medium">Total</dt>
-                <dd className="text-primary">$23.00</dd>
-              </div>
-            </dl>
-            <div className="border-muted mt-16 border-t py-6 text-right">
+            <div className="py-6 text-right">
               <Link
                 href="/shop/zenith"
                 className="text-primary text-sm font-medium"

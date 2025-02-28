@@ -1,8 +1,8 @@
+import { db } from "@/server/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { compare } from "bcryptjs"; // For password comparison
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { compare } from "bcryptjs"; // For password comparison
-import { db } from "@/server/db";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -14,15 +14,17 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      email: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    /** Add any additional user properties here */
+    email?: string | null | undefined;
+    id?: string | undefined; // Example: Add custom user properties like ID
+  }
 }
 
 /**
@@ -68,14 +70,22 @@ export const authConfig = {
       },
     }),
   ],
+  session: {
+    strategy: "jwt", // Use JWT-based sessions
+  },
   adapter: PrismaAdapter(db),
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id; // Add user ID to the token
+        token.email = user.email; // Add user email to the token
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Include user information in the session object
+      session.userId = token.id as string;
+      return session;
+    },
   },
 } satisfies NextAuthConfig;

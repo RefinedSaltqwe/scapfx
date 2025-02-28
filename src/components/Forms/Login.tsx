@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { type z } from "zod";
 import Loader from "../Loader";
 import { Button } from "../ui/button";
@@ -26,6 +25,8 @@ type LoginFormProps = {
 };
 
 const LoginForm: React.FC<LoginFormProps> = () => {
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -35,13 +36,20 @@ const LoginForm: React.FC<LoginFormProps> = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof FetchUserSchema>) => {
+    setLoading(true);
     const res = await signIn("credentials", {
       email: values.email,
       password: values.password,
       redirect: false,
     });
+
     if (res?.error) {
-      toast.error(res.error);
+      setError("The provided email and password do not match our records.");
+      form.reset({
+        ...values,
+        password: "", // Clear the password field
+      });
+      setLoading(false);
     } else {
       router.push("/account/testId"); // Redirect on successful login
     }
@@ -113,22 +121,24 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             </FormItem>
           )}
         />
+        {error && <span className="text-destructive text-sm">{error}</span>}
 
         <div className="flex w-full flex-col items-center justify-between gap-4">
           <Button
             className="bg-primary hover:bg-primary focus-visible:outline-primary flex h-12 w-full justify-center rounded-md px-3 py-1.5 text-sm/6 font-semibold text-white uppercase shadow-sm focus-visible:outline focus-visible:outline-offset-2"
-            disabled={false}
+            disabled={loading}
             type="submit"
           >
-            {false ? (
+            {loading ? (
               <Loader classNames="h-4 w-4 border-2 border-white/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
             ) : (
               "Login"
             )}
           </Button>
+
           {/* Forgot Password & Sign Up Links */}
           <div className="text-primary flex w-full text-sm">
-            <span className="mr-1 ml-auto font-medium">{`No account yet?`}</span>
+            <span className="mr-1 ml-auto font-medium">No account yet?</span>
             <Link
               href="/signup"
               className="text-primary text-sm hover:underline"
@@ -141,4 +151,5 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     </Form>
   );
 };
+
 export default LoginForm;

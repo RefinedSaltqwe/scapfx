@@ -29,7 +29,7 @@ model Account {
     userId                   String
     type                     String
     provider                 String
-    providerAccountId        String
+    providerAccountId        String 
     refresh_token            String? // @db.Text
     access_token             String? // @db.Text
     expires_at               Int?
@@ -77,6 +77,7 @@ model PresetUser {
   id        String  @id @default(cuid())  // Unique identifier (Primary Key)
   userEmail String?  // Can store an email even if the user isn't registered
   presetId  String
+  stripeSessionId String
 
   user      User?   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   preset    Preset  @relation(fields: [presetId], references: [id], onDelete: Cascade)

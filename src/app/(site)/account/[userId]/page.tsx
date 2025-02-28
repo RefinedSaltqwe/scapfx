@@ -1,27 +1,20 @@
-// // pages/dashboard.tsx
-// import { getSession } from "next-auth/react";
+// app/dashboard/page.tsx
+import getServerSession from "next-auth";
+import { redirect } from "next/navigation";
+import { authConfig } from "@/server/auth/config";
 
-// const Dashboard = ({ session }) => {
-//   if (!session) {
-//     return <p>You must be logged in to view this page.</p>;
-//   }
+export default async function Dashboard() {
+  const session = getServerSession(authConfig);
+  console.log(session);
 
-//   return (
-//     <div>
-//       <h1>Dashboard</h1>
-//       <p>Welcome, {session.user.name}</p>
-//     </div>
-//   );
-// };
+  if (!session) {
+    redirect("/login"); // Redirects the user if not authenticated
+  }
 
-// export const getServerSideProps = async (context) => {
-//   const session = await getSession({ req: context.req });
-
-//   if (!session) {
-//     return { redirect: { destination: "/signin", permanent: false } };
-//   }
-
-//   return { props: { session } };
-// };
-
-// export default Dashboard;
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <p>Welcome, {session.auth.name}</p>
+    </div>
+  );
+}

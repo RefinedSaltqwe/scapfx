@@ -30,7 +30,7 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
 
   const form = useForm<z.infer<typeof CreateUserSchema>>({
     resolver: zodResolver(CreateUserSchema),
-    defaultValues: { email: "", password: "", confirmPassword: "" },
+    defaultValues: { email: "", password: "", confirmPassword: "", name: "" },
   });
 
   const { execute: executeCreateUser, isLoading: isCreatingUser } = useAction(
@@ -52,6 +52,7 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
 
   const onSubmit = async (values: z.infer<typeof CreateUserSchema>) => {
     void executeCreateUser({
+      name: values.name,
       email: values.email,
       password: values.password,
       confirmPassword: values.confirmPassword,
@@ -64,6 +65,25 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-6"
       >
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem className="flex-1">
+              <FormLabel className="text-primary data-[error=true]:text-destructive">
+                Full name
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Full name"
+                  {...field}
+                  className="bg-background text-primary focus:outline-primary block h-12 w-full rounded-md px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+                />
+              </FormControl>
+              <FormMessage className="text-destructive" />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"
@@ -137,7 +157,7 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
             {isCreatingUser ? (
               <Loader classNames="h-4 w-4 border-2 border-white/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
             ) : (
-              "Login"
+              "Register"
             )}
           </Button>
           {/* Login link */}

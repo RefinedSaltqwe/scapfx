@@ -5,30 +5,46 @@ import { revalidatePath } from "next/cache";
 import { CreateUserSchema } from "./schema";
 import { type InputType, type ReturnType } from "./types";
 import bcrypt from "bcryptjs";
+import { randomUUID } from "crypto";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
-  const { email, password } = data;
+  const { email, password, name } = data;
   let newUser;
   try {
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
     // Check if user exists
     const existingUser = await db.user.findUnique({ where: { email } });
     if (existingUser) {
+      if (existingUser.password == "N/A") {
+        //Update user
+        newUser = await db.user.update({
+          where: {
+            email,
+          },
+          data: {
+            name,
+            password: hashedPassword,
+          },
+          include: {
+            accounts: true,
+          },
+        });
+      }
       throw new Error("User already exists.");
     }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
 
     //Create user
     newUser = await db.user.create({
       data: {
+        name,
         email,
         password: hashedPassword,
         accounts: {
           create: {
             type: "CLIENT",
             provider: "credentials",
-            providerAccountId: "",
+            providerAccountId: randomUUID(),
           },
         },
       },

@@ -7,16 +7,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 const Navigation: React.FC = () => {
   const { data: session, status } = useSession();
+  console.log("Navigation.tsx -> Session: ", session);
 
   const pathname = usePathname();
   const pages =
     pathname.includes("checkout_success") ||
     pathname.includes("login") ||
     pathname.includes("signup") ||
+    pathname.includes("account") ||
     pathname.includes("create_account");
 
   const [isAtTop, setIsAtTop] = useState(true);
@@ -84,21 +86,30 @@ const Navigation: React.FC = () => {
                 </Link>
               </div>
 
-              <div
-                className={cn(
-                  "flex flex-1 items-center justify-end",
-                  pages && "hidden",
-                )}
-              >
+              <div className={cn("flex flex-1 items-center justify-end")}>
                 {/* Login */}
-
+                <span onClick={() => signOut()} className="cursor-pointer">
+                  logout
+                </span>
                 {session ? (
-                  <Link href="#" className="text-primary-foreground p-2">
+                  <Link
+                    href="#"
+                    className={cn(
+                      "text-primary-foreground p-2",
+                      pages && "text-primary",
+                    )}
+                  >
                     <span className="sr-only">Account</span>
                     <User aria-hidden="true" className="size-6 stroke-1" />
                   </Link>
                 ) : (
-                  <Link href="/login" className="text-primary-foreground p-2">
+                  <Link
+                    href="/login"
+                    className={cn(
+                      "text-primary-foreground p-2",
+                      pages && "text-primary",
+                    )}
+                  >
                     <span className="sr-only">Login</span>
                     Login
                   </Link>
@@ -108,7 +119,10 @@ const Navigation: React.FC = () => {
                 <div className={"ml-4 flow-root lg:ml-8"}>
                   <span
                     onClick={() => openCart()}
-                    className="text-primary-foreground group -m-2 flex cursor-pointer items-center p-2"
+                    className={cn(
+                      "text-primary-foreground group -m-2 flex cursor-pointer items-center p-2",
+                      pages && "text-primary",
+                    )}
                   >
                     <ShoppingBasket
                       aria-hidden="true"

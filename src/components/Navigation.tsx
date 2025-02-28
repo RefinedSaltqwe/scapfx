@@ -8,6 +8,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 const Navigation: React.FC = () => {
   const { data: session, status } = useSession();
@@ -88,20 +96,29 @@ const Navigation: React.FC = () => {
 
               <div className={cn("flex flex-1 items-center justify-end")}>
                 {/* Login */}
-                <span onClick={() => signOut()} className="cursor-pointer">
-                  logout
-                </span>
                 {session ? (
-                  <Link
-                    href="#"
-                    className={cn(
-                      "text-primary-foreground p-2",
-                      pages && "text-primary",
-                    )}
-                  >
-                    <span className="sr-only">Account</span>
-                    <User aria-hidden="true" className="size-6 stroke-1" />
-                  </Link>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="cursor-pointer">
+                      <span className="sr-only">Account</span>
+                      <User
+                        aria-hidden="true"
+                        className={cn(
+                          "text-primary-foreground size-6 stroke-1",
+                          pages && "text-primary",
+                        )}
+                      />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuLabel>
+                        {session.user.email}
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>Purchase History</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => signOut()}>
+                        Logout
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 ) : (
                   <Link
                     href="/login"

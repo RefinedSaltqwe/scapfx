@@ -11,6 +11,7 @@ import { SessionProvider } from "next-auth/react"; // Import SessionProvider
 import { type Session } from "next-auth";
 import { Toaster } from "sonner";
 import QueryProvider from "@/components/providers/QueryProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -75,6 +76,7 @@ export default function RootLayout({
             {children}
             <Footer />
             <Toaster />
+            <SpeedInsights />
           </SessionProvider>
         </QueryProvider>
       </body>

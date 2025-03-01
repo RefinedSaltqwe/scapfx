@@ -105,6 +105,7 @@ const Navigation: React.FC = () => {
                         className={cn(
                           "text-primary-foreground size-6 stroke-1",
                           pages && "text-primary",
+                          !isAtTop && "text-primary-foreground!",
                         )}
                       />
                     </DropdownMenuTrigger>
@@ -125,6 +126,7 @@ const Navigation: React.FC = () => {
                     className={cn(
                       "text-primary-foreground p-2",
                       pages && "text-primary",
+                      !isAtTop && "text-primary-foreground!",
                     )}
                   >
                     <span className="sr-only">Login</span>
@@ -139,6 +141,7 @@ const Navigation: React.FC = () => {
                     className={cn(
                       "text-primary-foreground group -m-2 flex cursor-pointer items-center p-2",
                       pages && "text-primary",
+                      !isAtTop && "text-primary-foreground!",
                     )}
                   >
                     <ShoppingBasket

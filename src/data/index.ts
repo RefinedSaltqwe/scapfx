@@ -1,7 +1,7 @@
 // Plan data
 export const presets = [
   {
-    productId: "price_1Qvm8t4cQY4LArYfMP4gk07w", //stripe and put inside env
+    productId: "price_1Qvm8t4cQY4LArYfMP4gk07w", //stripe and put inside env cm7pi0pih00000cjo0hwjgdmb
     name: "zenith",
     heroImg: "https://live.staticflickr.com/65535/54344779581_2c566fe641_b.jpg",
     description:
@@ -61,7 +61,7 @@ export const presets = [
     ],
   },
   {
-    productId: "price_1Qvm7p4cQY4LArYfSWrAL64t", //stripe and put inside env
+    productId: "price_1Qvm7p4cQY4LArYfSWrAL64t", //stripe and put inside env cm7pi11vk00010cjo3ahmcfi5
     name: "aether",
     heroImg: "https://live.staticflickr.com/65535/54345201790_59afb99b53_b.jpg",
     description: `The Aether pack gives your photos a laid-back cinematic feel, softening the image and giving it a deeper, more muted vibe. It's similar to the Zenith pack but with a smoother, more relaxed look, ditching that sharp, clean finish.`,
@@ -120,7 +120,7 @@ export const presets = [
     ],
   },
   {
-    productId: "price_1Qvm754cQY4LArYflVy57MsJ", //stripe and put inside env
+    productId: "price_1Qvm754cQY4LArYflVy57MsJ", //stripe and put inside env cm7pi2kx600020cjobq0z8bu9
     name: "etherea",
     heroImg: "https://live.staticflickr.com/65535/54344779576_eeaa3cc1c6_b.jpg",
     description:

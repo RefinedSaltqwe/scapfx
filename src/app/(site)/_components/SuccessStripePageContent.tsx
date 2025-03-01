@@ -69,8 +69,13 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
   };
 
   const { execute: executeCreateUserPreset } = useAction(createUserPreset, {
-    onSuccess: () => {
+    onSuccess: (data) => {
       setLoading(false);
+      if (data.success) {
+        toast.success("Email sent.");
+      } else {
+        toast.error("Something went wrong - sending the email unsuccessful.");
+      }
     },
   });
 
@@ -130,22 +135,28 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
 
           <h3 className="sr-only">Items</h3>
           {loading ? (
-            Array.from({ length: 3 }, (_, index) => (
-              <div
-                key={index}
-                className="border-muted flex space-x-6 border-b py-10"
-              >
-                <Skeleton className="h-[200px] w-[200px] rounded-md" />
-                <div className="flex flex-auto flex-col">
-                  <div className="flex w-full flex-col">
-                    <Skeleton className="h-[20px] w-[100px] rounded-md" />
-                    <Skeleton className="mt-2 h-[100px] w-full rounded-md" />
-                    <Skeleton className="mt-5 ml-auto h-[40px] w-[150px] rounded-md" />
-                    <Skeleton className="mt-5 h-[20px] w-[65px] rounded-md" />
+            <>
+              <h2 className="text-primary mt-6 text-base font-medium">
+                Do not leave this page. We are generating your download links.
+                Please wait—we appreciate your patience!
+              </h2>
+              {Array.from({ length: 3 }, (_, index) => (
+                <div
+                  key={index}
+                  className="border-muted flex space-x-6 border-b py-10"
+                >
+                  <Skeleton className="h-[200px] w-[200px] rounded-md" />
+                  <div className="flex flex-auto flex-col">
+                    <div className="flex w-full flex-col">
+                      <Skeleton className="h-[20px] w-[100px] rounded-md" />
+                      <Skeleton className="mt-2 h-[100px] w-full rounded-md" />
+                      <Skeleton className="mt-5 ml-auto h-[40px] w-[150px] rounded-md" />
+                      <Skeleton className="mt-5 h-[20px] w-[65px] rounded-md" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </>
           ) : sessionData.lineItems.length > 0 ? (
             presets
               .filter((preset) =>

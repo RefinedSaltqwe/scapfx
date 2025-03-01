@@ -8,7 +8,12 @@ export const getUserPresets = async (session_id: string) => {
     },
     include: {
       user: true,
-      preset: true,
+      preset: {
+        include: {
+          beforeAfterImages: true,
+          inclusions: true,
+        },
+      },
     },
   });
 

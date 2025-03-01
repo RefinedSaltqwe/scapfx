@@ -1,185 +1,37 @@
-"use client";
-import Loader from "@/components/Loader";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { presets } from "@/data";
-import Image from "next/image";
-import Link from "next/link";
-import { redirect, useSearchParams } from "next/navigation";
-import React, { Suspense, useEffect, useState } from "react";
+import React from "react";
+import SuccessStripePageContent from "../../_components/SuccessStripePageContent";
+import { redirect } from "next/navigation";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
+import { getUserPresets } from "@/server/queries/fetch-user-presets";
 
-const SuccessStripePageContent: React.FC = () => {
-  const searchParams = useSearchParams();
-  const sessionId = searchParams.get("session_id");
-  const [loading, setLoading] = useState(true);
-  const [sessionData, setSessionData] = useState({
-    email: "",
-    name: "",
-    payment_intent: "",
-    lineItems: [""],
-  });
+type CheckoutSuccessPageProps = {
+  searchParams: {
+    session_id?: string;
+  };
+};
 
-  if (!sessionId) {
+const CheckoutSuccessPage: React.FC<CheckoutSuccessPageProps> = async ({
+  searchParams,
+}) => {
+  const session_id = searchParams.session_id;
+  if (!session_id) {
     redirect("/shop");
   }
 
-  const getEmail = async (sessionId: string) => {
-    const res = await fetch("/api/stripe/customer_email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sessionId: sessionId }),
-    });
-
-    const data = (await res.json()) as {
-      email: string;
-      name: string;
-      payment_intent: string;
-      lineItems: string[];
-    };
-
-    if (!res) {
-      redirect("/shop");
-    }
-
-    setSessionData(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    void getEmail(sessionId);
-  }, [sessionId]);
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryFn: () => getUserPresets(session_id),
+    queryKey: ["user_presets_", session_id],
+  });
 
   return (
-    <main className="bg-background -mt-[60px] px-4 pt-16 pb-24 sm:px-6 sm:pt-24 lg:px-8 lg:py-32">
-      <div className="mx-auto max-w-3xl">
-        <div className="max-w-xl">
-          <h1 className="text-primary text-base font-medium">Thank you!</h1>
-          <p className="mt-2 text-4xl font-bold tracking-tight">
-            {`Your file(s) are ready for download.`}
-          </p>
-          <p className="text-muted-foreground mt-2 text-base">
-            {`We've also emailed you the link to this page, or you can download your files from the Order History page.`}
-          </p>
-        </div>
-
-        <section
-          aria-labelledby="order-heading"
-          className="border-muted mt-10 border-t"
-        >
-          <h2 id="order-heading" className="sr-only">
-            Your order
-          </h2>
-
-          <h3 className="sr-only">Items</h3>
-          {loading ? (
-            <>
-              <div className="border-muted flex space-x-6 border-b py-10">
-                <Skeleton className="h-[200px] w-[200px] rounded-md" />
-                <div className="flex flex-auto flex-col">
-                  <div className="flex w-full flex-col">
-                    <Skeleton className="h-[20px] w-[100px] rounded-md" />
-                    <Skeleton className="mt-2 h-[100px] w-full rounded-md" />
-                    <Skeleton className="mt-5 ml-auto h-[40px] w-[150px] rounded-md" />
-                    <Skeleton className="mt-5 h-[20px] w-[65px] rounded-md" />
-                  </div>
-                </div>
-              </div>
-              <div className="border-muted flex space-x-6 border-b py-10">
-                <Skeleton className="h-[200px] w-[200px] rounded-md" />
-                <div className="flex flex-auto flex-col">
-                  <div className="flex w-full flex-col">
-                    <Skeleton className="h-[20px] w-[100px] rounded-md" />
-                    <Skeleton className="mt-2 h-[100px] w-full rounded-md" />
-                    <Skeleton className="mt-5 ml-auto h-[40px] w-[150px] rounded-md" />
-                    <Skeleton className="mt-5 h-[20px] w-[65px] rounded-md" />
-                  </div>
-                </div>
-              </div>
-              <div className="border-muted flex space-x-6 border-b py-10">
-                <Skeleton className="h-[200px] w-[200px] rounded-md" />
-                <div className="flex flex-auto flex-col">
-                  <div className="flex w-full flex-col">
-                    <Skeleton className="h-[20px] w-[100px] rounded-md" />
-                    <Skeleton className="mt-2 h-[100px] w-full rounded-md" />
-                    <Skeleton className="mt-5 ml-auto h-[40px] w-[150px] rounded-md" />
-                    <Skeleton className="mt-5 h-[20px] w-[65px] rounded-md" />
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : (
-            presets
-              .filter((preset) =>
-                sessionData.lineItems.includes(preset.productId),
-              )
-              .map((product) => (
-                <div
-                  key={product.productId}
-                  className="border-muted flex space-x-6 border-b py-10"
-                >
-                  <Image
-                    alt="TODO"
-                    src={product.heroImg}
-                    className="size-20 flex-none rounded-lg bg-gray-100 object-cover sm:size-40"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    width={200}
-                    height={200}
-                  />
-                  <div className="flex flex-auto flex-col">
-                    <div>
-                      <h4 className="text-primary font-medium capitalize">
-                        <a href={`/shop/${product.name}`}>
-                          {product.name} Pack
-                        </a>
-                      </h4>
-                      <p className="mt-2 text-sm text-gray-600">
-                        {product.description}
-                      </p>
-                    </div>
-                    <Button
-                      type="button"
-                      className="mt-5 ml-auto font-normal"
-                      asChild
-                    >
-                      <a href={`/api/download-${product.name}-zip`}>
-                        Download<span aria-hidden="true"> &rarr;</span>
-                      </a>
-                    </Button>
-                    <div className="mt-5 flex flex-1 items-end">
-                      <dl className="divide-muted flex divide-x text-sm">
-                        <div className="flex pl-4 sm:pl-6">
-                          <dt className="text-primary font-medium">Price </dt>
-                          <dd className="text-mutedsecondary-foreground">
-                            {`: $${product.price}`}
-                          </dd>
-                        </div>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-              ))
-          )}
-          <div className="sm:ml-40 sm:pl-6">
-            <div className="py-6 text-right">
-              <Link
-                href="/shop/zenith"
-                className="text-primary text-sm font-medium"
-              >
-                Continue Shopping
-                <span aria-hidden="true"> &rarr;</span>
-              </Link>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <SuccessStripePageContent sessionId={session_id} />
+    </HydrationBoundary>
   );
 };
-
-const SuccessStripePage = () => (
-  <Suspense fallback={<Loader />}>
-    <SuccessStripePageContent />
-  </Suspense>
-);
-
-export default SuccessStripePage;
+export default CheckoutSuccessPage;

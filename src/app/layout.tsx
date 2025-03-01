@@ -10,6 +10,7 @@ import ModalProvider from "@/components/providers/ModalProvider";
 import { SessionProvider } from "next-auth/react"; // Import SessionProvider
 import { type Session } from "next-auth";
 import { Toaster } from "sonner";
+import QueryProvider from "@/components/providers/QueryProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -67,13 +68,15 @@ export default function RootLayout({
         />
       </head>
       <body className={cn("min-h-screen font-sans", "bg-background")}>
-        <SessionProvider session={session}>
-          <ModalProvider />
-          <Navigation />
-          {children}
-          <Footer />
-          <Toaster />
-        </SessionProvider>
+        <QueryProvider>
+          <SessionProvider session={session}>
+            <ModalProvider />
+            <Navigation />
+            {children}
+            <Footer />
+            <Toaster />
+          </SessionProvider>
+        </QueryProvider>
       </body>
     </html>
   );

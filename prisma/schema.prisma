@@ -74,15 +74,16 @@ model VerificationToken {
 
 // Junction Table (Many-to-Many) with Optional User
 model PresetUser {
-  id        String  @id @default(cuid())  // Unique identifier (Primary Key)
-  userEmail String?  // Can store an email even if the user isn't registered
-  presetId  String
-  stripeSessionId String
+  id                String  @id @default(cuid())  // Unique identifier (Primary Key)
+  userEmail         String  // Can store an email even if the user isn't registered
+  presetId          String
+  createdAt         DateTime @default(now())
+  stripeSessionId   String
 
-  user      User?   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  user      User   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   preset    Preset  @relation(fields: [presetId], references: [id], onDelete: Cascade)
 
-  @@unique([userEmail, presetId]) // Ensures a user (or guest email) can't have duplicate presets
+  @@unique([id]) // Ensures a user (or guest email) can't have duplicate presets
 }
 
 

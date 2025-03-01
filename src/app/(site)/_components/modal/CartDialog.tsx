@@ -190,7 +190,9 @@ const CartDialog: React.FC = () => {
                     <p>Subtotal</p>
                     <div className="flex flex-col items-end">
                       <p>{`$${subTotal.toFixed(2)} ${siteConfig.currency}`}</p>
-                      <span className="text-muted-foreground text-[12px] line-through">{`$${subTotalPrevPrice.toFixed(2)}`}</span>
+                      {subTotalPrevPrice > 0 && (
+                        <span className="text-muted-foreground text-[12px] line-through">{`$${subTotalPrevPrice.toFixed(2)}`}</span>
+                      )}
                     </div>
                   </div>
                   <p className="text-muted-foreground mt-0.5 text-sm">

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
     if (!sessionId) {
       return NextResponse.json(
-        { error: "sessionId is required" },
+        { error: "session_id is required" },
         { status: 400 },
       );
     }
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
       {
         email: session.customer_details?.email,
         name: session.customer_details?.name,
-        payment_intent: session.payment_intent, //payment id - can be used to retrieve product info
+        createdAt: session.created, //payment id - can be used to retrieve product info
         lineItems: priceIds,
       },
       { status: 200 },

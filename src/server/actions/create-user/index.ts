@@ -31,27 +31,26 @@ const handler = async (data: InputType): Promise<ReturnType> => {
           },
         });
       }
-      throw new Error("User already exists.");
-    }
-
-    //Create user
-    newUser = await db.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        accounts: {
-          create: {
-            type: "CLIENT",
-            provider: "credentials",
-            providerAccountId: randomUUID(),
+    } else {
+      //Create user
+      newUser = await db.user.create({
+        data: {
+          name,
+          email,
+          password: hashedPassword,
+          accounts: {
+            create: {
+              type: "CLIENT",
+              provider: "credentials",
+              providerAccountId: randomUUID(),
+            },
           },
         },
-      },
-      include: {
-        accounts: true,
-      },
-    });
+        include: {
+          accounts: true,
+        },
+      });
+    }
   } catch (err: unknown) {
     if (err instanceof Error) {
       return {

@@ -12,13 +12,17 @@ export async function POST(req: Request) {
     email: string;
   };
 
+  console.log(items);
+
   try {
     const { data, error } = await resend.emails.send({
-      from: "Scap Creative <onboarding@resend.dev>",
+      from: "Scap Creative <support@scapcreative.com>",
       to: [items.email],
       subject: "ScapCreative Purchase Download Link",
       react: EmailTemplate({ name: items.name, session_id: items.session_id }),
     });
+
+    console.log(error);
 
     if (error) {
       return NextResponse.json({ error }, { status: 500 });

@@ -100,6 +100,7 @@ model Preset {
   beforeAfterImages  BeforeAfter[]
   inclusions         Inclusions[]
   users              PresetUser[]
+  gallery             Gallery[]
 }
 
 
@@ -119,4 +120,12 @@ model Inclusions  {
     description          String
 
     preset               Preset @relation(fields: [presetId], references: [id], onDelete: Cascade)
+}
+
+model Gallery {
+  id                      String @id @default(cuid())
+  link                    String
+  presetId                String
+
+  preset                  Preset @relation(fields: [presetId], references: [id], onDelete: Cascade)
 }

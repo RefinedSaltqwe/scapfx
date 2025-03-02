@@ -8,5 +8,5 @@ export const defaultPreset = {
   color: "",
   beforeAfterImages: [{ beforeImage: "", afterImage: "" }],
   whatsIncluded: [{ name: "", description: "" }],
-  gallery: [""], // Ensure no undefined values here
+  gallery: [{ link: "" }], // Ensure no undefined values here
 };

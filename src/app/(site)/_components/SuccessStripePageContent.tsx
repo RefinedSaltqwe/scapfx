@@ -116,12 +116,22 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
     <main className="bg-background -mt-[60px] px-4 pt-16 pb-24 sm:px-6 sm:pt-24 lg:px-8 lg:py-32">
       <div className="mx-auto max-w-3xl">
         <div className="max-w-xl">
-          <h1 className="text-primary text-base font-medium">Thank you!</h1>
+          <h1 className="text-primary text-base font-medium">
+            {loading ? (
+              <Loader classNames="h-4 w-4 border-2 border-foreground/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+            ) : (
+              "Thank you!"
+            )}
+          </h1>
           <p className="mt-2 text-4xl font-bold tracking-tight">
-            {`Your file(s) are ready for download.`}
+            {loading
+              ? `Generating your download link(s).`
+              : `Your file(s) are ready for download.`}
           </p>
           <p className="text-muted-foreground mt-2 text-base">
-            {`We've also emailed you the link to this page, or you can download your files from the Order History page.`}
+            {loading
+              ? "We'll also email you the link to this page, or you can download your files from the Purchase History page."
+              : `We've emailed you the link to this page, or you can download your files from the Purchase History page.`}
           </p>
         </div>
 

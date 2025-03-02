@@ -1,14 +1,13 @@
 import * as React from "react";
 
-export interface EmailTemplateProps {
+export interface DownloadLinkEmailTemplateProps {
   name: string;
   session_id: string;
 }
 
-export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
-  name,
-  session_id,
-}) => (
+export const DownloadLinkEmailTemplate: React.FC<
+  Readonly<DownloadLinkEmailTemplateProps>
+> = ({ name, session_id }) => (
   <div
     style={{ fontFamily: "Arial, sans-serif", color: "#333", padding: "20px" }}
   >

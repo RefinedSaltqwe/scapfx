@@ -1,11 +1,11 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { type presets } from "@/data";
+import { type Preset } from "@/types";
 import { siteConfig } from "config/site";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 
 type PlanProps = {
-  preset: (typeof presets)[0];
+  preset: Preset;
   selectedPreset: string;
   index: number;
 };

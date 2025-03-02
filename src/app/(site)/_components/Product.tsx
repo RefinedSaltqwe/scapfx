@@ -1,7 +1,7 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { presets, supportedSoftwares } from "@/data";
+import { supportedSoftwares } from "@/data";
 import { useCart } from "@/hooks/stores/useCart";
 import { type Preset } from "@/types";
 import React, { useMemo } from "react";
@@ -10,9 +10,14 @@ import Plan from "./Plan";
 type ProductProps = {
   currentPreset: Preset;
   index: number;
+  allPresets: Preset[];
 };
 
-const Product: React.FC<ProductProps> = ({ currentPreset, index }) => {
+const Product: React.FC<ProductProps> = ({
+  currentPreset,
+  index,
+  allPresets,
+}) => {
   const onOpen = useCart((state) => state.onOpen);
   const cartPresets = useCart((state) => state.presets);
   const addPreset = useCart((state) => state.addPreset);
@@ -79,7 +84,7 @@ const Product: React.FC<ProductProps> = ({ currentPreset, index }) => {
           aria-label="Available Packs"
           className="bg-background relative max-w-2xl -space-y-px rounded-md"
         >
-          {presets.map((plan, index) => (
+          {allPresets.map((plan, index) => (
             <Plan
               key={plan.name}
               preset={plan}

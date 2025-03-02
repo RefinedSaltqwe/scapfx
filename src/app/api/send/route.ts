@@ -1,4 +1,4 @@
-import { EmailTemplate } from "@/components/email-template";
+import { DownloadLinkEmailTemplate } from "@/components/Email/DownloadLink";
 import { env } from "@/env";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
@@ -12,17 +12,16 @@ export async function POST(req: Request) {
     email: string;
   };
 
-  console.log(items);
-
   try {
     const { data, error } = await resend.emails.send({
       from: "Scap Creative <support@scapcreative.com>",
       to: [items.email],
-      subject: "ScapCreative Purchase Download Link",
-      react: EmailTemplate({ name: items.name, session_id: items.session_id }),
+      subject: "Scap Creative Purchase Download Link",
+      react: DownloadLinkEmailTemplate({
+        name: items.name,
+        session_id: items.session_id,
+      }),
     });
-
-    console.log(error);
 
     if (error) {
       return NextResponse.json({ error }, { status: 500 });

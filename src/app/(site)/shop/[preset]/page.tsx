@@ -36,7 +36,6 @@ export async function generateMetadata({ params }: StoreType) {
 
 const Store: React.FC<StoreType> = async ({ params }) => {
   const session = getServerSession(authConfig);
-  console.log("Server ====== ", session);
   if (!session) {
     return <p>You are not logged in</p>;
   }

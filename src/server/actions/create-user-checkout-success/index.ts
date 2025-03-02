@@ -38,7 +38,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       db.preset.findMany({ where: { productId: { in: priceId } } }),
       db.user.findUnique({
         where: { email: userEmail },
-        include: { presets: true },
+        include: { ownedPresets: true },
       }),
     ]);
 
@@ -51,7 +51,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
     // ✅ Filter out already owned presets
     const ownedPresetIds = new Set(
-      existingUser?.presets.map((p) => p.presetId) ?? [],
+      existingUser?.ownedPresets.map((p) => p.presetId) ?? [],
     );
 
     const newPresetUserData = presetUserData.filter(

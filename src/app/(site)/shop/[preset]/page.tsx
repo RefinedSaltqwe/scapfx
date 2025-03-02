@@ -6,6 +6,8 @@ import {
 } from "@tanstack/react-query";
 import React from "react";
 import MainPageContent from "./_components/MainPageContent";
+import getServerSession from "next-auth";
+import { authConfig } from "@/server/auth/config";
 
 type StoreType = {
   params: {
@@ -33,6 +35,11 @@ export async function generateMetadata({ params }: StoreType) {
 }
 
 const Store: React.FC<StoreType> = async ({ params }) => {
+  const session = getServerSession(authConfig);
+  console.log("Server ====== ", session);
+  if (!session) {
+    return <p>You are not logged in</p>;
+  }
   const currentPreset = params?.preset ?? "";
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({

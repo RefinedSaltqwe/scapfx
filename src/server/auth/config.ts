@@ -1,4 +1,7 @@
+//NEW
+import { defaultUser } from "@/data/default";
 import { db } from "@/server/db";
+import { type CurrentUser } from "@/types";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { compare } from "bcryptjs"; // For password comparison
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
@@ -15,6 +18,9 @@ declare module "next-auth" {
     user: {
       id: string;
       email: string;
+      ownedPresets: string[];
+      name: string;
+      currentUser: CurrentUser;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -24,6 +30,9 @@ declare module "next-auth" {
     /** Add any additional user properties here */
     email?: string | null | undefined;
     id?: string | undefined; // Example: Add custom user properties like ID
+    name?: string | undefined | null; // Example: Add custom user properties like ID
+    ownedPresets?: string[] | undefined; // Example: Add custom user properties like ID
+    currentUser?: CurrentUser | undefined;
   }
 }
 
@@ -50,6 +59,12 @@ export const authConfig = {
         // Look up the user by username (adjust based on your Prisma schema)
         const user = await db.user.findUnique({
           where: { email: credentials.email as string },
+          include: {
+            ownedPresets: true,
+            accounts: true,
+            sessions: true,
+            posts: true,
+          },
         });
 
         if (!user) {
@@ -65,8 +80,16 @@ export const authConfig = {
           throw new Error("Invalid password");
         }
 
+        const presetIds = user.ownedPresets.map((p) => p.presetId);
+
         // If the user is valid, return the user object to be stored in the session
-        return { id: user.id, name: user.name, email: user.email };
+        return {
+          id: user.id,
+          name: user.name ?? "Client",
+          email: user.email,
+          ownedPresets: presetIds,
+          currentUser: { user } as CurrentUser,
+        };
       },
     }),
   ],
@@ -79,12 +102,20 @@ export const authConfig = {
       if (user) {
         token.id = user.id; // Add user ID to the token
         token.email = user.email; // Add user email to the token
+        token.name = user.name; // Add user email to the token
+        token.ownedPresets = user.ownedPresets ?? [];
+        token.currentUser = user.currentUser ?? { user: defaultUser };
       }
       return token;
     },
     async session({ session, token }) {
       // Include user information in the session object
       session.userId = token.id as string;
+      session.user.id = token.id as string;
+      session.user.name = token.name!;
+      session.user.ownedPresets = token.ownedPresets as string[]; // Attach presets to the session
+      session.user.currentUser = token.currentUser as CurrentUser; // Attach presets to the session
+
       return session;
     },
   },

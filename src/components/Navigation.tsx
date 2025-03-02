@@ -7,7 +7,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,20 +16,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
 
 const Navigation: React.FC = () => {
   const { data: session, status } = useSession();
   const pathname = usePathname();
+  const removeLoggedUser = useLoggedUser((state) => state.removeUser);
+  const addLoggedUser = useLoggedUser((state) => state.addUser);
 
-  const isPagesPath = useMemo(
-    () =>
-      pathname.includes("checkout_success") ||
-      pathname.includes("login") ||
-      pathname.includes("signup") ||
-      pathname.includes("account") ||
-      pathname.includes("create_account"),
-    [pathname],
-  );
+  // Update logged user when session data changes
+  useEffect(() => {
+    if (session) {
+      addLoggedUser(session.user.currentUser.user, session.user.ownedPresets);
+    }
+  }, [session, addLoggedUser]);
+
+  const isPagesPath =
+    pathname.includes("checkout_success") ||
+    pathname.includes("login") ||
+    pathname.includes("signup") ||
+    pathname.includes("account") ||
+    pathname.includes("create_account");
 
   const [isAtTop, setIsAtTop] = useState(true);
   const openCart = useCart((state) => state.onOpen);
@@ -38,10 +45,7 @@ const Navigation: React.FC = () => {
   const cartCounter = presets.length;
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsAtTop(window.scrollY === 0);
-    };
-
+    const handleScroll = () => setIsAtTop(window.scrollY === 0);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -50,13 +54,31 @@ const Navigation: React.FC = () => {
     return <div className={cn("sticky top-0 z-50 h-[56px] w-full")} />;
   }
 
+  const headerClassNames = cn(
+    "sticky top-0 z-50 w-full",
+    isAtTop ? "bg-transparent" : "bg-foreground/30 backdrop-blur-sm",
+  );
+
+  const iconClassNames = cn(
+    "text-primary-foreground size-6 stroke-1",
+    isPagesPath && "text-primary",
+    !isAtTop && "text-primary-foreground!",
+  );
+
+  const cartClassNames = cn(
+    "text-primary-foreground group -m-2 flex cursor-pointer items-center p-2",
+    isPagesPath && "text-primary",
+    !isAtTop && "text-primary-foreground!",
+  );
+
+  const loginClassNames = cn(
+    "text-primary-foreground p-2",
+    isPagesPath && "text-primary",
+    !isAtTop && "text-primary-foreground!",
+  );
+
   return (
-    <div
-      className={cn(
-        "sticky top-0 z-50 w-full",
-        isAtTop ? "bg-transparent" : "bg-foreground/30 backdrop-blur-sm",
-      )}
-    >
+    <div className={headerClassNames}>
       <header className="relative">
         <nav
           aria-label="Top"
@@ -91,19 +113,12 @@ const Navigation: React.FC = () => {
               </div>
 
               <div className="flex items-center justify-end">
-                {/* Login */}
+                {/* Account */}
                 {session ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger className="cursor-pointer">
                       <span className="sr-only">Account</span>
-                      <User
-                        aria-hidden="true"
-                        className={cn(
-                          "text-primary-foreground size-6 stroke-1",
-                          isPagesPath && "text-primary",
-                          !isAtTop && "text-primary-foreground!",
-                        )}
-                      />
+                      <User aria-hidden="true" className={iconClassNames} />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuLabel>
@@ -111,20 +126,18 @@ const Navigation: React.FC = () => {
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>Purchase History</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => signOut()}>
+                      <DropdownMenuItem
+                        onClick={async () => {
+                          removeLoggedUser();
+                          await signOut();
+                        }}
+                      >
                         Logout
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : (
-                  <Link
-                    href="/login"
-                    className={cn(
-                      "text-primary-foreground p-2",
-                      isPagesPath && "text-primary",
-                      !isAtTop && "text-primary-foreground!",
-                    )}
-                  >
+                  <Link href="/login" className={loginClassNames}>
                     <span className="sr-only">Login</span>
                     Login
                   </Link>
@@ -132,14 +145,7 @@ const Navigation: React.FC = () => {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-8">
-                  <span
-                    onClick={openCart}
-                    className={cn(
-                      "text-primary-foreground group -m-2 flex cursor-pointer items-center p-2",
-                      isPagesPath && "text-primary",
-                      !isAtTop && "text-primary-foreground!",
-                    )}
-                  >
+                  <span onClick={openCart} className={cartClassNames}>
                     <ShoppingBasket
                       aria-hidden="true"
                       className="size-6 shrink-0 stroke-1"

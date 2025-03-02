@@ -61,7 +61,7 @@ model User {
   accounts       Account[]
   sessions       Session[]
   posts          Post[]
-  presets        PresetUser[]
+  ownedPresets        PresetUser[]
 }
 
 model VerificationToken {

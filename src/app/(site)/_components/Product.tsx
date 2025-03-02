@@ -1,4 +1,5 @@
 "use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { supportedSoftwares } from "@/data";
@@ -6,6 +7,7 @@ import { useCart } from "@/hooks/stores/useCart";
 import { type Preset } from "@/types";
 import React, { useMemo } from "react";
 import Plan from "./Plan";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
 
 type ProductProps = {
   currentPreset: Preset;
@@ -21,8 +23,9 @@ const Product: React.FC<ProductProps> = ({
   const onOpen = useCart((state) => state.onOpen);
   const cartPresets = useCart((state) => state.presets);
   const addPreset = useCart((state) => state.addPreset);
+  const ownedPresets = useLoggedUser((state) => state.ownedPresets);
 
-  // Memoize the text color style to avoid recalculating on every render
+  // Memoize the border color and text color styles to avoid unnecessary recalculations
   const borderColorStyle = useMemo(
     () => ({ borderColor: currentPreset.color }),
     [currentPreset.color],
@@ -30,6 +33,12 @@ const Product: React.FC<ProductProps> = ({
   const textColorStyle = useMemo(
     () => ({ color: currentPreset.color }),
     [currentPreset.color],
+  );
+
+  // Check if preset is already owned by the user
+  const isPresetOwned = useMemo(
+    () => ownedPresets.includes(currentPreset.id),
+    [ownedPresets, currentPreset.id],
   );
 
   // Check if the preset already exists in the cart
@@ -96,13 +105,17 @@ const Product: React.FC<ProductProps> = ({
 
         <Button
           className="mt-8 h-12 max-w-2xl"
-          disabled={isPresetExists}
+          disabled={isPresetExists || isPresetOwned}
           onClick={() => {
             addPreset(currentPreset);
             onOpen();
           }}
         >
-          {isPresetExists ? "ALREADY IN THE CART" : "ADD TO CART"}
+          {isPresetExists
+            ? "ALREADY ADDED"
+            : isPresetOwned
+              ? "ALREADY OWNED"
+              : "ADD TO CART"}
         </Button>
 
         <div className="border-muted mt-10 border-t pt-10">

@@ -9,6 +9,7 @@ import Container from "@/components/Container";
 import { getPresets } from "@/server/queries/fetch-presets";
 import { type Preset } from "@/types";
 import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 type MainPageContentProps = {
@@ -18,6 +19,8 @@ type MainPageContentProps = {
 const MainPageContent: React.FC<MainPageContentProps> = ({
   current_preset,
 }) => {
+  const { data: session } = useSession();
+  console.log("Client ====== ", session);
   const { data: allPresets } = useQuery({
     queryFn: () => getPresets(),
     queryKey: ["all_presets_"],

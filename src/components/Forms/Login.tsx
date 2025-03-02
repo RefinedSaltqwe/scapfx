@@ -3,10 +3,10 @@ import { FetchUserSchema } from "@/server/queries/fetch-login-details/schema";
 import { Input } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
 import Loader from "../Loader";
@@ -25,9 +25,9 @@ type LoginFormProps = {
 };
 
 const LoginForm: React.FC<LoginFormProps> = () => {
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof FetchUserSchema>>({
@@ -35,25 +35,35 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     defaultValues: { email: "", password: "" },
   });
 
-  const onSubmit = async (values: z.infer<typeof FetchUserSchema>) => {
-    setLoading(true);
-    const res = await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false,
-    });
+  const onSubmit = useCallback(
+    async (values: z.infer<typeof FetchUserSchema>) => {
+      setLoading(true);
 
-    if (res?.error) {
-      setError("The provided email and password do not match our records.");
-      form.reset({
-        ...values,
-        password: "", // Clear the password field
+      const res = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
       });
-      setLoading(false);
-    } else {
-      router.push("/account/testId"); // Redirect on successful login
-    }
-  };
+
+      if (res?.error) {
+        setError("The provided email and password do not match our records.");
+        form.reset({
+          ...values,
+          password: "", // Clear the password field
+        });
+        setLoading(false);
+        return;
+      }
+
+      // Successful login, now get the session manually
+      const session = await getSession(); // Retrieve the session
+
+      if (session) {
+        router.push(`/account/${session.user.id}`);
+      }
+    },
+    [form, router],
+  );
 
   return (
     <Form {...form}>
@@ -107,7 +117,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                   <button
                     type="button"
                     className="absolute inset-y-0 right-3 flex cursor-pointer items-center"
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={() => setShowPassword((prev) => !prev)}
                   >
                     {showPassword ? (
                       <EyeOff className="h-5 w-5" />

@@ -22,14 +22,6 @@ const Navigation: React.FC = () => {
   const { data: session, status } = useSession();
   const pathname = usePathname();
   const removeLoggedUser = useLoggedUser((state) => state.removeUser);
-  const addLoggedUser = useLoggedUser((state) => state.addUser);
-
-  // Update logged user when session data changes
-  useEffect(() => {
-    if (session) {
-      addLoggedUser(session.user.currentUser.user, session.user.ownedPresets);
-    }
-  }, [session, addLoggedUser]);
 
   const isPagesPath =
     pathname.includes("checkout_success") ||

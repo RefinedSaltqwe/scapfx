@@ -6,10 +6,10 @@ import Gallery from "@/app/(site)/_components/Gallery";
 import Hero from "@/app/(site)/_components/Hero";
 import Product from "@/app/(site)/_components/Product";
 import Container from "@/components/Container";
+import { usePresets } from "@/hooks/stores/usePresets";
 import { getPresets } from "@/server/queries/fetch-presets";
-import { type Preset } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 
 type MainPageContentProps = {
   current_preset: string;
@@ -22,13 +22,28 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
     queryFn: () => getPresets(),
     queryKey: ["all_presets_"],
   });
-  // Optimized preset lookup
-  const currentPreset: Preset = allPresets!.find(
-    (preset) => preset.name === current_preset,
-  )!;
 
-  const currentPresetIndex =
-    allPresets!.findIndex((preset) => preset.name === current_preset) + 1;
+  const addAllPresets = usePresets((state) => state.addPreset);
+
+  useEffect(() => {
+    if (allPresets) addAllPresets(allPresets);
+  }, [addAllPresets, allPresets]);
+
+  // Memoized preset lookup to prevent unnecessary recalculations
+  const currentPreset = useMemo(
+    () => allPresets?.find((preset) => preset.name === current_preset),
+    [allPresets, current_preset],
+  );
+
+  const currentPresetIndex = useMemo(
+    () =>
+      allPresets
+        ? allPresets.findIndex((preset) => preset.name === current_preset) + 1
+        : 1,
+    [allPresets, current_preset],
+  );
+
+  if (!currentPreset) return null; // Avoid errors if preset isn't found
 
   return (
     <>

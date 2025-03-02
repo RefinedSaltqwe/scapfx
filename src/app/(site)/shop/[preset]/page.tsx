@@ -6,43 +6,39 @@ import {
 } from "@tanstack/react-query";
 import React from "react";
 import MainPageContent from "./_components/MainPageContent";
-import getServerSession from "next-auth";
-import { authConfig } from "@/server/auth/config";
 
 type StoreType = {
   params: {
-    preset: string;
+    preset?: string;
   };
 };
 
-// ✅ Fix: Await `params` before accessing its properties
+// ✅ Improved: Await `getPresets()` directly without Promise.all()
 export async function generateMetadata({ params }: StoreType) {
-  if (!params?.preset) return;
+  const presetName = params?.preset;
 
-  // Preload data
-  const [dynamicPresets] = await Promise.all([getPresets()]);
-  const allPresets = [...dynamicPresets];
+  if (!presetName) {
+    return {
+      title: "Preset Not Found",
+      description: "No preset specified.",
+    };
+  }
 
-  const currentPreset = allPresets.find(
-    (preset) => preset.name === params.preset,
-  );
+  const presets = await getPresets();
+  const currentPreset = presets.find((preset) => preset.name === presetName);
 
   return {
     title: currentPreset?.name ?? "Preset Not Found",
-    description:
-      currentPreset?.description ?? "No description available for this preset.",
+    description: currentPreset?.description ?? "No description available.",
   };
 }
 
 const Store: React.FC<StoreType> = async ({ params }) => {
-  const session = getServerSession(authConfig);
-  if (!session) {
-    return <p>You are not logged in</p>;
-  }
   const currentPreset = params?.preset ?? "";
   const queryClient = new QueryClient();
+
   await queryClient.prefetchQuery({
-    queryFn: () => getPresets(),
+    queryFn: getPresets,
     queryKey: ["all_presets_"],
   });
 

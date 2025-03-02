@@ -1,19 +1,11 @@
-// app/dashboard/page.tsx
-import getServerSession from "next-auth";
-import { redirect } from "next/navigation";
-import { authConfig } from "@/server/auth/config";
+import React from "react";
+import AccountPageContents from "../../_components/AccountPageContents";
 
-export default async function Dashboard() {
-  const session = getServerSession(authConfig);
-
-  if (!session) {
-    redirect("/login"); // Redirects the user if not authenticated
-  }
-
+const AccountPage: React.FC = () => {
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Welcome, {session.auth.name}</p>
-    </div>
+    <>
+      <AccountPageContents />
+    </>
   );
-}
+};
+export default AccountPage;

@@ -3,22 +3,20 @@ import { getToken } from "next-auth/jwt";
 import { env } from "./env";
 
 export async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
+  const { pathname, origin, href } = req.nextUrl;
 
-  // Redirect /shop to /shop/zenith
+  // Redirect /shop and root to /shop/zenith
   if (pathname === "/shop" || pathname === "/") {
-    const url = req.nextUrl.clone();
-    url.pathname = "/shop/zenith";
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(`${origin}/shop/zenith`);
   }
 
-  // Protect purchase history page: Only allow authenticated users
-  if (pathname.startsWith("/shop/purchase-history")) {
+  // Protect all /account/[userId] routes (including /purchase-history)
+  if (pathname.startsWith("/account/")) {
     const token = await getToken({ req, secret: env.AUTH_SECRET });
 
     if (!token) {
-      const loginUrl = new URL("/login", req.nextUrl.origin);
-      loginUrl.searchParams.set("callbackUrl", req.nextUrl.href); // Redirect back after login
+      const loginUrl = new URL("/login", origin);
+      loginUrl.searchParams.set("callbackUrl", href); // Redirect back after login
       return NextResponse.redirect(loginUrl);
     }
   }
@@ -26,7 +24,7 @@ export async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// Apply middleware to /shop and /shop/purchase-history
+// Apply middleware to /shop and all /account/[userId] pages (including purchase-history)
 export const config = {
-  matcher: ["/shop", "/shop/purchase-history"],
+  matcher: ["/shop", "/account/:path*"],
 };

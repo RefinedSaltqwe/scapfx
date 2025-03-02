@@ -1,7 +1,8 @@
+"use client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type Preset } from "@/types";
 import { siteConfig } from "config/site";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import React, { useEffect, useMemo, useState } from "react";
 
 type PlanProps = {

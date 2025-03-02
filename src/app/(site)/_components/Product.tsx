@@ -112,7 +112,7 @@ const Product: React.FC<ProductProps> = ({
           }}
         >
           {isPresetExists
-            ? "ALREADY ADDED"
+            ? "IN CART"
             : isPresetOwned
               ? "ALREADY OWNED"
               : "ADD TO CART"}

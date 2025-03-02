@@ -1,18 +1,20 @@
+import Footer from "@/components/Footer";
+import NextTopLoaderWrapper from "@/components/NextTopLoaderWrapper";
+import DataProvider from "@/components/providers/DataProvider";
+import ModalProvider from "@/components/providers/ModalProvider";
+import QueryProvider from "@/components/providers/QueryProvider";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "config/site";
 import { type Metadata } from "next";
+import { type Session } from "next-auth";
+import { SessionProvider } from "next-auth/react"; // Import SessionProvider
 import { Poppins } from "next/font/google";
 import Script from "next/script";
-import Navigation from "../components/Navigation";
-import Footer from "@/components/Footer";
-import ModalProvider from "@/components/providers/ModalProvider";
-import { SessionProvider } from "next-auth/react"; // Import SessionProvider
-import { type Session } from "next-auth";
 import { Toaster } from "sonner";
-import QueryProvider from "@/components/providers/QueryProvider";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/react";
+import Navigation from "../components/Navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -61,7 +63,7 @@ export default function RootLayout({
               offers: {
                 "@type": "Offer",
                 priceCurrency: "CAD",
-                price: "15.00",
+                price: "14.99",
                 availability: "https://schema.org/InStock",
                 url: "https://scapcreative.com/shop/zenith",
               },
@@ -73,12 +75,16 @@ export default function RootLayout({
         <QueryProvider>
           <SessionProvider session={session}>
             <ModalProvider />
-            <Navigation />
-            {children}
-            <Footer />
-            <Toaster />
-            <SpeedInsights />
-            <Analytics />
+            <NextTopLoaderWrapper>
+              <DataProvider>
+                <Navigation />
+                {children}
+                <Footer />
+                <Toaster />
+                <SpeedInsights />
+                <Analytics />
+              </DataProvider>
+            </NextTopLoaderWrapper>
           </SessionProvider>
         </QueryProvider>
       </body>

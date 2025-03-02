@@ -126,7 +126,9 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
           <p className="mt-2 text-4xl font-bold tracking-tight">
             {loading
               ? `Generating your download link(s).`
-              : `Your file(s) are ready for download.`}
+              : userPresets?.length === 1
+                ? "Your file is ready for download."
+                : `Your files are ready for download.`}
           </p>
           <p className="text-muted-foreground mt-2 text-base">
             {loading

@@ -42,17 +42,17 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authConfig = {
-  trustHost: true, // Add this line
-  cookies: {
-    sessionToken: {
-      name: `__Secure-next-auth.session-token`, // Make cookie secure
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production", // Secure in production
-      },
-    },
-  },
+  // trustHost: true, // Add this line
+  // cookies: {
+  //   sessionToken: {
+  //     name: `__Secure-next-auth.session-token`, // Make cookie secure
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "lax",
+  //       secure: process.env.NODE_ENV === "production", // Secure in production
+  //     },
+  //   },
+  // },
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...").
@@ -110,7 +110,7 @@ export const authConfig = {
   ],
   session: {
     strategy: "jwt", // Use JWT-based sessions
-    maxAge: 7 * 24 * 60 * 60, // 7 days
+    // maxAge: 7 * 24 * 60 * 60, // 7 days
   },
   adapter: PrismaAdapter(db),
   callbacks: {
@@ -122,7 +122,7 @@ export const authConfig = {
         token.ownedPresets = user.ownedPresets ?? [];
         token.currentUser = user.currentUser ?? { user: defaultUser };
       }
-      token.exp = Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60; // 7 days
+      // token.exp = Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60; // 7 days
       return token;
     },
     async session({ session, token }) {

@@ -130,6 +130,7 @@ const Navigation: React.FC = () => {
                         onClick={async () => {
                           removeLoggedUser();
                           await signOut();
+                          router.push(`/login`);
                         }}
                       >
                         Logout

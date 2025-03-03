@@ -6,8 +6,8 @@ import { siteConfig } from "config/site";
 import { CheckCircleIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect, useState } from "react";
+import { useRouter } from "nextjs-toploader/app";
 
 type AccountPageContentsProps = {
   x?: string;
@@ -15,7 +15,19 @@ type AccountPageContentsProps = {
 
 const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
   const { data: session } = useSession();
-  const router = useRouter();
+  const router = useRouter(); // Initialize the router
+  const [isClient, setIsClient] = useState(false); // Track if it's client-side
+
+  useEffect(() => {
+    setIsClient(true); // Set the flag once it's client-side
+  }, []);
+
+  // Redirect to login page if session is null and only after client-side render
+  useEffect(() => {
+    if (isClient && !session) {
+      router.push("/login");
+    }
+  }, [session, isClient, router]);
 
   const orders = useMemo(() => {
     if (!session?.user?.currentUser?.user?.ownedPresets) return [];
@@ -45,10 +57,6 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
 
     return Object.values(ordersMap);
   }, [session]);
-
-  if (!session) {
-    router.push("/login");
-  }
 
   return (
     <div className="bg-background">
@@ -214,4 +222,5 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
     </div>
   );
 };
+
 export default AccountPageContents;

@@ -29,7 +29,7 @@ export async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// Apply middleware to /shop and all /account/[userId] pages (including purchase-history)
+// Apply middleware to /shop and all /account/[userId] pages (including purchase-history) , "/account", "/account/:path*"
 export const config = {
-  matcher: ["/shop", "/account", "/account/:path*"],
+  matcher: ["/shop"],
 };

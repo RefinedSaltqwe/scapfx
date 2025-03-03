@@ -3,10 +3,10 @@ import { FetchUserSchema } from "@/server/queries/fetch-login-details/schema";
 import { Input } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
-import { getSession, signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useCallback, useState } from "react";
+import { useRouter } from "nextjs-toploader/app";
+import React, { useCallback, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
 import Loader from "../Loader";
@@ -26,9 +26,11 @@ type LoginFormProps = {
 
 const LoginForm: React.FC<LoginFormProps> = () => {
   const router = useRouter();
+  const { data: session } = useSession();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isClient, setIsClient] = useState(false); // Track if it's client-side rendering
 
   const form = useForm<z.infer<typeof FetchUserSchema>>({
     resolver: zodResolver(FetchUserSchema),
@@ -54,16 +56,20 @@ const LoginForm: React.FC<LoginFormProps> = () => {
         setLoading(false);
         return;
       }
-
-      // Successful login, now get the session manually
-      const session = await getSession(); // Retrieve the session
-
-      if (session) {
-        router.push(`/account/${session.user.id}`);
-      }
     },
-    [form, router],
+    [form],
   );
+
+  // Ensure the redirect happens after the component has been rendered client-side
+  useEffect(() => {
+    setIsClient(true); // Once mounted, it's client-side
+  }, []);
+
+  useEffect(() => {
+    if (isClient && session?.user) {
+      router.push(`/account/${session.user.id}`);
+    }
+  }, [session, isClient, router]);
 
   return (
     <Form {...form}>

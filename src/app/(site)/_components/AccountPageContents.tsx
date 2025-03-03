@@ -48,8 +48,6 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
     return;
   }
 
-  console.log(orders);
-
   return (
     <div className="bg-background">
       <div className="py-16 sm:py-24">

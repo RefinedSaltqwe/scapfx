@@ -99,6 +99,7 @@ export const authConfig = {
   ],
   session: {
     strategy: "jwt", // Use JWT-based sessions
+    maxAge: 7 * 24 * 60 * 60, // 7 days
   },
   adapter: PrismaAdapter(db),
   callbacks: {

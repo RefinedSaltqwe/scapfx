@@ -14,6 +14,8 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/account/")) {
     const token = await getToken({ req, secret: env.AUTH_SECRET });
 
+    console.log("Token in middleware:", token); // Debug
+
     if (!token) {
       const loginUrl = new URL("/login", origin);
       loginUrl.searchParams.set("callbackUrl", href); // Redirect back after login
@@ -26,5 +28,5 @@ export async function middleware(req: NextRequest) {
 
 // Apply middleware to /shop and all /account/[userId] pages (including purchase-history)
 export const config = {
-  matcher: ["/shop", "/account/:path*"],
+  matcher: ["/shop", "/account", "/account/:path*"],
 };

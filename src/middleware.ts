@@ -1,6 +1,5 @@
-import { type NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
-import { env } from "./env";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
   const { pathname, origin, href } = req.nextUrl;
@@ -14,7 +13,7 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/account/")) {
     console.log("COOKIES IN MIDDLEWARE:", req.cookies.getAll()); // Debugging
 
-    const token = await getToken({ req, secret: env.AUTH_SECRET });
+    const token = await getToken({ req, secret: process.env.AUTH_SECRET });
 
     console.log("TOKEN IN MIDDLEWARE:", token); // Debugging
 

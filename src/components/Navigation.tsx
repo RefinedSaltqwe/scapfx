@@ -17,10 +17,12 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
+import { useRouter } from "nextjs-toploader/app";
 
 const Navigation: React.FC = () => {
   const { data: session, status } = useSession();
   const pathname = usePathname();
+  const router = useRouter();
   const removeLoggedUser = useLoggedUser((state) => state.removeUser);
 
   const isPagesPath =
@@ -117,7 +119,13 @@ const Navigation: React.FC = () => {
                         {session.user.email}
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>Purchase History</DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() =>
+                          router.push(`/account/${session.user.id}`)
+                        }
+                      >
+                        Purchase History
+                      </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={async () => {
                           removeLoggedUser();

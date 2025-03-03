@@ -31,5 +31,5 @@ export async function middleware(req: NextRequest) {
 
 // Apply middleware to /shop and all /account/[userId] pages (including purchase-history) , "/account", "/account/:path*"
 export const config = {
-  matcher: ["/shop"],
+  matcher: ["/shop", "/account", "/account/:path*"],
 };

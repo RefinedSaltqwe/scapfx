@@ -26,7 +26,7 @@ type LoginFormProps = {
 
 const LoginForm: React.FC<LoginFormProps> = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -71,6 +71,11 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     }
   }, [session, isClient, router]);
 
+  if (status === "loading") {
+    return (
+      <Loader classNames="h-4 w-4 border-2 border-foreground/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+    );
+  }
   return (
     <Form {...form}>
       <form

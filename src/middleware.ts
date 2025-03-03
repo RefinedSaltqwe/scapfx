@@ -12,13 +12,16 @@ export async function middleware(req: NextRequest) {
 
   // Protect all /account/[userId] routes (including /purchase-history)
   if (pathname.startsWith("/account/")) {
+    console.log("COOKIES IN MIDDLEWARE:", req.cookies.getAll()); // Debugging
+
     const token = await getToken({ req, secret: env.AUTH_SECRET });
 
-    console.log("Token in middleware:", token); // Debug
+    console.log("TOKEN IN MIDDLEWARE:", token); // Debugging
 
     if (!token) {
-      const loginUrl = new URL("/login", origin);
-      loginUrl.searchParams.set("callbackUrl", href); // Redirect back after login
+      console.log("Redirecting to login because token is null"); // Debugging
+      const loginUrl = new URL("/login", req.nextUrl.origin);
+      loginUrl.searchParams.set("callbackUrl", req.nextUrl.href);
       return NextResponse.redirect(loginUrl);
     }
   }

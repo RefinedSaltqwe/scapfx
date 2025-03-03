@@ -42,6 +42,7 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authConfig = {
+  trustHost: true, // Add this line
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...").
@@ -111,6 +112,7 @@ export const authConfig = {
         token.ownedPresets = user.ownedPresets ?? [];
         token.currentUser = user.currentUser ?? { user: defaultUser };
       }
+      token.exp = Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60; // 7 days
       return token;
     },
     async session({ session, token }) {

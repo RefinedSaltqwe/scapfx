@@ -6,6 +6,7 @@ import { siteConfig } from "config/site";
 import { CheckCircleIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useMemo } from "react";
 
 type AccountPageContentsProps = {
@@ -14,6 +15,7 @@ type AccountPageContentsProps = {
 
 const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   const orders = useMemo(() => {
     if (!session?.user?.currentUser?.user?.ownedPresets) return [];
@@ -45,7 +47,7 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
   }, [session]);
 
   if (!session) {
-    return;
+    router.push("/login");
   }
 
   return (

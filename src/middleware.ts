@@ -18,12 +18,12 @@ export async function middleware(req: NextRequest) {
 
     console.log("TOKEN IN MIDDLEWARE:", token); // Debugging
 
-    if (!token) {
-      console.log("Redirecting to login because token is null"); // Debugging
-      const loginUrl = new URL("/login", req.nextUrl.origin);
-      loginUrl.searchParams.set("callbackUrl", req.nextUrl.href);
-      return NextResponse.redirect(loginUrl);
-    }
+    // if (!token) {
+    //   console.log("Redirecting to login because token is null"); // Debugging
+    //   const loginUrl = new URL("/login", req.nextUrl.origin);
+    //   loginUrl.searchParams.set("callbackUrl", href);
+    //   return NextResponse.redirect(loginUrl);
+    // }
   }
 
   return NextResponse.next();

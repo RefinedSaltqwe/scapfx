@@ -1,7 +1,13 @@
 import React from "react";
 import AccountPageContents from "../../_components/AccountPageContents";
 
-const AccountPage: React.FC = () => {
+type AccountPageProps = {
+  params: {
+    userId: string;
+  };
+};
+
+const AccountPage: React.FC<AccountPageProps> = ({ params }) => {
   return (
     <>
       <AccountPageContents />

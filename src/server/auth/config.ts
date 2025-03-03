@@ -60,7 +60,11 @@ export const authConfig = {
         const user = await db.user.findUnique({
           where: { email: credentials.email as string },
           include: {
-            ownedPresets: true,
+            ownedPresets: {
+              include: {
+                preset: true,
+              },
+            },
             accounts: true,
             sessions: true,
             posts: true,

@@ -13,7 +13,7 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/account/")) {
     console.log("COOKIES IN MIDDLEWARE:", req.cookies.getAll()); // Debugging
 
-    const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
     console.log("TOKEN IN MIDDLEWARE:", token); // Debugging
 

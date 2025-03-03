@@ -114,6 +114,7 @@ export const authConfig = {
     maxAge: 7 * 24 * 60 * 60, // 7 days
     updateAge: 24 * 60 * 60, // 24 hours
   },
+  secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(db),
   callbacks: {
     async jwt({ token, user }) {

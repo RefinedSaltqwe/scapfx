@@ -43,6 +43,16 @@ declare module "next-auth" {
  */
 export const authConfig = {
   trustHost: true, // Add this line
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`, // Make cookie secure
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production", // Secure in production
+      },
+    },
+  },
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...").

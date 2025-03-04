@@ -1,13 +1,14 @@
 "use client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { env } from "@/env";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
 import { type Preset } from "@/types";
 import { siteConfig } from "config/site";
 import { CheckCircleIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React, { useMemo, useEffect, useState } from "react";
 import { useRouter } from "nextjs-toploader/app";
+import React, { useEffect, useMemo, useState } from "react";
 
 type AccountPageContentsProps = {
   x?: string;
@@ -17,6 +18,7 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
   const { data: session } = useSession();
   const router = useRouter(); // Initialize the router
   const [isClient, setIsClient] = useState(false); // Track if it's client-side
+  const user = useLoggedUser((state) => state.user);
 
   useEffect(() => {
     setIsClient(true); // Set the flag once it's client-side
@@ -30,10 +32,10 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
   }, [session, isClient, router]);
 
   const orders = useMemo(() => {
-    if (!session?.user?.currentUser?.user?.ownedPresets) return [];
+    if (!user?.ownedPresets) return [];
 
     // Group presets by stripeSessionId
-    const ordersMap = session.user.currentUser.user.ownedPresets.reduce(
+    const ordersMap = user.ownedPresets.reduce(
       (acc, presetUser) => {
         const { stripeSessionId, preset, createdAt } = presetUser;
 
@@ -56,7 +58,7 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
     );
 
     return Object.values(ordersMap);
-  }, [session]);
+  }, [user]);
 
   return (
     <div className="bg-background">

@@ -5,7 +5,7 @@ import { create } from "zustand";
 type UserStore = {
   user: User;
   ownedPresets: string[];
-  addPreset: (data: PresetUser) => void;
+  addPreset: (data: PresetUser[]) => void;
   addUser: (data: User, ownedPresets: string[]) => void;
   removeUser: () => void;
 };
@@ -15,7 +15,11 @@ export const useLoggedUser = create<UserStore>((set) => ({
   ownedPresets: [],
   addPreset: (data) =>
     set((prev) => ({
-      user: { ...prev.user, ownedPresets: [data, ...prev.user.ownedPresets] },
+      ...prev,
+      user: {
+        ...prev.user,
+        ownedPresets: [...data, ...prev.user.ownedPresets],
+      },
     })),
   addUser: (data, ownedPresets) =>
     set(() => ({

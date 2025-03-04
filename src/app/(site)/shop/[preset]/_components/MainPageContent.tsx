@@ -7,9 +7,7 @@ import Hero from "@/app/(site)/_components/Hero";
 import Product from "@/app/(site)/_components/Product";
 import Container from "@/components/Container";
 import { usePresets } from "@/hooks/stores/usePresets";
-import { getPresets } from "@/server/queries/fetch-presets";
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 
 type MainPageContentProps = {
   current_preset: string;
@@ -18,16 +16,7 @@ type MainPageContentProps = {
 const MainPageContent: React.FC<MainPageContentProps> = ({
   current_preset,
 }) => {
-  const { data: allPresets } = useQuery({
-    queryFn: () => getPresets(),
-    queryKey: ["all_presets_"],
-  });
-
-  const addAllPresets = usePresets((state) => state.addPreset);
-
-  useEffect(() => {
-    if (allPresets) addAllPresets(allPresets);
-  }, [addAllPresets, allPresets]);
+  const allPresets = usePresets((state) => state.presets);
 
   // Memoized preset lookup to prevent unnecessary recalculations
   const currentPreset = useMemo(
@@ -51,7 +40,7 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
       <Product
         currentPreset={currentPreset}
         index={currentPresetIndex}
-        allPresets={allPresets!}
+        allPresets={allPresets}
       />
 
       <Container maxWidth="full" bgColor="bg-secondary">

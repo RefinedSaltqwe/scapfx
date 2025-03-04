@@ -10,11 +10,14 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "config/site";
 import { type Metadata } from "next";
 import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react"; // Import SessionProvider
+import { SessionProvider } from "next-auth/react";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "sonner";
 import Navigation from "../components/Navigation";
+import { QueryClient, dehydrate } from "@tanstack/react-query";
+import { getPresets } from "@/server/queries/fetch-presets";
+import { HydrationBoundary } from "@tanstack/react-query";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -37,10 +40,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  session, // Pass session from pageProps
+  session,
 }: Readonly<{ children: React.ReactNode; session: Session }>) {
+  const queryClient = new QueryClient();
+
+  // Prefetch presets once
+  await queryClient.prefetchQuery({
+    queryFn: getPresets,
+    queryKey: ["all_presets_"],
+  });
+
   return (
     <html lang="en" className={poppins.variable} suppressHydrationWarning>
       <head>
@@ -74,17 +85,19 @@ export default function RootLayout({
       <body className={cn("min-h-screen font-sans", "bg-background")}>
         <QueryProvider>
           <SessionProvider session={session}>
-            <ModalProvider />
-            <NextTopLoaderWrapper>
-              <DataProvider>
-                <Navigation />
-                {children}
-                <Footer />
-                <Toaster />
-                <SpeedInsights />
-                <Analytics />
-              </DataProvider>
-            </NextTopLoaderWrapper>
+            <HydrationBoundary state={dehydrate(queryClient)}>
+              <ModalProvider />
+              <NextTopLoaderWrapper>
+                <DataProvider>
+                  <Navigation />
+                  {children}
+                  <Footer />
+                  <Toaster />
+                  <SpeedInsights />
+                  <Analytics />
+                </DataProvider>
+              </NextTopLoaderWrapper>
+            </HydrationBoundary>
           </SessionProvider>
         </QueryProvider>
       </body>

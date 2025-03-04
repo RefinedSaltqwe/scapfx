@@ -2,9 +2,11 @@
 import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { presets } from "@/data";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
+import { usePresets } from "@/hooks/stores/usePresets";
 import { useAction } from "@/hooks/useSafeAction";
 import { createUserPreset } from "@/server/actions/create-user-checkout-success";
+import { getUserByStripeSessionId } from "@/server/queries/fetch-user-preset-by-session";
 import { getUserPresets } from "@/server/queries/fetch-user-presets";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -20,16 +22,21 @@ type SuccessStripePageContentProps = {
 const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
   sessionId,
 }) => {
-  if (!sessionId) {
-    redirect("/shop");
-  }
+  if (!sessionId) redirect("/shop");
+
   const { data: userPresets } = useQuery({
     queryFn: () => getUserPresets(sessionId),
     queryKey: ["user_presets_", sessionId],
   });
 
-  const [loading, setLoading] = useState(true);
-  const [dbData, setDbData] = useState(true);
+  const { data: userPresetByStripeSessionId } = useQuery({
+    queryFn: () => getUserByStripeSessionId(sessionId),
+    queryKey: ["user_presets_by_stripe_session_id", sessionId],
+  });
+
+  const addUser = useLoggedUser((state) => state.addUser);
+  const allPresets = usePresets((state) => state.presets);
+
   const [sessionData, setSessionData] = useState({
     email: "",
     name: "",
@@ -37,17 +44,18 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
     lineItems: [""],
   });
 
+  const [loading, setLoading] = useState(true);
+  const [dbData, setDbData] = useState(true);
+
   const getCustomerStripeDetails = async (sessionId: string) => {
     try {
       const res = await fetch("/api/stripe/customer_email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId: sessionId }),
+        body: JSON.stringify({ sessionId }),
       });
 
-      if (!res.ok) {
-        throw new Error("No products found.");
-      }
+      if (!res.ok) throw new Error("No products found.");
 
       const data = (await res.json()) as {
         email: string;
@@ -55,7 +63,6 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
         createdAt: number;
         lineItems: string[];
       };
-
       setSessionData(data);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -64,30 +71,26 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
       }
     } finally {
       setLoading(false);
-      setDbData(false); // Only set once
+      setDbData(false);
     }
   };
 
   const { execute: executeCreateUserPreset } = useAction(createUserPreset, {
     onSuccess: (data) => {
       setLoading(false);
-      if (data.success) {
-        toast.success("Email sent.");
-      } else {
-        toast.error("Something went wrong - sending the email unsuccessful.");
-      }
+      toast[data.success ? "success" : "error"](
+        data.success
+          ? "Email sent."
+          : "Something went wrong - sending the email unsuccessful.",
+      );
     },
   });
 
   useEffect(() => {
-    // If no presets in db, fetch Stripe details and update state
     if (userPresets?.length === 0 && dbData) {
       void getCustomerStripeDetails(sessionId);
     } else {
-      // If Presets exist in db
-      const lineItems: string[] =
-        userPresets?.map((item) => item.preset.productId) ?? [];
-
+      const lineItems = userPresets?.map((item) => item.preset.productId) ?? [];
       setSessionData({
         email: userPresets?.[0]?.userEmail ?? "",
         name: userPresets?.[0]?.user?.name ?? "",
@@ -100,7 +103,6 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
 
   useEffect(() => {
     if (!dbData) {
-      // Insert Data to Database
       setLoading(true);
       void executeCreateUserPreset({
         userEmail: sessionData.email,
@@ -111,6 +113,15 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbData]);
+
+  useEffect(() => {
+    if (userPresetByStripeSessionId) {
+      const presetIds = userPresetByStripeSessionId.ownedPresets.map(
+        (p) => p.presetId,
+      );
+      addUser(userPresetByStripeSessionId, presetIds);
+    }
+  }, [userPresetByStripeSessionId, addUser]);
 
   return (
     <main className="bg-background -mt-[60px] px-4 pt-16 pb-24 sm:px-6 sm:pt-24 lg:px-8 lg:py-32">
@@ -130,11 +141,14 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
                 ? "Your file is ready for download."
                 : `Your files are ready for download.`}
           </p>
-          <p className="text-muted-foreground mt-2 text-base">
-            {loading
-              ? "We'll also email you the link to this page, or you can download your files from the Purchase History page."
-              : `We've emailed you the link to this page, or you can download your files from the Purchase History page.`}
-          </p>
+          <p
+            className="text-muted-foreground mt-2 text-base"
+            dangerouslySetInnerHTML={{
+              __html: loading
+                ? "We'll also email you the link to this page, or you can download your files from the Purchase History page."
+                : `We've sent the email to <strong>${sessionData.email}</strong> with the link to this page, or you can download your files from the Purchase History page.`,
+            }}
+          />
         </div>
 
         <section
@@ -170,7 +184,7 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
               ))}
             </>
           ) : sessionData.lineItems.length > 0 ? (
-            presets
+            allPresets
               .filter((preset) =>
                 sessionData.lineItems.includes(preset.productId),
               )

@@ -7,6 +7,7 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import { getUserPresets } from "@/server/queries/fetch-user-presets";
+import { getUserByStripeSessionId } from "@/server/queries/fetch-user-preset-by-session";
 
 type CheckoutSuccessPageProps = {
   searchParams: {
@@ -26,6 +27,10 @@ const CheckoutSuccessPage: React.FC<CheckoutSuccessPageProps> = async ({
   await queryClient.prefetchQuery({
     queryFn: () => getUserPresets(session_id),
     queryKey: ["user_presets_", session_id],
+  });
+  await queryClient.prefetchQuery({
+    queryFn: () => getUserByStripeSessionId(session_id),
+    queryKey: ["user_presets_by_stripe_session_id", session_id],
   });
 
   return (

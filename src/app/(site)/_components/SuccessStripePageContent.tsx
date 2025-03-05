@@ -248,7 +248,7 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
           <div className="sm:ml-40 sm:pl-6">
             <div className="py-6 text-right">
               <Link
-                href="/shop/zenith"
+                href="/shop/aether"
                 className="text-primary text-sm font-medium"
               >
                 Continue Shopping

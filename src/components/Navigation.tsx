@@ -83,7 +83,7 @@ const Navigation: React.FC = () => {
               {/* Logo */}
               <div className="flex flex-1">
                 <Link
-                  href="/shop/zenith"
+                  href="/shop/aether"
                   className="text flex h-full items-center gap-1"
                 >
                   <span className="sr-only">scap.</span>

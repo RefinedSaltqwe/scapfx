@@ -76,7 +76,7 @@ export default async function RootLayout({
                 priceCurrency: "CAD",
                 price: "14.99",
                 availability: "https://schema.org/InStock",
-                url: "https://scapcreative.com/shop/zenith",
+                url: "https://scapcreative.com/shop/aether",
               },
             }),
           }}

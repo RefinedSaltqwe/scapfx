@@ -58,6 +58,7 @@ export type VerificationToken = {
 export type PresetUser = {
   id: string;
   userEmail: string;
+  orderId?: string;
   presetId: string;
   createdAt: Date;
   stripeSessionId: string;

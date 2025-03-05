@@ -6,7 +6,7 @@ export async function middleware(req: NextRequest) {
 
   // Redirect /shop and root to /shop/zenith
   if (pathname === "/shop" || pathname === "/") {
-    return NextResponse.redirect(`${origin}/shop/zenith`);
+    return NextResponse.redirect(`${origin}/shop/aether`);
   }
 
   // Protect all /account/[userId] routes (including /purchase-history)

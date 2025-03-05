@@ -69,7 +69,8 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     if (isClient && session?.user) {
       router.push(`/account/${session.user.id}`);
     }
-  }, [session, isClient, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session, isClient]);
 
   if (status === "loading") {
     return (

@@ -79,6 +79,7 @@ model PresetUser {
   presetId          String
   createdAt         DateTime @default(now())
   stripeSessionId   String
+  orderId           String? 
 
   user      User   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   preset    Preset  @relation(fields: [presetId], references: [id], onDelete: Cascade)

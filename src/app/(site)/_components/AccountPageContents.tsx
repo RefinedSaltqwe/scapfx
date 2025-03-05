@@ -29,7 +29,8 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
     if (isClient && !session) {
       router.push("/login");
     }
-  }, [session, isClient, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session, isClient]);
 
   const orders = useMemo(() => {
     if (!user?.ownedPresets) return [];
@@ -37,13 +38,15 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
     // Group presets by stripeSessionId
     const ordersMap = user.ownedPresets.reduce(
       (acc, presetUser) => {
-        const { stripeSessionId, preset, createdAt } = presetUser;
+        const { stripeSessionId, preset, createdAt, id, orderId } = presetUser;
 
         if (!acc[stripeSessionId]) {
           acc[stripeSessionId] = {
+            id,
             stripeSessionId,
-            createdAt,
+            createdAt: new Date(createdAt), // Ensure createdAt is a Date object
             presets: [],
+            orderId: orderId ?? "",
           };
         }
 
@@ -53,11 +56,22 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
       },
       {} as Record<
         string,
-        { stripeSessionId: string; presets: Preset[]; createdAt: Date }
+        {
+          stripeSessionId: string;
+          presets: Preset[];
+          createdAt: Date;
+          id: string;
+          orderId: string;
+        }
       >,
     );
 
-    return Object.values(ordersMap);
+    // Sort the orders by createdAt date in descending order (latest first)
+    const sortedOrders = Object.values(ordersMap).sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
+    );
+
+    return sortedOrders;
   }, [user]);
 
   return (
@@ -97,16 +111,20 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
                     </h3>
 
                     <div className="border-muted flex items-center border-b p-4 sm:grid sm:grid-cols-4 sm:gap-x-6 sm:p-6">
-                      <dl className="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2">
-                        <div>
+                      <dl className="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-full sm:grid-cols-3">
+                        <div className="flex flex-1 flex-col">
                           <dt className="text-foreground font-medium">
                             Order number
                           </dt>
                           <dd className="text-muted-foreground mt-1 uppercase">
-                            {order.stripeSessionId.slice(-7)}
+                            {order.orderId}
+                            {/* {order.stripeSessionId.slice(-7)} */}
                           </dd>
                         </div>
-                        <div className="hidden sm:block">
+
+                        <div className="hidden sm:ml-auto sm:block">
+                          {" "}
+                          {/* Move Date placed to the right */}
                           <dt className="text-foreground font-medium">
                             Date placed
                           </dt>
@@ -118,7 +136,10 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
                             </time>
                           </dd>
                         </div>
-                        <div>
+
+                        <div className="justify-self-end sm:ml-auto">
+                          {" "}
+                          {/* Move Total amount to the right */}
                           <dt className="text-foreground font-medium">
                             Total amount
                           </dt>

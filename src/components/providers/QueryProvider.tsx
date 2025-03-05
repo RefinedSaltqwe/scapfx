@@ -12,8 +12,8 @@ const QueryProvider: React.FC<QueryProviderProps> = ({ children }) => {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 6 * 1000,
-            refetchInterval: 6 * 1000,
+            staleTime: 5 * 60 * 1000, // Keeps the data fresh for 5 minutes (1000ms * 60 sec * 5min)
+            refetchInterval: 5 * 60 * 1000, // Refetches data every 5 minutes
           },
         },
       }),

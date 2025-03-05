@@ -6,7 +6,7 @@ type HomeProps = {
 };
 
 const Home: React.FC<HomeProps> = () => {
-  redirect("/shop/zenith");
+  redirect("/shop/aether");
   return <div>Nothing here</div>;
 };
 export default Home;

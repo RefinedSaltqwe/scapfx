@@ -30,7 +30,7 @@ const CheckoutSuccessPage: React.FC<CheckoutSuccessPageProps> = async ({
   });
   await queryClient.prefetchQuery({
     queryFn: () => getUserByStripeSessionId(session_id),
-    queryKey: ["user_presets_by_stripe_session_id", session_id],
+    queryKey: ["user_by_stripe_session_id", session_id],
   });
 
   return (

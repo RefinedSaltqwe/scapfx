@@ -27,11 +27,12 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
   const { data: userPresets } = useQuery({
     queryFn: () => getUserPresets(sessionId),
     queryKey: ["user_presets_", sessionId],
+    // enabled: !!sessionId
   });
 
-  const { data: userPresetByStripeSessionId } = useQuery({
+  const { data: userByStripeSessionId } = useQuery({
     queryFn: () => getUserByStripeSessionId(sessionId),
-    queryKey: ["user_presets_by_stripe_session_id", sessionId],
+    queryKey: ["user_by_stripe_session_id", sessionId],
   });
 
   const addUser = useLoggedUser((state) => state.addUser);
@@ -115,13 +116,13 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
   }, [dbData]);
 
   useEffect(() => {
-    if (userPresetByStripeSessionId) {
-      const presetIds = userPresetByStripeSessionId.ownedPresets.map(
+    if (userByStripeSessionId) {
+      const presetIds = userByStripeSessionId.ownedPresets.map(
         (p) => p.presetId,
       );
-      addUser(userPresetByStripeSessionId, presetIds);
+      addUser(userByStripeSessionId, presetIds);
     }
-  }, [userPresetByStripeSessionId, addUser]);
+  }, [userByStripeSessionId, addUser]);
 
   return (
     <main className="bg-background -mt-[60px] px-4 pt-16 pb-24 sm:px-6 sm:pt-24 lg:px-8 lg:py-32">
@@ -149,6 +150,12 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
                 : `We've sent the email to <strong>${sessionData.email}</strong> with the link to this page, or you can download your files from the Purchase History page.`,
             }}
           />
+          <dl className="mt-12 text-sm font-medium">
+            <dt className="text-primary">Order number</dt>
+            <dd className="text-primary mt-2 uppercase">
+              {userPresets![0]?.orderId}
+            </dd>
+          </dl>
         </div>
 
         <section

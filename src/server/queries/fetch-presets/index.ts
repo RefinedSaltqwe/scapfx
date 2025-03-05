@@ -8,6 +8,9 @@ export const getPresets = async () => {
       inclusions: true,
       gallery: true,
     },
+    orderBy: {
+      name: "asc",
+    },
   });
 
   return response;

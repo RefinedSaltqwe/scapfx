@@ -1,6 +1,4 @@
 "use client";
-import Loader from "@/components/Loader";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
 import { usePresets } from "@/hooks/stores/usePresets";
@@ -12,8 +10,10 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
+import DownloadButton from "./DownloadButton";
+const Loader = lazy(() => import("@/components/Loader"));
 
 type SuccessStripePageContentProps = {
   sessionId: string;
@@ -219,15 +219,9 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
                         {product.description}
                       </p>
                     </div>
-                    <Button
-                      type="button"
-                      className="mt-5 ml-auto font-normal"
-                      asChild
-                    >
-                      <a href={`/api/download-${product.name}-zip`}>
-                        Download<span aria-hidden="true"> &rarr;</span>
-                      </a>
-                    </Button>
+                    <div className="mt-5 ml-auto font-normal">
+                      <DownloadButton fileName={product.name} />
+                    </div>
                     <div className="mt-5 flex flex-1 items-end">
                       <dl className="divide-muted flex divide-x text-sm">
                         <div className="flex pl-4 sm:pl-6">

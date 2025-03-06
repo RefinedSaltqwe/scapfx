@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "nextjs-toploader/app";
 import React, { useEffect, useMemo, useState } from "react";
+import DownloadButton from "./DownloadButton";
 
 type AccountPageContentsProps = {
   x?: string;
@@ -110,8 +111,8 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
                       </time>
                     </h3>
 
-                    <div className="border-muted flex items-center border-b p-4 sm:grid sm:grid-cols-4 sm:gap-x-6 sm:p-6">
-                      <dl className="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-full sm:grid-cols-3">
+                    <div className="flex items-center border-b border-gray-200 p-4 sm:grid sm:grid-cols-4 sm:gap-x-6 sm:p-6">
+                      <dl className="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2">
                         <div className="flex flex-1 flex-col">
                           <dt className="text-foreground font-medium">
                             Order number
@@ -226,9 +227,8 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
                                 </a>
                               </div>
                               <div className="flex flex-1 justify-center pl-4">
-                                <a href={`/api/download-${product.name}-zip`}>
-                                  Download<span aria-hidden="true"></span>
-                                </a>
+                                {" "}
+                                <DownloadButton fileName={product.name} />
                               </div>
                             </div>
                           </div>

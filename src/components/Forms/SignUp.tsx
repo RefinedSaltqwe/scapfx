@@ -5,11 +5,10 @@ import { CreateUserSchema } from "@/server/actions/create-user/schema";
 import { Input } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { lazy } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { type z } from "zod";
-import Loader from "../Loader";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -20,6 +19,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import Link from "next/link";
+const Loader = lazy(() => import("@/components/Loader"));
 
 type SignUpFormProps = {
   s?: string;

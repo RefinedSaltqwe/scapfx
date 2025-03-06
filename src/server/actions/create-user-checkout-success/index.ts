@@ -7,7 +7,7 @@ import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
 import { CreateUserPresetSchema } from "./schema";
 import { type InputType, type ReturnType } from "./types";
-import cuid from "cuid";
+import shortid from "shortid";
 
 // ✅ Extracted email sender function
 const sendEmail = async (name: string, session_id: string, email: string) => {
@@ -43,7 +43,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       }),
     ]);
 
-    const orderId = cuid().slice(0.7);
+    const orderId = shortid.generate();
 
     const presetUserData = presets.map((preset) => ({
       presetId: preset.id,

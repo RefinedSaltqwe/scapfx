@@ -1,12 +1,13 @@
 "use client";
 
 import { useCart } from "@/hooks/stores/useCart";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
 import { cn } from "@/lib/utils";
 import { ShoppingBasket, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import React, { useEffect, useState } from "react";
 import {
   DropdownMenu,
@@ -16,8 +17,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
-import { useRouter } from "nextjs-toploader/app";
 
 const Navigation: React.FC = () => {
   const { data: session, status } = useSession();
@@ -49,7 +48,7 @@ const Navigation: React.FC = () => {
   }
 
   const headerClassNames = cn(
-    "sticky top-0 z-50 w-full",
+    "sticky top-0 z-50 w-full transition-background-color duration-300",
     isAtTop ? "bg-transparent" : "bg-foreground/30 backdrop-blur-sm",
   );
 
@@ -83,17 +82,17 @@ const Navigation: React.FC = () => {
               {/* Logo */}
               <div className="flex flex-1">
                 <Link
-                  href="/shop/aether"
+                  href={`/shop/aether`}
                   className="text flex h-full items-center gap-1"
                 >
                   <span className="sr-only">scap.</span>
-                  <Image
+                  {/* <Image
                     src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                     alt="subaccount logo"
                     width={32}
                     height={32}
                     className="rounded-md"
-                  />
+                  /> */}
                   <span
                     className={cn(
                       "text-primary-foreground text-2xl font-medium",

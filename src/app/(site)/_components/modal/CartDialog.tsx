@@ -1,5 +1,7 @@
 "use client";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { env } from "@/env";
 import { useCart } from "@/hooks/stores/useCart";
 import {
   Dialog,
@@ -7,13 +9,13 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import { X } from "lucide-react";
-import React, { useCallback, useMemo, useState } from "react";
-import Image from "next/image";
-import { siteConfig } from "config/site";
 import { loadStripe } from "@stripe/stripe-js";
-import { env } from "@/env";
-import Loader from "@/components/Loader";
+import { siteConfig } from "config/site";
+import { Info, X } from "lucide-react";
+import Image from "next/image";
+import React, { lazy, useCallback, useMemo, useState } from "react";
+
+const Loader = lazy(() => import("@/components/Loader"));
 
 const stripePromise = loadStripe(env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -199,6 +201,15 @@ const CartDialog: React.FC = () => {
                     Shipping and taxes calculated at checkout.
                   </p>
                   <div className="mt-6">
+                    <Alert>
+                      <Info className="h-4 w-4" />
+                      <AlertTitle>Heads up!</AlertTitle>
+                      <AlertDescription>
+                        {`If you've purchased from us before, log in to view your
+                        purchase history and avoid duplicate purchases. Please
+                        note that we do not offer refunds.`}
+                      </AlertDescription>
+                    </Alert>
                     <Button
                       className="mt-8 h-12 w-full uppercase"
                       onClick={handleCheckout}
@@ -210,7 +221,7 @@ const CartDialog: React.FC = () => {
                           Redirecting to Stripe
                         </>
                       ) : (
-                        "Checkout"
+                        "Checkout with Stripe"
                       )}
                     </Button>
                   </div>

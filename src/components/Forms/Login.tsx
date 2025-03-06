@@ -6,10 +6,9 @@ import { Eye, EyeOff } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "nextjs-toploader/app";
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, lazy } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
-import Loader from "../Loader";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -19,6 +18,8 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+
+const Loader = lazy(() => import("@/components/Loader"));
 
 type LoginFormProps = {
   s?: string;

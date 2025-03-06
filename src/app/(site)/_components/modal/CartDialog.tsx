@@ -13,6 +13,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { siteConfig } from "config/site";
 import { Info, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React, { lazy, useCallback, useMemo, useState } from "react";
 
 const Loader = lazy(() => import("@/components/Loader"));
@@ -147,9 +148,9 @@ const CartDialog: React.FC = () => {
                                   <div className="text-popover-foreground flex justify-between text-base font-medium">
                                     <div className="flex flex-col items-start">
                                       <h3 className="uppercase">
-                                        <a href={`/shop/${product.name}`}>
+                                        <Link href={`/shop/${product.name}`}>
                                           {product.name}
-                                        </a>
+                                        </Link>
                                       </h3>
 
                                       <p className="text-muted-foreground mt-1 text-sm">

@@ -7,7 +7,8 @@ import Hero from "@/app/(site)/_components/Hero";
 import Product from "@/app/(site)/_components/Product";
 import Container from "@/components/Container";
 import { usePresets } from "@/hooks/stores/usePresets";
-import React, { useMemo } from "react";
+import React, { lazy, useMemo } from "react";
+const Loader = lazy(() => import("@/components/Loader"));
 
 type MainPageContentProps = {
   current_preset: string;
@@ -32,7 +33,11 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
     [allPresets, current_preset],
   );
 
-  if (!currentPreset) return null; // Avoid errors if preset isn't found
+  if (!currentPreset) {
+    return (
+      <Loader classNames="h-4 w-4 border-2 border-primary-foreground/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+    );
+  } // Avoid errors if preset isn't found
 
   return (
     <>

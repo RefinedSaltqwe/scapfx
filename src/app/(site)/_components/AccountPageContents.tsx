@@ -7,6 +7,7 @@ import { siteConfig } from "config/site";
 import { CheckCircleIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "nextjs-toploader/app";
 import React, { useEffect, useMemo, useState } from "react";
 import DownloadButton from "./DownloadButton";
@@ -219,12 +220,12 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
 
                             <div className="divide-muteborder-muted border-muted mt-6 flex items-center divide-x border-t pt-4 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
                               <div className="flex flex-1 justify-center pr-4">
-                                <a
+                                <Link
                                   href={`${env.NEXT_PUBLIC_API_URL}/shop/${product.name}`}
                                   className="text-primary hover:text-primary/75 whitespace-nowrap"
                                 >
                                   View product
-                                </a>
+                                </Link>
                               </div>
                               <div className="flex flex-1 justify-center pl-4">
                                 {" "}

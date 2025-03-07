@@ -81,9 +81,7 @@ const Product: React.FC<ProductProps> = ({
           >
             {currentPreset.name}
           </span>
-          <p className="text-muted-foreground text-md">
-            {currentPreset.description}
-          </p>
+          <p className="text-muted/85 text-md">{currentPreset.description}</p>
         </div>
       </div>
 

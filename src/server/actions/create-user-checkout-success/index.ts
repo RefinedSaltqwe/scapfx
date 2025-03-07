@@ -1,33 +1,16 @@
 "use server";
 
-import { env } from "@/env";
 import { createSafeAction } from "@/lib/create-safe-actions";
+import { fetchPrice } from "@/lib/fetchPrice";
+import { sendEmail } from "@/lib/sendEmail";
 import { db } from "@/server/db";
 import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
+import shortid from "shortid";
 import { CreateUserPresetSchema } from "./schema";
 import { type InputType, type ReturnType } from "./types";
-import shortid from "shortid";
 
 // ✅ Extracted email sender function
-const sendEmail = async (name: string, session_id: string, email: string) => {
-  try {
-    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/api/send`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, name, session_id }),
-    });
-
-    const data = (await res.json()) as {
-      success: boolean;
-      data: { id: string };
-    };
-    return data.success;
-  } catch (error) {
-    console.error("Error sending email:", error);
-    return false;
-  }
-};
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { priceId, userEmail, stripeSessionId, createdAt } = data;
@@ -45,13 +28,22 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
     const orderId = shortid.generate();
 
-    const presetUserData = presets.map((preset) => ({
-      presetId: preset.id,
-      orderId,
-      userEmail,
-      stripeSessionId,
-      createdAt: date.toISOString(),
-    }));
+    const presetUserData = await Promise.all(
+      presets.map(async (preset) => {
+        // Fetch the price asynchronously using fetchPrice function
+        const fetchedPrice = await fetchPrice(preset.productId);
+
+        // Return the updated preset with the fetchedPrice as purchasedPrice
+        return {
+          presetId: preset.id,
+          orderId,
+          userEmail,
+          stripeSessionId,
+          createdAt: date.toISOString(),
+          purchasedPrice: fetchedPrice, // Use fetchedPrice as purchasedPrice
+        };
+      }),
+    );
 
     // ✅ Filter out already owned presets
     // const ownedPresetIds = new Set(
@@ -88,9 +80,10 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       await db.presetUser.createMany({ data: newPresetUserData });
 
       emailSent = await sendEmail(
+        "checkout_success",
         existingUser?.name ?? "Guest",
-        stripeSessionId,
         userEmail,
+        stripeSessionId,
       );
     }
 

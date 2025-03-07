@@ -126,6 +126,7 @@ const Navigation: React.FC = () => {
                         Purchase History
                       </DropdownMenuItem>
                       <DropdownMenuItem
+                        className="mt-1"
                         onClick={async () => {
                           removeLoggedUser();
                           await signOut();

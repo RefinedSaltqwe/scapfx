@@ -1,8 +1,18 @@
 "use client";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { env } from "@/env";
 import { useCart } from "@/hooks/stores/useCart";
+import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogBackdrop,
@@ -11,7 +21,7 @@ import {
 } from "@headlessui/react";
 import { loadStripe } from "@stripe/stripe-js";
 import { siteConfig } from "config/site";
-import { Info, X } from "lucide-react";
+import { Info, X, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { lazy, useCallback, useMemo, useState } from "react";
@@ -202,29 +212,49 @@ const CartDialog: React.FC = () => {
                     Shipping and taxes calculated at checkout.
                   </p>
                   <div className="mt-6">
-                    <Alert>
-                      <Info className="h-4 w-4" />
-                      <AlertTitle>Heads up!</AlertTitle>
-                      <AlertDescription>
-                        {`If you've purchased from us before, log in to view your
-                        purchase history and avoid duplicate purchases. Please
-                        note that we do not offer refunds.`}
-                      </AlertDescription>
-                    </Alert>
-                    <Button
-                      className="mt-8 h-12 w-full uppercase"
-                      onClick={handleCheckout}
-                      disabled={loading || cartItemsCount == 0}
-                    >
-                      {loading ? (
-                        <>
-                          <Loader classNames="h-4 w-4 border-2 border-white/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
-                          Redirecting to Stripe
-                        </>
-                      ) : (
-                        "Checkout with Stripe"
-                      )}
-                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger
+                        disabled={loading || cartItemsCount === 0}
+                        className={cn(
+                          "mt-8 h-12 w-full cursor-pointer rounded-md text-sm font-medium uppercase transition-colors",
+                          "bg-primary text-primary-foreground hover:bg-primary/90 shadow-xs", // Normal state
+                          "disabled:pointer-events-none disabled:opacity-50", // Disabled state
+                        )}
+                      >
+                        Checkout
+                      </AlertDialogTrigger>
+
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="flex flex-row items-center gap-2">
+                            <Info className="h-5 w-5" />
+                            Heads up!
+                            <AlertDialogCancel className="ml-auto w-auto border-0 uppercase shadow-none hover:bg-transparent">
+                              <XIcon className="h-5 w-5" />
+                            </AlertDialogCancel>
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            {`If you've purchased from us before, please log in to view your purchase history and avoid duplicate purchases. Kindly note that we do not offer refunds. You will be securely redirected to Stripe to complete your payment.`}
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter className="flex">
+                          <Button
+                            onClick={handleCheckout}
+                            disabled={loading || cartItemsCount == 0}
+                            className="mt-8 h-12 w-full uppercase"
+                          >
+                            {loading ? (
+                              <>
+                                <Loader classNames="h-4 w-4 border-2 border-white/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+                                Redirecting to Stripe
+                              </>
+                            ) : (
+                              "Checkout with Stripe"
+                            )}
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                   <div className="text-muted-foreground mt-6 flex justify-center text-center text-sm">
                     <p>

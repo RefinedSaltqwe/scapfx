@@ -1,4 +1,4 @@
-import { DownloadLinkEmailTemplate } from "@/components/email/DownloadLink";
+import { DownloadLinkEmailTemplate } from "@/components/Email/DownloadLink";
 import { env } from "@/env";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";

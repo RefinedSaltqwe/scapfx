@@ -17,7 +17,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   const date = new Date(createdAt * 1000);
 
   try {
-    // ✅ Fetch presets and check user existence
+    // Fetch presets and check user existence
     const [presets, existingUser] = await Promise.all([
       db.preset.findMany({ where: { productId: { in: priceId } } }),
       db.user.findUnique({
@@ -45,7 +45,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       }),
     );
 
-    // ✅ Filter out already owned presets
+    // Filter out already owned presets
     // const ownedPresetIds = new Set(
     //   existingUser?.ownedPresets.map((p) => p.presetId) ?? [],
     // );
@@ -59,7 +59,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     let emailSent = false;
 
     if (newPresetUserData.length > 0) {
-      // ✅ If the user doesn't exist, create it first
+      // If the user doesn't exist, create it first
       if (!existingUser) {
         await db.user.create({
           data: {
@@ -76,7 +76,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         });
       }
 
-      // ✅ Insert new preset-user relationships
+      // Insert new preset-user relationships
       await db.presetUser.createMany({ data: newPresetUserData });
 
       emailSent = await sendEmail(

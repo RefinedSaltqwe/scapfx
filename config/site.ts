@@ -1,6 +1,7 @@
 export const siteConfig = {
   name: "Scap Creative",
-  description: "@scapranger's presets and luts",
+  description:
+    "Discover premium Lightroom presets designed to transform your photos with cinematic depth and storytelling aesthetics. The Aether Pack delivers a laid-back, muted cinematic feel, while the Etherea Pack blends nostalgic film tones with modern softness. For a crisp, stylish look, the Zenith Pack enhances contrast and sharpens details. Each preset is fully customizable, giving you creative freedom to refine your photography with ease.",
   icon: "/favicon.ico",
   currency: "CAD",
   theme_color: "#0d1117",

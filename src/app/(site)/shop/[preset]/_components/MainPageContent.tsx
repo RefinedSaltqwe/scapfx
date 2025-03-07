@@ -18,6 +18,7 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
   current_preset,
 }) => {
   const allPresets = usePresets((state) => state.presets);
+  const isLoading = !allPresets || allPresets.length === 0;
 
   // Memoized preset lookup to prevent unnecessary recalculations
   const currentPreset = useMemo(
@@ -33,11 +34,21 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
     [allPresets, current_preset],
   );
 
-  if (!currentPreset) {
+  if (isLoading || !currentPreset) {
     return (
-      <Loader classNames="h-4 w-4 border-2 border-primary-foreground/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+      <div className="flex h-80 items-center justify-center">
+        <Loader classNames="h-8 w-8 border-3 border-primary animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+      </div>
     );
-  } // Avoid errors if preset isn't found
+  }
+
+  // if () {
+  //   return (
+  //     <div className="py-10 text-center">
+  //       <p className="text-muted-foreground text-lg">Preset not found.</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>

@@ -63,13 +63,14 @@ export default async function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Product",
-              name: "Scapranger Lightroom Preset",
-              image: "https://yourdomain.com/images/bright-airy.jpg",
+              name: "ScapCreative Lightroom Preset",
+              image:
+                "https://live.staticflickr.com/65535/54344958259_a9917780a3_o.jpg",
               description:
-                "Enhance your photos with a bright and airy feel. Perfect for Instagram and bloggers.",
+                "Discover premium Lightroom presets designed to transform your photos with cinematic depth and storytelling aesthetics. The Aether Pack delivers a laid-back, muted cinematic feel, while the Etherea Pack blends nostalgic film tones with modern softness. For a crisp, stylish look, the Zenith Pack enhances contrast and sharpens details. Each preset is fully customizable, giving you creative freedom to refine your photography with ease.",
               brand: {
                 "@type": "Brand",
-                name: "Scapranger",
+                name: "ScapCreative",
               },
               offers: {
                 "@type": "Offer",
@@ -79,6 +80,33 @@ export default async function RootLayout({
                 url: "https://scapcreative.com/shop/aether",
               },
             }),
+          }}
+        />
+        {/* Add Meta Pixel Script */}
+        <Script
+          id="meta-pixel"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s) {
+                if(f.fbq) return; 
+                n=f.fbq=function(){
+                  n.callMethod? 
+                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq) f._fbq=n;
+                n.push=n;
+                n.loaded=!0;
+                n.version='2.0';
+                n.queue=[];
+                t=b.createElement(e);
+                t.async=!0;
+                t.src=v;
+                s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)
+              }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '873200158209793');
+              fbq('track', 'PageView');
+            `,
           }}
         />
       </head>

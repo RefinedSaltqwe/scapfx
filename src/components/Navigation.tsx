@@ -26,6 +26,8 @@ const Navigation: React.FC = () => {
 
   const isPagesPath =
     pathname.includes("checkout_success") ||
+    pathname.includes("terms-and-condition") ||
+    pathname.includes("about") ||
     pathname.includes("login") ||
     pathname.includes("signup") ||
     pathname.includes("account") ||

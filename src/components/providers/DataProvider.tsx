@@ -29,13 +29,14 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
 
   useEffect(() => {
     if (!pixel_id) return; // Prevent running if no Pixel ID
-    initFacebookPixel(pixel_id);
-    trackPageView();
+
+    void initFacebookPixel(pixel_id); // Use void to mark promise as ignored
+    void trackPageView();
   }, [pixel_id]); // Only runs once on mount
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      trackPageView();
+      void trackPageView();
     }
   }, [pathname]);
 

@@ -75,7 +75,9 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
   if (status === "loading") {
     return (
-      <Loader classNames="h-4 w-4 border-2 border-foreground/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+      <div className="flex h-80 items-center justify-center">
+        <Loader classNames="h-8 w-8 border-3 border-primary animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+      </div>
     );
   }
   return (

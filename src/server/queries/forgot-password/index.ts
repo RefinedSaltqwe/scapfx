@@ -1,44 +1,46 @@
 "use server";
 
 import { createSafeAction } from "@/lib/create-safe-actions";
-import { sendEmail } from "@/lib/sendEmail";
 import { db } from "@/server/db";
-import { Prisma } from "@prisma/client";
+import { Prisma, type User } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
 import { ForgotPasswordSchema } from "./schema";
 import { type InputType, type ReturnType } from "./types";
+import { sendEmail } from "@/lib/sendEmail";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { email } = data;
 
+  let user: User | null = null;
+  let emailSent;
+
   try {
-    // Check if the email exists and update the forgotPasswordId in a single query
-    const user = await db.user.update({
+    const emailExist = await db.user.findUnique({
       where: { email },
-      data: { forgotPasswordId: randomUUID() },
-      select: { name: true, email: true, forgotPasswordId: true },
     });
 
-    if (!user) {
+    if (!emailExist) {
       throw new Error("Email does not exist");
     }
 
-    // Send the email
-    const emailSent = await sendEmail(
-      "forgot_password",
-      email,
-      user.name ?? "Guest",
-      undefined,
-      user.forgotPasswordId,
-    );
+    const uuid = randomUUID();
 
-    // Revalidate the page
-    revalidatePath(`/forgot-password`);
+    user = await db.user.update({
+      where: { email },
+      data: { forgotPasswordId: uuid },
+    });
 
-    return { data: { data: user, emailSent, error: undefined } };
+    if (user) {
+      emailSent = await sendEmail(
+        "forgot_password",
+        email,
+        user?.name ?? "Guest",
+        undefined,
+        user.forgotPasswordId,
+      );
+    }
   } catch (error) {
-    // Specific error handling
     if (
       error instanceof Prisma.PrismaClientInitializationError ||
       error instanceof Prisma.PrismaClientKnownRequestError
@@ -49,12 +51,15 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     return {
       data: {
         data: null,
-        emailSent: false,
+        emailSent: emailSent,
         error:
           "We couldn't find an account associated with this email address.",
       },
     };
   }
+
+  revalidatePath(`/forgot-password`);
+  return { data: { data: user, emailSent, error: undefined } };
 };
 
 export const forgotPassword = createSafeAction(ForgotPasswordSchema, handler);

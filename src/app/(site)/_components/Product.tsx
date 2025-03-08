@@ -107,10 +107,14 @@ const Product: React.FC<ProductProps> = ({
           className="mt-8 h-12 max-w-2xl"
           disabled={isPresetExists || isPresetOwned}
           onClick={() => {
-            // trackEvent("AddToCart", {
-            //   value: currentPreset.price,
-            //   currency: siteConfig.currency,
-            // });
+            // Handle the promise rejection gracefully
+            trackEvent("AddToCart", {
+              value: currentPreset.price,
+              currency: siteConfig.currency,
+            }).catch((error) =>
+              console.error("Error tracking AddToCart event:", error),
+            );
+
             addPreset(currentPreset);
             onOpen();
           }}

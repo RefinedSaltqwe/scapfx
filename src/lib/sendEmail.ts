@@ -2,14 +2,18 @@ import { env } from "@/env";
 
 export const sendEmail = async (
   what: string,
-  name: string,
   email: string,
+  name: string,
   session_id?: string,
+  forgot_password_id?: string | null,
 ) => {
   let emailBody;
   switch (what) {
     case "checkout_success":
-      emailBody = JSON.stringify({ email, name, session_id });
+      emailBody = JSON.stringify({ what, email, name, id: session_id });
+      break;
+    case "forgot_password":
+      emailBody = JSON.stringify({ what, email, name, id: forgot_password_id });
       break;
   }
   try {

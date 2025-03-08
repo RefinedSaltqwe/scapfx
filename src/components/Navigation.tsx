@@ -27,6 +27,7 @@ const Navigation: React.FC = () => {
 
   const isPagesPath =
     pathname.includes("checkout_success") ||
+    pathname.includes("forgot-password") ||
     pathname.includes("terms-and-condition") ||
     pathname.includes("about") ||
     pathname.includes("login") ||
@@ -100,10 +101,10 @@ const Navigation: React.FC = () => {
                         className="hidden sm:block"
                       />
                       <Image
-                        src="/assets/images/logo-monogram-white.png"
+                        src="/assets/images/logo-white-short.png"
                         alt="ScapCreative White Monogram Logo"
-                        width={23.2}
-                        height={23.2}
+                        width={85}
+                        height={22.95}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="block sm:hidden"
                       />
@@ -119,10 +120,10 @@ const Navigation: React.FC = () => {
                         className="hidden sm:block"
                       />
                       <Image
-                        src="/assets/images/logo-monogram-black.png"
-                        alt="ScapCreative White Monogram Logo"
-                        width={23.2}
-                        height={23.2}
+                        src="/assets/images/logo-black-short.png"
+                        alt="ScapCreative White Short Logo"
+                        width={85}
+                        height={22.95}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="block sm:hidden"
                       />
@@ -138,10 +139,10 @@ const Navigation: React.FC = () => {
                         className="hidden sm:block"
                       />
                       <Image
-                        src="/assets/images/logo-monogram-white.png"
-                        alt="ScapCreative White Monogram Logo"
-                        width={23.2}
-                        height={23.2}
+                        src="/assets/images/logo-white-short.png"
+                        alt="ScapCreative White Short Logo"
+                        width={85}
+                        height={22.95}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="block sm:hidden"
                       />

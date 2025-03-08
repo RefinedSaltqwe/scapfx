@@ -81,9 +81,10 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
       emailSent = await sendEmail(
         "checkout_success",
-        existingUser?.name ?? "Guest",
         userEmail,
+        existingUser?.name ?? "Guest",
         stripeSessionId,
+        undefined,
       );
     }
 

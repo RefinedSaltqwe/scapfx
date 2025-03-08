@@ -5,6 +5,7 @@ export type User = {
   password: string;
   emailVerified?: Date;
   image?: string;
+  forgotPasswordId?: string;
   accounts: Account[];
   sessions: Session[];
   posts: Post[];

@@ -15,12 +15,13 @@ export const defaultPreset = {
 };
 
 export const defaultUser = {
-  id: "",
-  email: "",
-  password: "",
-  name: "",
-  emailVerified: undefined,
-  image: "",
+  id: "empty",
+  email: "empty",
+  password: "empty",
+  name: "empty",
+  emailVerified: null,
+  image: "empty",
+  forgotPasswordId: "empty",
   accounts: [],
   sessions: [],
   posts: [],

@@ -18,6 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { usePresets } from "@/hooks/stores/usePresets";
 
 const Loader = lazy(() => import("@/components/Loader"));
 
@@ -32,6 +33,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isClient, setIsClient] = useState(false); // Track if it's client-side rendering
+  const allPresets = usePresets((state) => state.presets);
 
   const form = useForm<z.infer<typeof FetchUserSchema>>({
     resolver: zodResolver(FetchUserSchema),
@@ -68,7 +70,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
   useEffect(() => {
     if (isClient && session?.user) {
-      router.push(`/account/${session.user.id}`);
+      router.push(`/shop/${allPresets[0]?.name}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, isClient]);

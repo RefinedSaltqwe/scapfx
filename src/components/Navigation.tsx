@@ -18,12 +18,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { usePresets } from "@/hooks/stores/usePresets";
 
 const Navigation: React.FC = () => {
   const { data: session, status } = useSession();
   const pathname = usePathname();
   const router = useRouter();
   const removeLoggedUser = useLoggedUser((state) => state.removeUser);
+  const allPresets = usePresets((state) => state.presets);
 
   const isPagesPath =
     pathname.includes("checkout_success") ||
@@ -86,7 +88,7 @@ const Navigation: React.FC = () => {
               {/* Logo */}
               <div className="flex flex-1">
                 <Link
-                  href={`/shop/aether`}
+                  href={`/shop/${allPresets[0]?.name}`}
                   className="text flex h-full items-center justify-center gap-1 text-center"
                 >
                   <span className="sr-only">ScapCreative</span>

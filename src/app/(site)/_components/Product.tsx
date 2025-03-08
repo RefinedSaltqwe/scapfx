@@ -8,6 +8,8 @@ import { type Preset } from "@/types";
 import React, { useMemo } from "react";
 import Plan from "./Plan";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
+import { trackEvent } from "@/lib/fbpixels";
+import { siteConfig } from "config/site";
 
 type ProductProps = {
   currentPreset: Preset;
@@ -105,6 +107,10 @@ const Product: React.FC<ProductProps> = ({
           className="mt-8 h-12 max-w-2xl"
           disabled={isPresetExists || isPresetOwned}
           onClick={() => {
+            trackEvent("AddToCart", {
+              value: currentPreset.price,
+              currency: siteConfig.currency,
+            });
             addPreset(currentPreset);
             onOpen();
           }}

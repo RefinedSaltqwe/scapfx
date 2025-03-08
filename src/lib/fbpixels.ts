@@ -2,7 +2,7 @@ import ReactPixel from "react-facebook-pixel";
 
 const options = {
   autoConfig: true,
-  debug: false,
+  debug: true,
 };
 
 export const initFacebookPixel = (pixelId: string) => {

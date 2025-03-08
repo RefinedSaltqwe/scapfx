@@ -18,6 +18,7 @@ import Navigation from "../components/Navigation";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import { getPresets } from "@/server/queries/fetch-presets";
 import { HydrationBoundary } from "@tanstack/react-query";
+import { env } from "@/env";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -104,7 +105,7 @@ export default async function RootLayout({
                 s=b.getElementsByTagName(e)[0];
                 s.parentNode.insertBefore(t,s)
               }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '873200158209793');
+              fbq('init', '${env.FB_PIXEL_ID}');
               fbq('track', 'PageView');
             `,
           }}
@@ -116,7 +117,7 @@ export default async function RootLayout({
             <HydrationBoundary state={dehydrate(queryClient)}>
               <ModalProvider />
               <NextTopLoaderWrapper>
-                <DataProvider>
+                <DataProvider pixel_id={env.FB_PIXEL_ID}>
                   <Navigation />
                   {children}
                   <Footer />

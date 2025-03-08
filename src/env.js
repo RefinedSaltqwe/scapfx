@@ -25,6 +25,7 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string(),
     RESEND_API_KEY: z.string(),
     NEXTAUTH_URL: z.string(),
+    FB_PIXEL_ID: z.string(),
   },
 
   /**
@@ -60,6 +61,7 @@ export const env = createEnv({
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    FB_PIXEL_ID: process.env.FB_PIXEL_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

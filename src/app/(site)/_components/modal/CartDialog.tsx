@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { env } from "@/env";
 import { useCart } from "@/hooks/stores/useCart";
+import { trackEvent } from "@/lib/fbpixels";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -72,6 +73,7 @@ const CartDialog: React.FC = () => {
   const handleCheckout = async () => {
     if (cartItemsCount == 0) return;
     setLoading(true);
+    trackEvent("Purchase", { value: subTotal, currency: siteConfig.currency });
     const res = await fetch("/api/stripe/checkout_sessions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

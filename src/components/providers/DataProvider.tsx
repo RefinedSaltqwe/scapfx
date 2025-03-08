@@ -1,20 +1,24 @@
 "use client";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
 import { usePresets } from "@/hooks/stores/usePresets";
+import { initFacebookPixel, trackPageView } from "@/lib/fbpixels";
 import { fetchPrice } from "@/lib/fetchPrice";
 import { getPresets } from "@/server/queries/fetch-presets";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation"; // For App Directory
 import React, { useEffect } from "react";
 
 type DataProviderProps = {
   children: React.ReactNode;
+  pixel_id: string;
 };
 
-const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
+const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
   const { data: session } = useSession();
   const addLoggedUser = useLoggedUser((state) => state.addUser);
   const addAllPresets = usePresets((state) => state.addPreset);
+  const pathname = usePathname(); // Get the current path
 
   // Fetch presets using React Query
   const { data: allPresets } = useQuery({
@@ -22,6 +26,16 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     queryKey: ["all_presets"],
     staleTime: 300_000, // 5 minutes
   });
+
+  useEffect(() => {
+    if (!pixel_id) return; // Prevent running if no Pixel ID
+    initFacebookPixel(pixel_id);
+    trackPageView();
+  }, [pixel_id]); // Only runs once on mount
+
+  useEffect(() => {
+    trackPageView();
+  }, [pathname]); // Runs on route change
 
   useEffect(() => {
     if (!allPresets?.length) return;

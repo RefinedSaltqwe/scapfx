@@ -3,37 +3,32 @@ import { type NextRequest, NextResponse } from "next/server";
 export async function middleware(req: NextRequest) {
   const { pathname, origin, href } = req.nextUrl;
   const cookies = req.cookies;
-  const sessionToken = cookies.get("__Secure-authjs.session-token.0");
-  const sessionToken01 = cookies.get("authjs.session-token.0");
+  const sessionToken =
+    cookies.get("__Secure-authjs.session-token.0") ??
+    cookies.get("authjs.session-token.0");
 
-  console.log("session from middleware", !!sessionToken || !!sessionToken01);
-
-  // Redirect /shop and root to /shop/zenith
-  if (pathname === "/shop" || pathname === "/") {
+  // Redirect /shop and root to /shop/aether
+  if (pathname === "/" || pathname === "/shop") {
     return NextResponse.redirect(`${origin}/shop/aether`);
   }
 
-  // If user is not logged in and tries to access account. Redirect to login page
+  // Handle /account routes: check login status and redirect accordingly
   if (pathname.startsWith("/account/")) {
-    //? If user is not logged in
-    if (sessionToken || sessionToken01) {
-      return NextResponse.next();
-    } else {
-      console.log("Redirecting to login because token is null"); // Debugging
-      const loginUrl = new URL("/login", req.nextUrl.origin);
-      loginUrl.searchParams.set("callbackUrl", href);
-      return NextResponse.redirect(loginUrl);
+    if (sessionToken) {
+      return NextResponse.next(); // User is logged in, allow access
     }
+    // User is not logged in, redirect to login
+    console.log("Redirecting to login because token is null"); // Debugging
+    const loginUrl = new URL("/login", req.nextUrl.origin);
+    loginUrl.searchParams.set("callbackUrl", href);
+    return NextResponse.redirect(loginUrl);
   }
-  // If user is logged in and tries to access login. Redirect to store
-  if (pathname.startsWith("/login")) {
-    if (sessionToken || sessionToken01) {
-      const mainStore = new URL("/shop/aether", req.nextUrl.origin);
-      mainStore.searchParams.set("callbackUrl", href);
-      return NextResponse.redirect(mainStore);
-    } else {
-      return NextResponse.next();
-    }
+
+  // Handle /login: if user is logged in, redirect to store page
+  if (pathname.startsWith("/login") && sessionToken) {
+    const mainStore = new URL("/shop/aether", req.nextUrl.origin);
+    mainStore.searchParams.set("callbackUrl", href);
+    return NextResponse.redirect(mainStore);
   }
 
   return NextResponse.next();

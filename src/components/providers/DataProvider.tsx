@@ -34,8 +34,10 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
   }, [pixel_id]); // Only runs once on mount
 
   useEffect(() => {
-    trackPageView();
-  }, [pathname]); // Runs on route change
+    if (typeof window !== "undefined") {
+      trackPageView();
+    }
+  }, [pathname]);
 
   useEffect(() => {
     if (!allPresets?.length) return;

@@ -107,10 +107,10 @@ const Product: React.FC<ProductProps> = ({
           className="mt-8 h-12 max-w-2xl"
           disabled={isPresetExists || isPresetOwned}
           onClick={() => {
-            trackEvent("AddToCart", {
-              value: currentPreset.price,
-              currency: siteConfig.currency,
-            });
+            // trackEvent("AddToCart", {
+            //   value: currentPreset.price,
+            //   currency: siteConfig.currency,
+            // });
             addPreset(currentPreset);
             onOpen();
           }}

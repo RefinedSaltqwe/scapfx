@@ -73,7 +73,7 @@ const CartDialog: React.FC = () => {
   const handleCheckout = async () => {
     if (cartItemsCount == 0) return;
     setLoading(true);
-    trackEvent("Purchase", { value: subTotal, currency: siteConfig.currency });
+    // trackEvent("Purchase", { value: subTotal, currency: siteConfig.currency });
     const res = await fetch("/api/stripe/checkout_sessions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

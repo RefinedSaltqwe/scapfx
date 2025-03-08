@@ -15,18 +15,17 @@ import { UpdatePasswordSchema } from "@/server/queries/update-password/schema";
 import { Input } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "nextjs-toploader/app";
-import React, { lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
+import { useRouter } from "nextjs-toploader/app";
+import { useSearchParams } from "next/navigation";
 
 const Loader = lazy(() => import("@/components/Loader"));
 
-const ChangePasswordPage: React.FC = () => {
+const ChangePasswordForm: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const email = searchParams.get("email");
   const fpassId = searchParams.get("FPassId");
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +33,6 @@ const ChangePasswordPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    // Redirect to /login if email or fpassId is null
     if (!email || !fpassId) {
       router.push("/login");
     }
@@ -51,10 +49,10 @@ const ChangePasswordPage: React.FC = () => {
       onSuccess: (data) => {
         if (data.error) {
           setError(data.error);
-          return;
+        } else {
+          setPassChanged(true);
+          setError(null);
         }
-        setPassChanged(true);
-        setError(null);
       },
       onError: (err) => {
         console.error(err);
@@ -183,6 +181,20 @@ const ChangePasswordPage: React.FC = () => {
         </Form>
       </div>
     </div>
+  );
+};
+
+const ChangePasswordPage: React.FC = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-80 items-center justify-center">
+          <Loader classNames="h-8 w-8 border-3 border-primary animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+        </div>
+      }
+    >
+      <ChangePasswordForm />
+    </Suspense>
   );
 };
 

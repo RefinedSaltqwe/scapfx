@@ -259,7 +259,13 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
 const SuccessStripePage: React.FC<SuccessStripePageContentProps> = ({
   sessionId,
 }) => (
-  <Suspense fallback={<Loader />}>
+  <Suspense
+    fallback={
+      <div className="flex h-80 items-center justify-center">
+        <Loader classNames="h-8 w-8 border-3 border-primary animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+      </div>
+    }
+  >
     <SuccessStripePageContent sessionId={sessionId} />
   </Suspense>
 );

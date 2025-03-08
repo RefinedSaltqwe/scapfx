@@ -86,7 +86,7 @@ const TermsAndConditions: React.FC = () => {
         <h2 className="text-xl font-semibold">8. Contact Information</h2>
         <p>
           If you have any questions regarding these Terms, please contact us at
-          [Your Email Address].
+          scapcreative@gmail.com.
         </p>
       </section>
     </div>

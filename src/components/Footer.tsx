@@ -5,7 +5,7 @@ const navigation = {
     { name: "About", href: "/about" },
     { name: "FAQs", href: "#" },
     { name: "Contact", href: "#" },
-    { name: "Terms and Condition", href: "/terms-and-conditions" },
+    { name: "Terms and Conditions", href: "/terms-and-conditions" },
   ],
   social: [
     {

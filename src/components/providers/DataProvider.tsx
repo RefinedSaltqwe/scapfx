@@ -27,6 +27,8 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
     staleTime: 300_000, // 5 minutes
   });
 
+  // Facebook Pixel
+
   useEffect(() => {
     if (!pixel_id) return; // Prevent running if no Pixel ID
 
@@ -39,6 +41,8 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
       void trackPageView();
     }
   }, [pathname]);
+
+  // Fetch Presets and prices from stripe
 
   useEffect(() => {
     if (!allPresets?.length) return;

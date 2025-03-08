@@ -12,7 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { env } from "@/env";
 import { useCart } from "@/hooks/stores/useCart";
-import { trackEvent } from "@/lib/fbpixels";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -75,10 +74,10 @@ const CartDialog: React.FC = () => {
     setLoading(true);
 
     // Handle trackEvent promise with .catch() if you don't want to await it
-    trackEvent("Purchase", {
-      value: subTotal,
-      currency: siteConfig.currency,
-    }).catch((error) => console.error("Error tracking purchase event:", error));
+    // trackEvent("Purchase", {
+    //   value: subTotal,
+    //   currency: siteConfig.currency,
+    // }).catch((error) => console.error("Error tracking purchase event:", error));
 
     const res = await fetch("/api/stripe/checkout_sessions", {
       method: "POST",

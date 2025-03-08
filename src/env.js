@@ -26,6 +26,7 @@ export const env = createEnv({
     RESEND_API_KEY: z.string(),
     NEXTAUTH_URL: z.string(),
     FB_PIXEL_ID: z.string(),
+    FB_CONVERSIONS_API: z.string(),
   },
 
   /**
@@ -62,6 +63,7 @@ export const env = createEnv({
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     FB_PIXEL_ID: process.env.FB_PIXEL_ID,
+    FB_CONVERSIONS_API: process.env.FB_CONVERSIONS_API,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

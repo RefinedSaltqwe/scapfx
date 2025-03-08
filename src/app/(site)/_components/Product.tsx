@@ -4,12 +4,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { supportedSoftwares } from "@/data";
 import { useCart } from "@/hooks/stores/useCart";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
 import { type Preset } from "@/types";
 import React, { useMemo } from "react";
 import Plan from "./Plan";
-import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
-import { trackEvent } from "@/lib/fbpixels";
-import { siteConfig } from "config/site";
 
 type ProductProps = {
   currentPreset: Preset;
@@ -76,7 +74,7 @@ const Product: React.FC<ProductProps> = ({
           <AvatarFallback>SC</AvatarFallback>
         </Avatar>
         <div className="mt-8 flex max-w-2xl flex-col justify-center gap-4 sm:mt-0">
-          <span className="text-primary-foreground text-sm">{labelNumber}</span>
+          <span className="text-muted/85 text-sm">{labelNumber}</span>
           <span
             className="text-muted-foreground text-5xl font-bold uppercase"
             style={textColorStyle}
@@ -108,12 +106,12 @@ const Product: React.FC<ProductProps> = ({
           disabled={isPresetExists || isPresetOwned}
           onClick={() => {
             // Handle the promise rejection gracefully
-            trackEvent("AddToCart", {
-              value: currentPreset.price,
-              currency: siteConfig.currency,
-            }).catch((error) =>
-              console.error("Error tracking AddToCart event:", error),
-            );
+            // trackEvent("AddToCart", {
+            //   value: currentPreset.price,
+            //   currency: siteConfig.currency,
+            // }).catch((error) =>
+            //   console.error("Error tracking AddToCart event:", error),
+            // );
 
             addPreset(currentPreset);
             onOpen();

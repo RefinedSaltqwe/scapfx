@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { ShoppingBasket, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import React, { useEffect, useState } from "react";
@@ -85,25 +86,67 @@ const Navigation: React.FC = () => {
               <div className="flex flex-1">
                 <Link
                   href={`/shop/aether`}
-                  className="text flex h-full items-center gap-1"
+                  className="text flex h-full items-center justify-center gap-1 text-center"
                 >
-                  <span className="sr-only">scap.</span>
-                  {/* <Image
-                    src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                    alt="subaccount logo"
-                    width={32}
-                    height={32}
-                    className="rounded-md"
-                  /> */}
-                  <span
-                    className={cn(
-                      "text-primary-foreground text-2xl font-medium",
-                      isPagesPath && "text-primary",
-                      !isAtTop && "text-primary-foreground!",
-                    )}
-                  >
-                    scap.
-                  </span>
+                  <span className="sr-only">ScapCreative</span>
+                  {!isAtTop ? (
+                    <>
+                      <Image
+                        src="/assets/images/logo-white.png"
+                        alt="ScapCreative White Logo"
+                        width={175}
+                        height={23.2}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="hidden sm:block"
+                      />
+                      <Image
+                        src="/assets/images/logo-monogram-white.png"
+                        alt="ScapCreative White Monogram Logo"
+                        width={23.2}
+                        height={23.2}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="block sm:hidden"
+                      />
+                    </>
+                  ) : isPagesPath ? (
+                    <>
+                      <Image
+                        src="/assets/images/logo-black.png"
+                        alt="ScapCreative White Logo"
+                        width={175}
+                        height={23.2}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="hidden sm:block"
+                      />
+                      <Image
+                        src="/assets/images/logo-monogram-black.png"
+                        alt="ScapCreative White Monogram Logo"
+                        width={23.2}
+                        height={23.2}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="block sm:hidden"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Image
+                        src="/assets/images/logo-white.png"
+                        alt="ScapCreative White Logo"
+                        width={175}
+                        height={23.2}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="hidden sm:block"
+                      />
+                      <Image
+                        src="/assets/images/logo-monogram-white.png"
+                        alt="ScapCreative White Monogram Logo"
+                        width={23.2}
+                        height={23.2}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="block sm:hidden"
+                      />
+                    </>
+                  )}
                 </Link>
               </div>
 

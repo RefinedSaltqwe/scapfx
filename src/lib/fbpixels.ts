@@ -1,18 +1,39 @@
-import ReactPixel from "react-facebook-pixel";
+"use client";
 
 const options = {
   autoConfig: true,
   debug: true,
 };
 
-export const initFacebookPixel = (pixelId: string) => {
-  ReactPixel.init(pixelId, undefined, options); // Pass undefined instead of {}
+export const initFacebookPixel = async (pixelId: string) => {
+  if (typeof window === "undefined") return;
+
+  try {
+    const ReactPixel = (await import("react-facebook-pixel")).default;
+    ReactPixel.init(pixelId, undefined, options);
+  } catch (error) {
+    console.error("Error initializing Facebook Pixel:", error);
+  }
 };
 
-export const trackPageView = () => {
-  ReactPixel.pageView();
+export const trackPageView = async () => {
+  if (typeof window === "undefined") return;
+
+  try {
+    const ReactPixel = (await import("react-facebook-pixel")).default;
+    ReactPixel.pageView();
+  } catch (error) {
+    console.error("Error tracking page view:", error);
+  }
 };
 
-export const trackEvent = (event: string, data = {}) => {
-  ReactPixel.track(event, data);
+export const trackEvent = async (event: string, data = {}) => {
+  if (typeof window === "undefined") return;
+
+  try {
+    const ReactPixel = (await import("react-facebook-pixel")).default;
+    ReactPixel.track(event, data);
+  } catch (error) {
+    console.error(`Error tracking event "${event}":`, error);
+  }
 };

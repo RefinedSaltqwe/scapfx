@@ -1,7 +1,7 @@
 //NEW
 import { defaultUser } from "@/data/default";
-import { type CurrentUserPrisma } from "@/hooks/stores/useLoggedUser";
 import { db } from "@/server/db";
+import { type CurrentUserPrisma } from "@/types/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { compare } from "bcryptjs"; // For password comparison
 import { type DefaultSession, type NextAuthConfig } from "next-auth";

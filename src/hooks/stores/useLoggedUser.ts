@@ -1,15 +1,5 @@
-import { type Preset, type PresetUser, type User } from "@prisma/client";
+import { type CurrentUserPrisma } from "@/types/prisma";
 import { create } from "zustand";
-
-export type PresentUserWithPreset = PresetUser & {
-  preset: Preset;
-};
-
-export type CurrentUserPrisma =
-  | (User & {
-      ownedPresets: PresentUserWithPreset[];
-    })
-  | null;
 
 type UserStore = {
   user: CurrentUserPrisma;

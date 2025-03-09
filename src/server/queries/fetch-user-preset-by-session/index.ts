@@ -1,5 +1,5 @@
 "use server";
-import { type CurrentUserPrisma } from "@/hooks/stores/useLoggedUser";
+import { type CurrentUserPrisma } from "@/types/prisma";
 import { db } from "@/server/db";
 import { cache } from "react";
 

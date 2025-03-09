@@ -1,6 +1,6 @@
 "use server";
-import { type CurrentUserPrisma } from "@/hooks/stores/useLoggedUser";
 import { db } from "@/server/db";
+import { type CurrentUserPrisma } from "@/types/prisma";
 import { cache } from "react";
 
 export const getUser = cache(

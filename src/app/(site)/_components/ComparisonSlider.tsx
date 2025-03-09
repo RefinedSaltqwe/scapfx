@@ -15,6 +15,8 @@ const ComparisonSlider: React.FC<ComparisonSliderProp> = ({
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const startX = useRef(0);
+  const startY = useRef(0);
 
   const updateSliderPosition = useCallback((clientX: number) => {
     if (!sliderRef.current) return;
@@ -32,10 +34,27 @@ const ComparisonSlider: React.FC<ComparisonSliderProp> = ({
     [isDragging, updateSliderPosition],
   );
 
+  const handleTouchStart = useCallback(
+    (event: React.TouchEvent<HTMLDivElement>) => {
+      setIsDragging(true);
+      startX.current = event.touches[0]!.clientX;
+      startY.current = event.touches[0]!.clientY;
+    },
+    [],
+  );
+
   const handleTouchMove = useCallback(
     (event: TouchEvent) => {
       if (!isDragging) return;
-      updateSliderPosition(event.touches[0]!.clientX);
+
+      const deltaX = Math.abs(event.touches[0]!.clientX - startX.current);
+      const deltaY = Math.abs(event.touches[0]!.clientY - startY.current);
+
+      if (deltaX > deltaY) {
+        // Prevent scrolling only if movement is horizontal
+        if (event.cancelable) event.preventDefault();
+        updateSliderPosition(event.touches[0]!.clientX);
+      }
     },
     [isDragging, updateSliderPosition],
   );
@@ -63,7 +82,7 @@ const ComparisonSlider: React.FC<ComparisonSliderProp> = ({
         ref={sliderRef}
         className="relative mx-auto aspect-3/2 w-full max-w-[1500px] overflow-hidden rounded-md select-none"
         onMouseDown={() => setIsDragging(true)}
-        onTouchStart={() => setIsDragging(true)}
+        onTouchStart={handleTouchStart}
       >
         {/* After Image */}
         <OptimizedImage src={afterImage} alt="Before" />

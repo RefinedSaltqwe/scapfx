@@ -1,12 +1,12 @@
-import { type Preset } from "@/types";
+import { type PresetAndChildren } from "@/types/prisma";
 import { create } from "zustand";
 
 type Cart = {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  presets: Preset[];
-  addPreset: (data: Preset) => void;
+  presets: PresetAndChildren[];
+  addPreset: (data: PresetAndChildren) => void;
   removePreset: (id: string) => void;
 };
 

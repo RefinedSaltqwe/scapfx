@@ -42,14 +42,6 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
     );
   }
 
-  // if () {
-  //   return (
-  //     <div className="py-10 text-center">
-  //       <p className="text-muted-foreground text-lg">Preset not found.</p>
-  //     </div>
-  //   );
-  // }
-
   return (
     <>
       <Hero currentPreset={currentPreset} />

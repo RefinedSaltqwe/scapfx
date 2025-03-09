@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { type Preset } from "@/types";
+import { type PresetAndChildren } from "@/types/prisma";
 import { CheckIcon } from "lucide-react";
 import React from "react";
 
@@ -26,7 +26,7 @@ const whatsIncluded = [
 ];
 
 type DetailsProps = {
-  currentPreset?: Preset;
+  currentPreset?: PresetAndChildren;
 };
 
 const Details: React.FC<DetailsProps> = () => {

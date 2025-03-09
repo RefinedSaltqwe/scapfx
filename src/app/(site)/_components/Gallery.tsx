@@ -1,11 +1,11 @@
 "use client";
-import { type Preset } from "@/types";
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import GalleryModal from "./modal/Gallery";
+import { type PresetAndChildren } from "@/types/prisma";
 
 type GalleryProps = {
-  currentPreset: Preset;
+  currentPreset: PresetAndChildren;
 };
 
 const Gallery: React.FC<GalleryProps> = ({ currentPreset }) => {

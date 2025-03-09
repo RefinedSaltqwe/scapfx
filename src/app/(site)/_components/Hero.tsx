@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import { type Preset } from "@/types";
+import { type PresetAndChildren } from "@/types/prisma";
 
 type HeroProps = {
-  currentPreset: Preset;
+  currentPreset: PresetAndChildren;
 };
 
 const Hero: React.FC<HeroProps> = ({ currentPreset }) => {

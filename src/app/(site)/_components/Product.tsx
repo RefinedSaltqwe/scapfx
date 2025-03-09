@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 import { supportedSoftwares } from "@/data";
 import { useCart } from "@/hooks/stores/useCart";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
-import { type Preset } from "@/types";
 import React, { useMemo } from "react";
 import Plan from "./Plan";
+import { type PresetAndChildren } from "@/types/prisma";
 
 type ProductProps = {
-  currentPreset: Preset;
+  currentPreset: PresetAndChildren;
   index: number;
-  allPresets: Preset[];
+  allPresets: PresetAndChildren[];
 };
 
 const Product: React.FC<ProductProps> = ({

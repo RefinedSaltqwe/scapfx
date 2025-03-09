@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/stores/useCart";
-import { type Preset } from "@/types";
+import { type PresetAndChildren } from "@/types/prisma";
 import React, { useMemo } from "react";
 
 type CallToActionProps = {
-  currentPreset: Preset;
+  currentPreset: PresetAndChildren;
 };
 
 const CallToAction: React.FC<CallToActionProps> = ({ currentPreset }) => {

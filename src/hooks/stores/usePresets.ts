@@ -1,10 +1,10 @@
 import { defaultPreset } from "@/data/default";
-import { type Preset } from "@/types";
+import { type PresetAndChildren } from "@/types/prisma";
 import { create } from "zustand";
 
 type UserStore = {
-  presets: Preset[];
-  addPreset: (data: Preset[]) => void;
+  presets: PresetAndChildren[];
+  addPreset: (data: PresetAndChildren[]) => void;
   removeUser: () => void;
 };
 

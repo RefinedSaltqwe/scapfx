@@ -2,39 +2,20 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { env } from "@/env";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
+import { type Preset } from "@prisma/client";
 import { siteConfig } from "config/site";
 import { CheckCircleIcon } from "lucide-react";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "nextjs-toploader/app";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import DownloadButton from "./DownloadButton";
-import { type Preset } from "@prisma/client";
 
 type AccountPageContentsProps = {
   x?: string;
 };
 
 const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
-  const { data: session } = useSession();
-  const router = useRouter(); // Initialize the router
-  const [isClient, setIsClient] = useState(false); // Track if it's client-side
   const user = useLoggedUser((state) => state.user);
-
-  console.log(user);
-
-  useEffect(() => {
-    setIsClient(true); // Set the flag once it's client-side
-  }, []);
-
-  // Redirect to login page if session is null and only after client-side render
-  useEffect(() => {
-    if (isClient && !session) {
-      router.push("/login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session, isClient]);
 
   const orders = useMemo(() => {
     if (!user?.ownedPresets) return [];

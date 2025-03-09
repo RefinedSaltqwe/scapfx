@@ -13,6 +13,7 @@ import { redirect } from "next/navigation";
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
 import DownloadButton from "./DownloadButton";
+import { useSession } from "next-auth/react";
 const Loader = lazy(() => import("@/components/Loader"));
 
 type SuccessStripePageContentProps = {
@@ -23,6 +24,8 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
   sessionId,
 }) => {
   if (!sessionId) redirect("/shop");
+
+  const { data: session } = useSession();
 
   const { data: userPresets } = useQuery({
     queryFn: () => getUserPresets(sessionId),
@@ -116,7 +119,8 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
   }, [dbData]);
 
   useEffect(() => {
-    if (userByStripeSessionId) {
+    // Update useLoggedUser when user is logged in only
+    if (userByStripeSessionId && session) {
       const presetIds = userByStripeSessionId.ownedPresets.map(
         (p) => p.presetId,
       );

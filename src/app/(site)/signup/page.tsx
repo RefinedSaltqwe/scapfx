@@ -12,11 +12,11 @@ const SignUpPage: React.FC = () => {
         </h2>
         <Alert variant="default">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Important</AlertTitle>
+          <AlertTitle>Important!</AlertTitle>
           <AlertDescription>
-            If you have bought from our website before, make sure to use the
-            same email you used for your purchase to access your purchase
-            history.
+            If you previously purchased from our website without logging in, use
+            the same email you entered at Stripe checkout to access your
+            purchase history.
           </AlertDescription>
         </Alert>
         <SignUpForm />

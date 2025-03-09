@@ -2,10 +2,13 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
   const { pathname, origin, href } = req.nextUrl;
-  const cookies = req.cookies;
-  const sessionToken =
-    cookies.get("__Secure-authjs.session-token.0") ??
-    cookies.get("authjs.session-token.0");
+  const cookies = req.cookies.getAll();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const sessionToken = cookies.some((cookie: { name: string | string[] }) =>
+    cookie.name?.includes("session-token"),
+  );
+
+  console.log("TOKEN", sessionToken, cookies);
 
   // Redirect /shop and root to /shop/aether
   if (pathname === "/" || pathname === "/shop") {

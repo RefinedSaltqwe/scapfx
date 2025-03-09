@@ -12,7 +12,10 @@ export async function POST(req: Request) {
     const origin = headersList.get("origin") ?? "https://scapcreative.com"; // Ensure it's always a string
 
     // Store data (stripeProductIds) sent from the checkout in client-side
-    const { items } = (await req.json()) as { items: CartItemsStripe[] };
+    const { items, email } = (await req.json()) as {
+      email: string;
+      items: CartItemsStripe[];
+    };
 
     // Convert cart items to Stripe's required format
     const line_items = items.map((item) => ({
@@ -26,6 +29,7 @@ export async function POST(req: Request) {
       mode: "payment",
       success_url: `${origin}/shop/checkout_success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/?canceled=true`,
+      customer_email: email === "empty" ? undefined : email,
     });
 
     // Return the sessionId back to the client using NextResponse

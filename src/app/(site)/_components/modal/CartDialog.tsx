@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { env } from "@/env";
 import { useCart } from "@/hooks/stores/useCart";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -36,6 +37,8 @@ const CartDialog: React.FC = () => {
   const onClose = useCart((state) => state.onClose);
   const presets = useCart((state) => state.presets);
   const removePreset = useCart((state) => state.removePreset);
+
+  const user = useLoggedUser((state) => state.user);
 
   // Memoize subtotal calculations to avoid unnecessary recalculations
   const subTotal = useMemo(
@@ -82,7 +85,7 @@ const CartDialog: React.FC = () => {
     const res = await fetch("/api/stripe/checkout_sessions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: stripeProductIds }), // Send data to api
+      body: JSON.stringify({ items: stripeProductIds, email: user?.email }), // Send data to api
     });
 
     const data = (await res.json()) as { sessionId: string };

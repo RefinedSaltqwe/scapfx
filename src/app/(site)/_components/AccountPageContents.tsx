@@ -2,7 +2,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { env } from "@/env";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
-import { type Preset } from "@/types";
 import { siteConfig } from "config/site";
 import { CheckCircleIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -11,6 +10,7 @@ import Link from "next/link";
 import { useRouter } from "nextjs-toploader/app";
 import React, { useEffect, useMemo, useState } from "react";
 import DownloadButton from "./DownloadButton";
+import { type Preset } from "@prisma/client";
 
 type AccountPageContentsProps = {
   x?: string;
@@ -21,6 +21,8 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
   const router = useRouter(); // Initialize the router
   const [isClient, setIsClient] = useState(false); // Track if it's client-side
   const user = useLoggedUser((state) => state.user);
+
+  console.log(user);
 
   useEffect(() => {
     setIsClient(true); // Set the flag once it's client-side

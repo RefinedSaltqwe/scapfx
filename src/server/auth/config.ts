@@ -77,9 +77,17 @@ export const authConfig = {
                 preset: true,
               },
             },
-            accounts: true,
-            sessions: true,
-            posts: true,
+            accounts: {
+              include: {
+                user: true, // Ensure user is included inside accounts
+              },
+            },
+            sessions: {
+              include: {
+                user: true, // Ensure user is included inside sessions
+              },
+            },
+            posts: true, // No need for additional include here
           },
         });
 
@@ -104,7 +112,7 @@ export const authConfig = {
           name: user.name ?? "Client",
           email: user.email,
           ownedPresets: presetIds,
-          currentUser: { user } as CurrentUser,
+          currentUser: { user } as unknown as CurrentUser,
         };
       },
     }),

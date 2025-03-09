@@ -4,10 +4,11 @@ import { usePresets } from "@/hooks/stores/usePresets";
 import { initFacebookPixel, trackPageView } from "@/lib/fbpixels";
 import { fetchPrice } from "@/lib/fetchPrice";
 import { getPresets } from "@/server/queries/fetch-presets";
+import { getUser } from "@/server/queries/fetch-user";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation"; // For App Directory
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 type DataProviderProps = {
   children: React.ReactNode;
@@ -20,6 +21,15 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
   const addAllPresets = usePresets((state) => state.addPreset);
   const pathname = usePathname(); // Get the current path
 
+  const { data: user } = useQuery({
+    queryFn: () => getUser(session!.user.id),
+    queryKey: ["user_", session?.user.id],
+    enabled: !!session,
+  });
+
+  // Track if session has been initialized
+  const isSessionInitialized = useRef(false);
+
   // Fetch presets using React Query
   const { data: allPresets } = useQuery({
     queryFn: getPresets,
@@ -28,7 +38,6 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
   });
 
   // Facebook Pixel
-
   useEffect(() => {
     if (!pixel_id) return; // Prevent running if no Pixel ID
 
@@ -43,7 +52,6 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
   }, [pathname]);
 
   // Fetch Presets and prices from stripe
-
   useEffect(() => {
     if (!allPresets?.length) return;
 
@@ -68,10 +76,16 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
   }, [addAllPresets, allPresets]);
 
   useEffect(() => {
-    if (session?.user) {
-      addLoggedUser(session.user.currentUser.user, session.user.ownedPresets);
+    if (user && (!isSessionInitialized.current || user !== undefined)) {
+      const presetIds = user.ownedPresets.map((p) => p.presetId);
+
+      // Initialize user data
+      addLoggedUser(user, presetIds);
+
+      // Mark session as initialized to prevent trigger on page refresh
+      isSessionInitialized.current = true;
     }
-  }, [session, addLoggedUser]);
+  }, [user, addLoggedUser]);
 
   return <>{children}</>;
 };

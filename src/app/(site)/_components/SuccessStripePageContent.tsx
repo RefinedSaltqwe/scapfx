@@ -120,8 +120,10 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
       const presetIds = userByStripeSessionId.ownedPresets.map(
         (p) => p.presetId,
       );
+      console.log(userByStripeSessionId, presetIds);
       addUser(userByStripeSessionId, presetIds);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userByStripeSessionId, addUser]);
 
   return (

@@ -19,7 +19,7 @@ export const defaultUser = {
   email: "empty",
   password: "empty",
   name: "empty",
-  emailVerified: null,
+  emailVerified: undefined,
   image: "empty",
   forgotPasswordId: "empty",
   accounts: [],

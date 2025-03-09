@@ -21,7 +21,7 @@ export type Post = {
   name: string;
   createdAt: Date;
   updatedAt: Date;
-  createdBy: User; // Relation to User
+  createdBy?: User;
   createdById: string;
 };
 
@@ -38,8 +38,8 @@ export type Account = {
   scope?: string;
   id_token?: string;
   session_state?: string;
-  user: User; // Relation to User
   refresh_token_expires_in?: number;
+  user?: Partial<User>;
 };
 
 export type Session = {
@@ -47,13 +47,7 @@ export type Session = {
   sessionToken: string;
   userId: string;
   expires: Date;
-  user: User; // Relation to User
-};
-
-export type VerificationToken = {
-  identifier: string;
-  token: string;
-  expires: Date;
+  user?: Partial<User>;
 };
 
 export type PresetUser = {
@@ -63,9 +57,16 @@ export type PresetUser = {
   presetId: string;
   createdAt: Date;
   stripeSessionId: string;
-  user: User; // Relation to User
-  preset: Preset; // Relation to Preset
+  user?: Partial<User>;
+  preset: Preset;
 };
+
+export type VerificationToken = {
+  identifier: string;
+  token: string;
+  expires: Date;
+};
+
 export type Preset = {
   id: string;
   productId: string;

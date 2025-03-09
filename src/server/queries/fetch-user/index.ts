@@ -3,21 +3,11 @@ import { type CurrentUserPrisma } from "@/hooks/stores/useLoggedUser";
 import { db } from "@/server/db";
 import { cache } from "react";
 
-export const getUserByStripeSessionId = cache(
-  async (session_id: string): Promise<CurrentUserPrisma | null> => {
-    // Find the preset user by stripeSessionId
-    const presetUser = await db.presetUser.findFirst({
-      where: { stripeSessionId: session_id },
-    });
-
-    // If no presetUser is found, return null early
-    if (!presetUser) {
-      return null;
-    }
-
+export const getUser = cache(
+  async (id: string): Promise<CurrentUserPrisma | null> => {
     // Use the userEmail from presetUser to find the corresponding user
     const user = await db.user.findUnique({
-      where: { email: presetUser.userEmail },
+      where: { id },
       include: {
         ownedPresets: {
           include: {

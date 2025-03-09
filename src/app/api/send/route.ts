@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
   switch (items.what) {
     case "checkout_success":
-      emailSubject = "Scap Creative Purchase Download Link(s)";
+      emailSubject = "Purchase Download Link(s)";
       template = DownloadLinkEmailTemplate({
         name: items.name,
         session_id: items.id,

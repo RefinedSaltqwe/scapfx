@@ -245,10 +245,16 @@ const CartDialog: React.FC = () => {
                               </AlertDialogCancel>
                             </AlertDialogTitle>
                             <AlertDialogDescription>
-                              {`If you've made a purchase with us before, please log in to view your purchase history and avoid duplicate orders. Please note that we do not offer refunds.`}
+                              {`If you have purchased from us before, please log in to check your purchase history and `}
+                              <strong>avoid duplicate orders</strong>
+                              {`. Duplicate purchases `}
+                              <strong>will not be refunded</strong>
+                              {`.`}
                               <br />
                               <br />
-                              {`If you wish to proceed, you will be securely redirected to Stripe to complete your payment.`}
+                              {`If you wish to proceed, you will be securely redirected to `}
+                              <strong>Stripe</strong>
+                              {` to complete your payment.`}
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter className="flex">

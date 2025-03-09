@@ -120,7 +120,7 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
 
   useEffect(() => {
     // Update useLoggedUser when user is logged in only
-    if (userByStripeSessionId && session) {
+    if (userByStripeSessionId && session?.user) {
       const presetIds = userByStripeSessionId.ownedPresets.map(
         (p) => p.presetId,
       );

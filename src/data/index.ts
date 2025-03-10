@@ -214,7 +214,7 @@ export const whatsIncluded = [
   {
     name: "Tools",
     description:
-      "My Preset Tools were designed to save you time and elevate your images. With features like the Mist Effect, Denoise, Level, and more, these tools add a dynamic, three-dimensional depth to your photos, enhancing their overall texture and visual interest.",
+      "My Preset Tools were designed to save you time and elevate your images. With features like the Mist Effect, Denoise, Linear Gradient Highlight and Shadow, and more, these tools add a dynamic, three-dimensional depth to your photos, enhancing their overall texture and visual interest.",
   },
   {
     name: "Shooting Tips",
@@ -224,6 +224,6 @@ export const whatsIncluded = [
   {
     name: "Preset Tutorial",
     description:
-      "A quick guide to help you get the most out of your preset adjustments and achieve the exact look we're going for.",
+      "A quick guide to help you get the most out of your preset adjustments and achieve the exact look we're going for, along with easy-to-follow instructions on how to install your preset.",
   },
 ];

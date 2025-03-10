@@ -201,3 +201,29 @@ export const supportedSoftwares = [
   "Adobe® Camera Raw 10.3 or later",
   "Adobe® Lightroom® CC Desktop 1.4 or later and Mobile (Non-Classic)",
 ];
+
+export const whatsIncluded = [
+  {
+    name: "Presets",
+    description: "Includes 3 Desktop (.xmp) files and 3 Mobile (.dng) files.",
+  },
+  {
+    name: "RAW Files",
+    description: "Includes 20 of my RAW files for you to edit on.",
+  },
+  {
+    name: "Tools",
+    description:
+      "My Preset Tools were designed to save you time and elevate your images. With features like the Mist Effect, Denoise, Level, and more, these tools add a dynamic, three-dimensional depth to your photos, enhancing their overall texture and visual interest.",
+  },
+  {
+    name: "Shooting Tips",
+    description:
+      "To help you get the best results from my Lightroom presets, I'll share some of the methods I personally use when shooting my photos. In this guide, I'll walk you through my camera settings and tips on how to capture images that work perfectly with my presets in post-processing.",
+  },
+  {
+    name: "Preset Tutorial",
+    description:
+      "A quick guide to help you get the most out of your preset adjustments and achieve the exact look we're going for.",
+  },
+];

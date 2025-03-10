@@ -1,29 +1,8 @@
+import { whatsIncluded } from "@/data";
 import { cn } from "@/lib/utils";
 import { type PresetAndChildren } from "@/types/prisma";
 import { CheckIcon } from "lucide-react";
 import React from "react";
-
-const whatsIncluded = [
-  {
-    name: "10 Presets",
-    description: "5 Desktop(.xmp) and 5 Mobile(.dng) files",
-  },
-  {
-    name: "Preset Tools",
-    description:
-      "Preset Tools were built to save time and add that something extra to your images.",
-  },
-  { name: "RAW Files", description: "20 of my RAW files for you to edit on" },
-  {
-    name: "Video Tutorial",
-    description:
-      "Just a quick guide to help you get the most out of your preset adjustments and achieve the exact look we're going for.",
-  },
-  {
-    name: "Camera Settings",
-    description: "Tips on how to shoot. I'll show you the camera settings.",
-  },
-];
 
 type DetailsProps = {
   currentPreset?: PresetAndChildren;

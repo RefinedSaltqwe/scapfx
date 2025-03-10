@@ -20,24 +20,19 @@ export default function AboutMe() {
                 {`Hi, I'm Stephen Pelagio`}
               </h1>
               <p className="mt-6">
-                {`My journey into photography started back in high school when I
-                first got into Photoshop. Experimenting with editing opened up a
-                whole new world for me. When I started university as an IT
-                student, I got my first camera, and that’s when my love for
-                capturing moments truly began.`}
+                {`My journey into photography started back in high school when I first got into Photoshop. Experimenting with editing opened up a whole new world for me.`}
               </p>
               <p className="mt-6">
-                {`At first, I was just taking random shots, but everything changed
-                when I discovered Lightroom. I became obsessed with perfecting
-                the look and feel of my photos. Over time, I gravitated towards
-                street, portrait, lifestyle, landscape, and travel
-                photography—each style telling a unique story through my lens.`}
+                {`When I started university as an IT student, I got into photo manipulations, but I relied on online resources for my images, which was time-consuming since finding the right pictures with the right angles was a challenge. I got my first camera when I moved to Canada, and that's when my true passion for capturing moments began.`}
               </p>
               <p className="mt-6">
-                {`Now, I create and share premium Lightroom presets, helping
-                others achieve their desired aesthetics effortlessly.
-                Photography isn't just a hobby for me; it's my way of capturing
-                the beauty in everyday life.`}
+                {`At first, I was just taking photos as resources for my Photoshop manipulations, but everything changed when I discovered Lightroom. I became obsessed with it, but I didn't have a specific aesthetic for my images. I just edited whatever I thought worked for the photos.`}
+              </p>
+              <p className="mt-6">
+                {`Over time, I gravitated towards street, portrait, lifestyle and landscape photography—each style telling a unique story through my lens. It took me a couple of years to finally discover the aesthetic that I like.`}
+              </p>
+              <p className="mt-6">
+                {`Now, I create and share premium Lightroom presets, helping others achieve their desired aesthetics effortlessly. Photography isn't just a hobby for me; it's my way of capturing the beauty in everyday life.`}
               </p>
             </div>
           </div>

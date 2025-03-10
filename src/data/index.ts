@@ -205,7 +205,7 @@ export const supportedSoftwares = [
 export const whatsIncluded = [
   {
     name: "Presets",
-    description: "Includes 3 Desktop (.xmp) files and 3 Mobile (.dng) files.",
+    description: "Includes 4 Desktop (.xmp) files and 4 Mobile (.dng) files.",
   },
   {
     name: "RAW Files",

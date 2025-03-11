@@ -272,7 +272,7 @@ const CartDialog: React.FC = () => {
                         .
                       </label>
 
-                      <AlertDialogContent>
+                      <AlertDialogContent className="max-w-3xl!">
                         <AlertDialogHeader>
                           <AlertDialogTitle className="flex flex-row items-center gap-2">
                             <AlertDialogCancel className="ml-auto w-auto border-0 uppercase shadow-none hover:bg-transparent">

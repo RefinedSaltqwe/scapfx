@@ -22,17 +22,24 @@ export async function GET(req: Request) {
       );
     }
 
-    // Get the file from Supabase Storage (replace 'your_bucket' with your actual bucket name)
-    const { data } = supabase.storage
-      .from("downloadable-files")
-      .getPublicUrl(fileName); // or use `.createSignedUrl` if you want a temporary link
+    //use `.getPublicUrl` if you want a permanent public URL to a file stored in Supabase
+    // const { data } = supabase.storage
+    //   .from(env.SUPABASE_BUCKET_NAME)
+    //   .getPublicUrl(fileName);
 
-    if (!data) {
-      return NextResponse.json({ error: "File not found" }, { status: 404 });
+    // or use `.createSignedUrl` if you want a temporary link
+    const { data, error } = await supabase.storage
+      .from(env.SUPABASE_BUCKET_NAME)
+      .createSignedUrl(fileName, 60 * 60 * 24 * 30 * 6); // 60 seconds * 60 minutes * 24 hours * 30 days * 6 months
+
+    if (error) {
+      console.error("Error generating signed URL:", error);
+    } else {
+      console.log("Signed URL:", data.signedUrl);
     }
 
     // Return the public URL (or signed URL if needed)
-    return NextResponse.json({ url: data.publicUrl }, { status: 200 });
+    return NextResponse.json({ url: data?.signedUrl }, { status: 200 });
   } catch (error) {
     console.error("Error fetching file:", error);
     return NextResponse.json(

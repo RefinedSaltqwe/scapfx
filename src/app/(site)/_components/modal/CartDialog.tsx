@@ -1,4 +1,5 @@
 "use client";
+import TermsAndConditions from "@/components/TermsAndCondition";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -41,6 +42,7 @@ const CartDialog: React.FC = () => {
   const removePreset = useCart((state) => state.removePreset);
   const router = useRouter();
   const user = useLoggedUser((state) => state.user);
+  const [isChecked, setIsChecked] = useState(false);
 
   // Memoize subtotal calculations to avoid unnecessary recalculations
   const subTotal = useMemo(
@@ -221,11 +223,84 @@ const CartDialog: React.FC = () => {
                   <p className="text-muted-foreground mt-0.5 text-sm">
                     Shipping and taxes calculated at checkout.
                   </p>
-                  <div className="mt-6">
+                  <div className="mt-6 flex gap-3">
+                    <div className="flex h-6 shrink-0 items-center">
+                      <div className="group grid size-4 grid-cols-1">
+                        <input
+                          checked={isChecked}
+                          onChange={() => setIsChecked((prev) => !prev)}
+                          id="same-as-shipping"
+                          name="same-as-shipping"
+                          type="checkbox"
+                          className="checked:border-primary checked:bg-primary indeterminate:border-primary indeterminate:bg-primary focus-visible:outline-primary bg-primary-foreground border-primary disabled:border-primary disabled:bg-secondary disabled:checked:bg-secondary col-start-1 row-start-1 cursor-pointer appearance-none rounded border focus-visible:outline focus-visible:outline-offset-2 forced-colors:appearance-auto"
+                        />
+                        <svg
+                          fill="none"
+                          viewBox="0 0 14 14"
+                          className="stroke-primary-foreground pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center group-has-[:disabled]:stroke-gray-950/25"
+                        >
+                          <path
+                            d="M3 8L6 11L11 3.5"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="opacity-0 group-has-[:checked]:opacity-100"
+                          />
+                          <path
+                            d="M3 7H11"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="opacity-0 group-has-[:indeterminate]:opacity-100"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                    <AlertDialog>
+                      <label
+                        htmlFor="same-as-shippingx"
+                        className="text-primary text-sm/6 font-normal"
+                      >
+                        <span onClick={(e) => e.stopPropagation()}>
+                          By checking this box, you agree to our{" "}
+                        </span>
+                        <AlertDialogTrigger asChild>
+                          <span className="cursor-pointer font-medium hover:underline">
+                            Terms and Conditions
+                          </span>
+                        </AlertDialogTrigger>
+                        .
+                      </label>
+
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="flex flex-row items-center gap-2">
+                            <AlertDialogCancel className="ml-auto w-auto border-0 uppercase shadow-none hover:bg-transparent">
+                              <XIcon className="h-5 w-5" />
+                            </AlertDialogCancel>
+                          </AlertDialogTitle>
+                          <AlertDialogDescription asChild>
+                            <div className="max-h-[500px] overflow-y-auto">
+                              <TermsAndConditions />
+                            </div>
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter className="flex">
+                          <AlertDialogAction className="uppercase">
+                            Close
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+
+                  <div>
                     {user?.id === "empty" ? (
                       <AlertDialog>
                         <AlertDialogTrigger
-                          disabled={loading || cartItemsCount === 0}
+                          disabled={
+                            loading || cartItemsCount === 0 || !isChecked
+                          }
                           className={cn(
                             "mt-8 h-12 w-full cursor-pointer rounded-md text-sm font-medium uppercase transition-colors",
                             "bg-primary text-primary-foreground hover:bg-primary/90 shadow-xs", // Normal state
@@ -289,7 +364,7 @@ const CartDialog: React.FC = () => {
                     ) : (
                       <Button
                         onClick={handleCheckout}
-                        disabled={loading || cartItemsCount == 0}
+                        disabled={loading || cartItemsCount == 0 || !isChecked}
                         className="mt-8 h-12 w-full uppercase"
                       >
                         {loading ? (

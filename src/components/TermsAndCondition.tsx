@@ -23,6 +23,13 @@ const TermsAndConditions: React.FC = () => {
           we do not offer refunds, returns, or exchanges under any
           circumstances.
         </p>
+        <p>
+          <strong>
+            If you accidentally purchase duplicate Presets, we do not offer
+            refunds. Please review your order carefully before completing your
+            purchase.
+          </strong>
+        </p>
       </section>
 
       <section>

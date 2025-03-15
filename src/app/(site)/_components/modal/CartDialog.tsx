@@ -29,6 +29,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { lazy, useCallback, useMemo, useState } from "react";
+import TermsAndConditionPage from "../../terms-and-conditions/page";
 
 const Loader = lazy(() => import("@/components/Loader"));
 
@@ -42,7 +43,8 @@ const CartDialog: React.FC = () => {
   const removePreset = useCart((state) => state.removePreset);
   const router = useRouter();
   const user = useLoggedUser((state) => state.user);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isLegalAgreementChecked, setIsLegalAgreementChecked] = useState(false);
+  const [activeTab, setActiveTab] = useState("terms"); // State to control which content is displayed
 
   // Memoize subtotal calculations to avoid unnecessary recalculations
   const subTotal = useMemo(
@@ -92,7 +94,7 @@ const CartDialog: React.FC = () => {
       body: JSON.stringify({
         items: stripeProductIds,
         email: user?.email,
-        licenceAgreement: isChecked,
+        legalAgreement: isLegalAgreementChecked,
       }), // Send data to api
     });
 
@@ -227,19 +229,22 @@ const CartDialog: React.FC = () => {
                   <p className="text-muted-foreground mt-0.5 text-sm">
                     Shipping and taxes calculated at checkout.
                   </p>
+                  {/* Licence Agreement */}
                   <div
                     className={cn(
                       "mt-6 gap-3",
-                      cartItemsCount == 0 ? "hidden" : "flex",
+                      cartItemsCount === 0 ? "hidden" : "flex",
                     )}
                   >
                     <div className="flex h-6 shrink-0 items-center">
                       <div className="group grid size-4 grid-cols-1">
                         <input
-                          checked={isChecked}
-                          onChange={() => setIsChecked((prev) => !prev)}
-                          id="same-as-shipping"
-                          name="same-as-shipping"
+                          checked={isLegalAgreementChecked}
+                          onChange={() =>
+                            setIsLegalAgreementChecked((prev) => !prev)
+                          }
+                          id="agreements"
+                          name="agreements"
                           type="checkbox"
                           className="checked:border-primary checked:bg-primary indeterminate:border-primary indeterminate:bg-primary focus-visible:outline-primary bg-primary-foreground border-primary disabled:border-primary disabled:bg-secondary disabled:checked:bg-secondary col-start-1 row-start-1 cursor-pointer appearance-none rounded border focus-visible:outline focus-visible:outline-offset-2 forced-colors:appearance-auto"
                         />
@@ -265,17 +270,30 @@ const CartDialog: React.FC = () => {
                         </svg>
                       </div>
                     </div>
+
                     <AlertDialog>
                       <label
-                        htmlFor="same-as-shippingx"
+                        htmlFor="agreementsx"
                         className="text-primary text-sm/6 font-normal"
                       >
                         <span onClick={(e) => e.stopPropagation()}>
                           I agree to the{" "}
                         </span>
                         <AlertDialogTrigger asChild>
-                          <span className="cursor-pointer font-medium hover:underline">
-                            Licence Agreement
+                          <span
+                            className="cursor-pointer font-medium hover:underline"
+                            onClick={() => setActiveTab("terms")} // Set active tab to "terms" when clicked
+                          >
+                            Terms & Conditions
+                          </span>
+                        </AlertDialogTrigger>
+                        <span>{" and "}</span>
+                        <AlertDialogTrigger asChild>
+                          <span
+                            className="cursor-pointer font-medium hover:underline"
+                            onClick={() => setActiveTab("license")} // Set active tab to "license" when clicked
+                          >
+                            License Agreement
                           </span>
                         </AlertDialogTrigger>
                         <span onClick={(e) => e.stopPropagation()}>
@@ -283,6 +301,7 @@ const CartDialog: React.FC = () => {
                           before purchasing.
                         </span>
                       </label>
+
                       <AlertDialogContent className="max-w-3xl!">
                         <AlertDialogHeader>
                           <AlertDialogTitle className="flex flex-row items-center gap-2">
@@ -292,7 +311,14 @@ const CartDialog: React.FC = () => {
                           </AlertDialogTitle>
                           <AlertDialogDescription asChild>
                             <div className="max-h-[500px] overflow-y-auto">
-                              <LicenseAgreement />
+                              {activeTab === "terms" && (
+                                <TermsAndConditionPage />
+                              )}{" "}
+                              {/* Show Terms if activeTab is "terms" */}
+                              {activeTab === "license" && (
+                                <LicenseAgreement />
+                              )}{" "}
+                              {/* Show License Agreement if activeTab is "license" */}
                             </div>
                           </AlertDialogDescription>
                         </AlertDialogHeader>
@@ -310,7 +336,9 @@ const CartDialog: React.FC = () => {
                       <AlertDialog>
                         <AlertDialogTrigger
                           disabled={
-                            loading || cartItemsCount === 0 || !isChecked
+                            loading ||
+                            cartItemsCount === 0 ||
+                            !isLegalAgreementChecked
                           }
                           className={cn(
                             "mt-8 h-12 w-full cursor-pointer rounded-md text-sm font-medium uppercase transition-colors",
@@ -382,7 +410,11 @@ const CartDialog: React.FC = () => {
                     ) : (
                       <Button
                         onClick={handleCheckout}
-                        disabled={loading || cartItemsCount == 0 || !isChecked}
+                        disabled={
+                          loading ||
+                          cartItemsCount == 0 ||
+                          !isLegalAgreementChecked
+                        }
                         className="mt-8 h-12 w-full uppercase"
                       >
                         {loading ? (

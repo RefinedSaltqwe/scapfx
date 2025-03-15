@@ -12,10 +12,10 @@ export async function POST(req: Request) {
     const origin = headersList.get("origin") ?? "https://scapcreative.com"; // Ensure it's always a string
 
     // Store data (stripeProductIds) sent from the checkout in client-side
-    const { items, email, licenceAgreement } = (await req.json()) as {
+    const { items, email, legalAgreement } = (await req.json()) as {
       email: string;
       items: CartItemsStripe[];
-      licenceAgreement: boolean;
+      legalAgreement: boolean;
     };
 
     // Convert cart items to Stripe's required format
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
       cancel_url: `${origin}/?canceled=true`,
       customer_email: email === "empty" ? undefined : email,
       metadata: {
-        licenceAgreement: licenceAgreement ? "accepted" : "not_accepted", // Store custom field data
+        legalAgreement: legalAgreement ? "accepted" : "not_accepted", // Store custom field data
       },
     });
 

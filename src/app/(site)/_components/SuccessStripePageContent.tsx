@@ -45,7 +45,7 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
     email: "",
     name: "",
     createdAt: 0,
-    licenceAgreement: false,
+    legalAgreement: false,
     lineItems: [""],
   });
 
@@ -66,7 +66,7 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
         email: string;
         name: string;
         createdAt: number;
-        licenceAgreement: boolean;
+        legalAgreement: boolean;
         lineItems: string[];
       };
       setSessionData(data);
@@ -100,7 +100,7 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
       setSessionData({
         email: userPresets?.[0]?.userEmail ?? "",
         name: userPresets?.[0]?.user?.name ?? "",
-        licenceAgreement: userPresets?.[0]?.licenceAgreement ? true : false,
+        legalAgreement: userPresets?.[0]?.legalAgreement ? true : false,
         createdAt: 0,
         lineItems,
       });
@@ -113,7 +113,7 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
       setLoading(true);
       void executeCreateUserPreset({
         userEmail: sessionData.email,
-        licenceAgreement: sessionData.licenceAgreement,
+        legalAgreement: sessionData.legalAgreement,
         stripeSessionId: sessionId,
         createdAt: Number(sessionData.createdAt),
         priceId: sessionData.lineItems,

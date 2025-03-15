@@ -80,7 +80,7 @@ model PresetUser {
   presetId          String
   createdAt         DateTime @default(now())
   stripeSessionId   String
-  licenceAgreement  Boolean?
+  legalAgreement  Boolean?
   orderId           String? 
   purchasedPrice    Float?
 

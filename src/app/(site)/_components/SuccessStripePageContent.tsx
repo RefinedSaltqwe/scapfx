@@ -14,6 +14,9 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
 import DownloadButton from "./DownloadButton";
 import { useSession } from "next-auth/react";
+import { fetchPrice } from "@/lib/fetchPrice";
+import { trackEvent } from "@/lib/fbpixels";
+import { siteConfig } from "config/site";
 const Loader = lazy(() => import("@/components/Loader"));
 
 type SuccessStripePageContentProps = {
@@ -109,16 +112,37 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
   }, [sessionId, userPresets, dbData]);
 
   useEffect(() => {
-    if (!dbData) {
-      setLoading(true);
-      void executeCreateUserPreset({
-        userEmail: sessionData.email,
-        legalAgreement: sessionData.legalAgreement,
-        stripeSessionId: sessionId,
-        createdAt: Number(sessionData.createdAt),
-        priceId: sessionData.lineItems,
-      });
+    async function fetchData() {
+      if (!dbData) {
+        setLoading(true);
+        try {
+          // Execute user preset creation
+          await executeCreateUserPreset({
+            userEmail: sessionData.email,
+            legalAgreement: sessionData.legalAgreement,
+            stripeSessionId: sessionId,
+            createdAt: Number(sessionData.createdAt),
+            priceId: sessionData.lineItems,
+          });
+          // Fetch the subtotal by resolving all prices
+          const subTotal = await Promise.all(
+            sessionData.lineItems.map(async (d) => await fetchPrice(d)),
+          ).then((prices) => prices.reduce((acc, price) => acc + price, 0));
+
+          // Track the purchase event
+          await trackEvent("Purchase", {
+            value: subTotal,
+            currency: siteConfig.currency,
+          });
+        } catch (error) {
+          console.error("Error in effect:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
     }
+
+    void fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbData]);
 

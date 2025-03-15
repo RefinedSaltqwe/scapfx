@@ -8,6 +8,8 @@ import {
 } from "@tanstack/react-query";
 import { getUserPresets } from "@/server/queries/fetch-user-presets";
 import { getUserByStripeSessionId } from "@/server/queries/fetch-user-preset-by-session";
+import DynamicTitle from "@/components/DynamicTitle";
+import { siteConfig } from "config/site";
 
 type CheckoutSuccessPageProps = {
   searchParams: {
@@ -34,9 +36,12 @@ const CheckoutSuccessPage: React.FC<CheckoutSuccessPageProps> = async ({
   });
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <SuccessStripePageContent sessionId={session_id} />
-    </HydrationBoundary>
+    <>
+      <DynamicTitle title={`Download File(s) | ${siteConfig.name}`} />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <SuccessStripePageContent sessionId={session_id} />
+      </HydrationBoundary>
+    </>
   );
 };
 export default CheckoutSuccessPage;

@@ -5,7 +5,7 @@ import { CreateUserSchema } from "@/server/actions/create-user/schema";
 import { Input } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { lazy } from "react";
+import React, { lazy, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { type z } from "zod";
@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import Link from "next/link";
+import { trackEvent } from "@/lib/fbpixels";
 const Loader = lazy(() => import("@/components/Loader"));
 
 type SignUpFormProps = {
@@ -27,6 +28,7 @@ type SignUpFormProps = {
 
 const SignUpForm: React.FC<SignUpFormProps> = () => {
   const router = useRouter();
+  const hasRenderedOnce = useRef(false);
 
   const form = useForm<z.infer<typeof CreateUserSchema>>({
     resolver: zodResolver(CreateUserSchema),
@@ -40,6 +42,9 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
         toast.success("User has been created.", {
           duration: 5000,
         });
+        trackEvent("CompleteRegistration").catch((error) =>
+          console.error("Error tracking CompleteRegistration event:", error),
+        );
         router.push(`/login`);
       },
       onError: (error) => {
@@ -58,6 +63,16 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
       confirmPassword: values.confirmPassword,
     });
   };
+
+  useEffect(() => {
+    if (hasRenderedOnce.current) {
+      trackEvent("Lead").catch((error) =>
+        console.error("Error tracking Lead event:", error),
+      );
+    } else {
+      hasRenderedOnce.current = true;
+    }
+  }, []);
 
   return (
     <Form {...form}>

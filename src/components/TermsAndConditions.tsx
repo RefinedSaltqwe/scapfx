@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const TermsAndConditions: React.FC = () => {
@@ -74,23 +75,23 @@ const TermsAndConditions: React.FC = () => {
         </p>
         <p>
           By making a purchase, you agree to Stripe’s{" "}
-          <a
+          <Link
             href="https://stripe.com/legal"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500 underline"
+            className="font-medium underline"
           >
             Terms of Service
-          </a>{" "}
+          </Link>{" "}
           and{" "}
-          <a
+          <Link
             href="https://stripe.com/privacy"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500 underline"
+            className="font-medium underline"
           >
             Privacy Policy
-          </a>
+          </Link>
           .
         </p>
       </section>
@@ -104,9 +105,9 @@ const TermsAndConditions: React.FC = () => {
         </p>
         <p>
           For more details on how we handle data, please refer to our{" "}
-          <a href="/privacy-policy" className="text-blue-500 underline">
+          <Link href="/privacy-policy" className="font-medium underline">
             Privacy Policy
-          </a>
+          </Link>
           .
         </p>
       </section>
@@ -133,12 +134,12 @@ const TermsAndConditions: React.FC = () => {
         <h2 className="text-xl font-semibold">10. Contact Information</h2>
         <p>
           If you have any questions regarding these Terms, please contact us at{" "}
-          <a
+          <Link
             href="mailto:scapcreative@gmail.com"
-            className="text-blue-500 underline"
+            className="font-medium underline"
           >
             scapcreative@gmail.com
-          </a>
+          </Link>
           .
         </p>
       </section>

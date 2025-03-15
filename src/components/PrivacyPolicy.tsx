@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const PrivacyPolicy: React.FC = () => {
@@ -14,15 +15,20 @@ const PrivacyPolicy: React.FC = () => {
 
       <section>
         <h2 className="text-xl font-semibold">2. Information We Collect</h2>
-        <p>We only collect the following information:</p>
+        <p>We collect the following information:</p>
         <ul className="list-inside list-disc space-y-2">
           <li>
             <strong>Email Address</strong>: Used for order fulfillment and
             product tracking.
           </li>
           <li>
-            <strong>Purchase Details</strong>: Records of the presets you’ve
-            purchased.
+            <strong>Name</strong>: To personalize your order and provide
+            customer support.
+          </li>
+          <li>
+            <strong>Purchase Details</strong>
+            {`: Records of the presets you've
+            purchased.`}
           </li>
         </ul>
         <p>
@@ -40,14 +46,14 @@ const PrivacyPolicy: React.FC = () => {
         <p>
           Stripe collects and processes your payment information in accordance
           with its{" "}
-          <a
+          <Link
             href="https://stripe.com/privacy"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500 underline"
+            className="font-medium underline"
           >
             Privacy Policy
-          </a>
+          </Link>
           .
         </p>
       </section>
@@ -56,7 +62,7 @@ const PrivacyPolicy: React.FC = () => {
         <h2 className="text-xl font-semibold">
           4. How We Use Your Information
         </h2>
-        <p>We use your email address for:</p>
+        <p>We use your email address and name for:</p>
         <ul className="list-inside list-disc space-y-2">
           <li>Order confirmation and delivery.</li>
           <li>Providing customer support.</li>
@@ -96,12 +102,12 @@ const PrivacyPolicy: React.FC = () => {
         </ul>
         <p>
           To exercise these rights, contact us at{" "}
-          <a
+          <Link
             href="mailto:scapcreative@gmail.com"
-            className="text-blue-500 underline"
+            className="font-medium underline"
           >
             scapcreative@gmail.com
-          </a>
+          </Link>
           .
         </p>
       </section>
@@ -119,12 +125,12 @@ const PrivacyPolicy: React.FC = () => {
         <p>
           If you have any questions about this Privacy Policy, please contact us
           at{" "}
-          <a
+          <Link
             href="mailto:scapcreative@gmail.com"
-            className="text-blue-500 underline"
+            className="font-medium underline"
           >
             scapcreative@gmail.com
-          </a>
+          </Link>
           .
         </p>
       </section>

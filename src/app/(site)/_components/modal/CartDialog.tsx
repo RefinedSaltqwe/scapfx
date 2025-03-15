@@ -227,7 +227,12 @@ const CartDialog: React.FC = () => {
                   <p className="text-muted-foreground mt-0.5 text-sm">
                     Shipping and taxes calculated at checkout.
                   </p>
-                  <div className="mt-6 flex gap-3">
+                  <div
+                    className={cn(
+                      "mt-6 gap-3",
+                      cartItemsCount == 0 ? "hidden" : "flex",
+                    )}
+                  >
                     <div className="flex h-6 shrink-0 items-center">
                       <div className="group grid size-4 grid-cols-1">
                         <input
@@ -326,11 +331,18 @@ const CartDialog: React.FC = () => {
                               </AlertDialogCancel>
                             </AlertDialogTitle>
                             <AlertDialogDescription>
-                              {`If you have purchased from us before, please log in to check your purchase history and `}
-                              <strong>avoid duplicate orders</strong>
-                              {`. Duplicate purchases `}
-                              <strong>will not be refunded</strong>
-                              {`.`}
+                              {`If you have purchased from us before, please log in to view your purchase history and avoid duplicate orders. `}
+                              <strong>As stated in our </strong>
+                              <Link
+                                className="underline"
+                                href={`/terms-and-conditions`}
+                              >
+                                <strong>Terms and Conditions</strong>
+                              </Link>
+
+                              <strong>
+                                , duplicate purchases will not be refunded.
+                              </strong>
                               <br />
                               <br />
                               {`If you wish to proceed, you will be securely redirected to `}

@@ -8,7 +8,7 @@ export async function middleware(req: NextRequest) {
     cookie.name?.includes("session-token"),
   );
 
-  console.log("TOKEN", sessionToken, cookies);
+  // console.log("TOKEN", sessionToken, cookies);
 
   // Redirect /shop and root to /shop/aether
   if (pathname === "/" || pathname === "/shop") {

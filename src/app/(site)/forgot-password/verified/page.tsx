@@ -20,6 +20,8 @@ import { useForm } from "react-hook-form";
 import { type z } from "zod";
 import { useRouter } from "nextjs-toploader/app";
 import { useSearchParams } from "next/navigation";
+import DynamicTitle from "@/components/DynamicTitle";
+import { siteConfig } from "config/site";
 
 const Loader = lazy(() => import("@/components/Loader"));
 
@@ -186,15 +188,18 @@ const ChangePasswordForm: React.FC = () => {
 
 const ChangePasswordPage: React.FC = () => {
   return (
-    <Suspense
-      fallback={
-        <div className="flex h-80 items-center justify-center">
-          <Loader classNames="h-8 w-8 border-3 border-primary animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
-        </div>
-      }
-    >
-      <ChangePasswordForm />
-    </Suspense>
+    <>
+      <DynamicTitle title={`Change Password | ${siteConfig.name}`} />
+      <Suspense
+        fallback={
+          <div className="flex h-80 items-center justify-center">
+            <Loader classNames="h-8 w-8 border-3 border-primary animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+          </div>
+        }
+      >
+        <ChangePasswordForm />
+      </Suspense>
+    </>
   );
 };
 

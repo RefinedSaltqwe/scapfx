@@ -293,7 +293,7 @@ const CartDialog: React.FC = () => {
                             className="cursor-pointer font-medium hover:underline"
                             onClick={() => setActiveTab("license")} // Set active tab to "license" when clicked
                           >
-                            License Agreement
+                            Licence Agreement
                           </span>
                         </AlertDialogTrigger>
                         <span onClick={(e) => e.stopPropagation()}>

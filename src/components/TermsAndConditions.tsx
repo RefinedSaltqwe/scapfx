@@ -99,9 +99,28 @@ const TermsAndConditions: React.FC = () => {
       <section>
         <h2 className="text-xl font-semibold">7. Data Collection & Privacy</h2>
         <p>
-          We only collect your <strong>email address</strong> for order
-          fulfillment and product tracking purposes. No personal financial
-          information is stored on our servers.
+          We collect the following information to process your order and provide
+          support:
+        </p>
+        <ul className="list-inside list-disc space-y-2">
+          <li>
+            <strong>Email Address</strong>: Used for order fulfillment and
+            product tracking.
+          </li>
+          <li>
+            <strong>Name</strong>: To personalize your order and provide
+            customer support.
+          </li>
+          <li>
+            <strong>Purchase Details</strong>:{" "}
+            {`Records of the presets you've
+            purchased.`}
+          </li>
+        </ul>
+        <p>
+          We <strong>do not</strong> collect, store, or process any credit card
+          or payment information. All transactions are securely handled by{" "}
+          <strong>Stripe</strong>.
         </p>
         <p>
           For more details on how we handle data, please refer to our{" "}

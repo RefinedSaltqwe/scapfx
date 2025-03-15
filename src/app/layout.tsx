@@ -83,7 +83,7 @@ export default async function RootLayout({
             }),
           }}
         />
-        {/* Add Meta Pixel Script */}
+        {/* Meta Pixel Script */}
         <Script
           id="meta-pixel"
           strategy="afterInteractive"

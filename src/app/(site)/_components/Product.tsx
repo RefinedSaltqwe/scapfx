@@ -8,6 +8,8 @@ import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
 import React, { useMemo } from "react";
 import Plan from "./Plan";
 import { type PresetAndChildren } from "@/types/prisma";
+import { trackEvent } from "@/lib/fbpixels";
+import { siteConfig } from "config/site";
 
 type ProductProps = {
   currentPreset: PresetAndChildren;
@@ -106,13 +108,12 @@ const Product: React.FC<ProductProps> = ({
           disabled={isPresetExists || isPresetOwned}
           onClick={() => {
             // Handle the promise rejection gracefully
-            // trackEvent("AddToCart", {
-            //   value: currentPreset.price,
-            //   currency: siteConfig.currency,
-            // }).catch((error) =>
-            //   console.error("Error tracking AddToCart event:", error),
-            // );
-
+            trackEvent("AddToCart", {
+              value: currentPreset.price,
+              currency: siteConfig.currency,
+            }).catch((error) =>
+              console.error("Error tracking AddToCart event:", error),
+            );
             addPreset(currentPreset);
             onOpen();
           }}

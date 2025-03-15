@@ -1,7 +1,7 @@
 import LicenseAgreement from "@/components/LicenseAgreement";
 import React from "react";
 
-const TermsAndConditionPage: React.FC = () => {
+const LicenseAgreementPage: React.FC = () => {
   return <LicenseAgreement />;
 };
-export default TermsAndConditionPage;
+export default LicenseAgreementPage;

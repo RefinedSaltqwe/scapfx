@@ -3,7 +3,9 @@ import React from "react";
 const navigation = {
   main: [
     { name: "About", href: "/about" },
-    { name: "License Agreement", href: "/license-agreement" },
+    { name: "License Agreement", href: "/licence-agreement" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Terms and Conditions", href: "/terms-and-conditions" },
   ],
   social: [
     {

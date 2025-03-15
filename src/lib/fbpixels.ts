@@ -2,7 +2,7 @@
 
 const options = {
   autoConfig: true,
-  debug: true,
+  debug: false,
 };
 
 export const initFacebookPixel = async (pixelId: string) => {

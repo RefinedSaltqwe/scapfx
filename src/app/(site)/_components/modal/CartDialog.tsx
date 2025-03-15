@@ -1,5 +1,5 @@
 "use client";
-import TermsAndConditions from "@/components/TermsAndCondition";
+import LicenseAgreement from "@/components/LicenseAgreement";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -89,7 +89,11 @@ const CartDialog: React.FC = () => {
     const res = await fetch("/api/stripe/checkout_sessions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: stripeProductIds, email: user?.email }), // Send data to api
+      body: JSON.stringify({
+        items: stripeProductIds,
+        email: user?.email,
+        licenceAgreement: isChecked,
+      }), // Send data to api
     });
 
     const data = (await res.json()) as { sessionId: string };
@@ -262,16 +266,18 @@ const CartDialog: React.FC = () => {
                         className="text-primary text-sm/6 font-normal"
                       >
                         <span onClick={(e) => e.stopPropagation()}>
-                          By checking this box, you agree to our{" "}
+                          I agree to the{" "}
                         </span>
                         <AlertDialogTrigger asChild>
                           <span className="cursor-pointer font-medium hover:underline">
-                            Terms and Conditions
+                            Licence Agreement
                           </span>
                         </AlertDialogTrigger>
-                        .
+                        <span onClick={(e) => e.stopPropagation()}>
+                          {" "}
+                          before purchasing.
+                        </span>
                       </label>
-
                       <AlertDialogContent className="max-w-3xl!">
                         <AlertDialogHeader>
                           <AlertDialogTitle className="flex flex-row items-center gap-2">
@@ -281,7 +287,7 @@ const CartDialog: React.FC = () => {
                           </AlertDialogTitle>
                           <AlertDialogDescription asChild>
                             <div className="max-h-[500px] overflow-y-auto">
-                              <TermsAndConditions />
+                              <LicenseAgreement />
                             </div>
                           </AlertDialogDescription>
                         </AlertDialogHeader>

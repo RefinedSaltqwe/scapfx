@@ -3,8 +3,7 @@ import React from "react";
 const navigation = {
   main: [
     { name: "About", href: "/about" },
-    { name: "Contact", href: "mailto:scapcreative@gmail.com?subject=Inquiry" },
-    { name: "Terms and Conditions", href: "/terms-and-conditions" },
+    { name: "License Agreement", href: "/license-agreement" },
   ],
   social: [
     {
@@ -71,6 +70,9 @@ const Footer: React.FC = () => {
             </a>
           ))}
         </div>
+        <p className="mt-10 text-center text-sm/6 text-gray-600">
+          Contact Us: scapcreative@gmail.com
+        </p>
         <p className="mt-10 text-center text-sm/6 text-gray-600">
           &copy; {year} ScapCreative. All rights reserved.
         </p>

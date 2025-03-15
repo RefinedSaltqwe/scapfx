@@ -36,6 +36,8 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         email: session.customer_details?.email,
+        licenceAgreement:
+          session.metadata?.licenceAgreement === "accepted" ? true : false,
         name: session.customer_details?.name,
         createdAt: session.created, //payment id - can be used to retrieve product info
         lineItems: priceIds,

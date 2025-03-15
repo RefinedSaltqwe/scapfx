@@ -13,7 +13,8 @@ import { type InputType, type ReturnType } from "./types";
 // ✅ Extracted email sender function
 
 const handler = async (data: InputType): Promise<ReturnType> => {
-  const { priceId, userEmail, stripeSessionId, createdAt } = data;
+  const { priceId, userEmail, stripeSessionId, createdAt, licenceAgreement } =
+    data;
   const date = new Date(createdAt * 1000);
 
   try {
@@ -36,6 +37,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         // Return the updated preset with the fetchedPrice as purchasedPrice
         return {
           presetId: preset.id,
+          licenceAgreement,
           orderId,
           userEmail,
           stripeSessionId,

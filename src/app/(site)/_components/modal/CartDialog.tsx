@@ -216,13 +216,23 @@ const CartDialog: React.FC = () => {
                     <div className="flex flex-col items-end">
                       <p>{`$${subTotal.toFixed(2)} ${siteConfig.currency}`}</p>
                       {subTotalPrevPrice > 0 && (
-                        <span className="text-muted-foreground text-[12px] line-through">{`$${subTotalPrevPrice.toFixed(2)}`}</span>
+                        <span className="text-muted-foreground text-sm line-through">{`$${subTotalPrevPrice.toFixed(2)}`}</span>
                       )}
                     </div>
                   </div>
-                  <p className="text-muted-foreground mt-0.5 text-sm">
-                    Discounts calculated at checkout.
-                  </p>
+                  <div className="mt-2">
+                    {presets.length === 3 && (
+                      <>
+                        <p className="text-primary text-sm font-medium">
+                          {`You're eligible for an extra 20% off!`}
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                          Discount applied at checkout.
+                        </p>
+                      </>
+                    )}
+                  </div>
+
                   {/* Licence Agreement */}
                   <div
                     className={cn(

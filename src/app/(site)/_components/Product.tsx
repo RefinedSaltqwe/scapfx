@@ -126,7 +126,9 @@ const Product: React.FC<ProductProps> = ({
         </Button>
 
         <div className="border-muted mt-10 border-t pt-10">
-          <h3 className="text-primary font-medium">BUY 3 Get Extra 20% Off</h3>
+          <h3 className="text-primary font-medium">
+            Buy 3, Get an Extra 20% Off!
+          </h3>
           <h3 className="text-primary mt-6 text-sm font-medium">
             Supported Software
           </h3>

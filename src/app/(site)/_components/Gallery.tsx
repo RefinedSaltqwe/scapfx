@@ -41,7 +41,7 @@ const Gallery: React.FC<GalleryProps> = ({ currentPreset }) => {
             {`Gallery`}
           </h2>
         </div>
-        <div className="my-10 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="my-10 grid grid-cols-3 gap-0.5 md:grid-cols-4 xl:grid-cols-5">
           {images.map((img, index) => (
             <div
               key={index}

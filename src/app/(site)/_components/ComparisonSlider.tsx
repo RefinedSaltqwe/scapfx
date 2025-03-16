@@ -50,10 +50,13 @@ const ComparisonSlider: React.FC<ComparisonSliderProp> = ({
       const deltaX = Math.abs(event.touches[0]!.clientX - startX.current);
       const deltaY = Math.abs(event.touches[0]!.clientY - startY.current);
 
-      if (deltaX > deltaY) {
-        // Prevent scrolling only if movement is horizontal
-        if (event.cancelable) event.preventDefault();
+      if (deltaX > 0) {
         updateSliderPosition(event.touches[0]!.clientX);
+      }
+
+      // Prevent scrolling only if movement is horizontal
+      if (deltaY > 0 && event.cancelable) {
+        event.preventDefault();
       }
     },
     [isDragging, updateSliderPosition],
@@ -81,8 +84,6 @@ const ComparisonSlider: React.FC<ComparisonSliderProp> = ({
       <div
         ref={sliderRef}
         className="relative mx-auto aspect-3/2 w-full max-w-[1500px] overflow-hidden rounded-md select-none"
-        onMouseDown={() => setIsDragging(true)}
-        onTouchStart={handleTouchStart}
       >
         {/* After Image */}
         <OptimizedImage src={afterImage} alt="Before" />
@@ -99,6 +100,8 @@ const ComparisonSlider: React.FC<ComparisonSliderProp> = ({
         <div
           className="absolute inset-y-0 w-[1px] cursor-ew-resize bg-white/75"
           style={{ left: `calc(${sliderPosition}% - 1px)` }}
+          onMouseDown={() => setIsDragging(true)}
+          onTouchStart={handleTouchStart}
         >
           <div className="absolute top-1/2 left-[-1.75rem] flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-white/75 bg-white/10 backdrop-blur-sm">
             <MoveHorizontal

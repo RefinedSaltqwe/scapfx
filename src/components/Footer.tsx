@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 const navigation = {
   main: [
-    { name: "About", href: "/about" },
+    { name: "About Me", href: "/about" },
     { name: "Licence Agreement", href: "/licence-agreement" },
     { name: "Privacy Policy", href: "/privacy-policy" },
     { name: "Terms and Conditions", href: "/terms-and-conditions" },

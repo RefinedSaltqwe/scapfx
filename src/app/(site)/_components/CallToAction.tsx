@@ -1,7 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/stores/useCart";
+import { trackEvent } from "@/lib/fbpixels";
 import { type PresetAndChildren } from "@/types/prisma";
+import { siteConfig } from "config/site";
 import React, { useMemo } from "react";
 
 type CallToActionProps = {
@@ -49,11 +51,17 @@ const CallToAction: React.FC<CallToActionProps> = ({ currentPreset }) => {
               variant={"secondary"}
               disabled={isPresetExists}
               onClick={() => {
+                trackEvent("AddToCart", {
+                  value: currentPreset.price,
+                  currency: siteConfig.currency,
+                }).catch((error) =>
+                  console.error("Error tracking AddToCart event:", error),
+                );
                 addPreset(currentPreset);
                 onOpen();
               }}
             >
-              {isPresetExists ? "ALREADY IN THE CART" : "ADD TO CART"}
+              {isPresetExists ? "IN CART" : "ADD TO CART"}
             </Button>
           </div>
         </div>

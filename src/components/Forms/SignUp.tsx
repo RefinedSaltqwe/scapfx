@@ -1,11 +1,13 @@
 "use client";
 import { useAction } from "@/hooks/useSafeAction";
+import { trackEvent } from "@/lib/fbpixels";
 import { createUser } from "@/server/actions/create-user";
 import { CreateUserSchema } from "@/server/actions/create-user/schema";
 import { Input } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { lazy, useEffect, useRef } from "react";
+import React, { lazy } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { type z } from "zod";
@@ -18,8 +20,6 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import Link from "next/link";
-import { trackEvent } from "@/lib/fbpixels";
 const Loader = lazy(() => import("@/components/Loader"));
 
 type SignUpFormProps = {
@@ -28,7 +28,6 @@ type SignUpFormProps = {
 
 const SignUpForm: React.FC<SignUpFormProps> = () => {
   const router = useRouter();
-  const hasRenderedOnce = useRef(false);
 
   const form = useForm<z.infer<typeof CreateUserSchema>>({
     resolver: zodResolver(CreateUserSchema),
@@ -63,16 +62,6 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
       confirmPassword: values.confirmPassword,
     });
   };
-
-  useEffect(() => {
-    if (hasRenderedOnce.current) {
-      trackEvent("Lead").catch((error) =>
-        console.error("Error tracking Lead event:", error),
-      );
-    } else {
-      hasRenderedOnce.current = true;
-    }
-  }, []);
 
   return (
     <Form {...form}>

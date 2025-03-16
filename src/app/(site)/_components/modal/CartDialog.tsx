@@ -220,9 +220,9 @@ const CartDialog: React.FC = () => {
                       )}
                     </div>
                   </div>
-                  {/* <p className="text-muted-foreground mt-0.5 text-sm">
-                    Shipping and taxes calculated at checkout.
-                  </p> */}
+                  <p className="text-muted-foreground mt-0.5 text-sm">
+                    Discounts calculated at checkout.
+                  </p>
                   {/* Licence Agreement */}
                   <div
                     className={cn(

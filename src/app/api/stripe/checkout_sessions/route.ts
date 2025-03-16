@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     // Create stripe checkout session
     const session = await stripe.checkout.sessions.create({
       line_items: line_items,
-      discounts: line_items.length === 3 ? [{ coupon: "BUNDLE20" }] : [],
+      discounts: line_items.length === 3 ? [{ coupon: "g7SRKDAT" }] : [],
       mode: "payment",
       success_url: `${origin}/shop/checkout_success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/?canceled=true`,

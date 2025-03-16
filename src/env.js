@@ -28,6 +28,7 @@ export const env = createEnv({
     FB_PIXEL_ID: z.string(),
     FB_CONVERSIONS_API: z.string(),
     SUPABASE_BUCKET_NAME: z.string(),
+    STRIPE_BUNDLE_DISCOUNT: z.string(),
   },
 
   /**
@@ -66,6 +67,7 @@ export const env = createEnv({
     FB_PIXEL_ID: process.env.FB_PIXEL_ID,
     FB_CONVERSIONS_API: process.env.FB_CONVERSIONS_API,
     SUPABASE_BUCKET_NAME: process.env.SUPABASE_BUCKET_NAME,
+    STRIPE_BUNDLE_DISCOUNT: process.env.STRIPE_BUNDLE_DISCOUNT,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { type CartItemsStripe } from "@/types";
+import { env } from "@/env";
 
 interface CustomError extends Error {
   statusCode?: number;
@@ -27,7 +28,8 @@ export async function POST(req: Request) {
     // Create stripe checkout session
     const session = await stripe.checkout.sessions.create({
       line_items: line_items,
-      discounts: line_items.length === 3 ? [{ coupon: "g7SRKDAT" }] : [],
+      discounts:
+        line_items.length === 3 ? [{ coupon: env.STRIPE_BUNDLE_DISCOUNT }] : [],
       mode: "payment",
       success_url: `${origin}/shop/checkout_success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/?canceled=true`,

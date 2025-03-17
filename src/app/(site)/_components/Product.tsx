@@ -10,6 +10,7 @@ import Plan from "./Plan";
 import { type PresetAndChildren } from "@/types/prisma";
 import { trackEvent } from "@/lib/fbpixels";
 import { siteConfig } from "config/site";
+import { env } from "@/env";
 
 type ProductProps = {
   currentPreset: PresetAndChildren;
@@ -127,7 +128,7 @@ const Product: React.FC<ProductProps> = ({
 
         <div className="border-muted mt-10 border-t pt-10">
           <h3 className="text-primary font-medium">
-            {`Buy 3, Get an Extra ${process.env.STRIPE_DISCOUNT} Off!`}
+            {`Buy 3, Get an Extra ${env.NEXT_PUBLIC_STRIPE_DISCOUNT} Off!`}
           </h3>
           <h3 className="text-primary mt-6 text-sm font-medium">
             Supported Software

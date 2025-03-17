@@ -42,6 +42,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_URL: z.string(),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string(),
     NEXT_PUBLIC_API_URL: z.string(),
+    NEXT_PUBLIC_STRIPE_DISCOUNT: z.string(),
   },
 
   /**
@@ -68,6 +69,7 @@ export const env = createEnv({
     FB_CONVERSIONS_API: process.env.FB_CONVERSIONS_API,
     SUPABASE_BUCKET_NAME: process.env.SUPABASE_BUCKET_NAME,
     STRIPE_BUNDLE_DISCOUNT: process.env.STRIPE_BUNDLE_DISCOUNT,
+    NEXT_PUBLIC_STRIPE_DISCOUNT: process.env.NEXT_PUBLIC_STRIPE_DISCOUNT,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

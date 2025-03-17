@@ -224,7 +224,7 @@ const CartDialog: React.FC = () => {
                     {presets.length === 3 && (
                       <>
                         <p className="text-primary text-sm font-medium">
-                          {`You're eligible for an extra 20% off!`}
+                          {`You're eligible for an extra ${process.env.STRIPE_DISCOUNT} off!`}
                         </p>
                         <p className="text-muted-foreground text-sm">
                           Discount applied at checkout.

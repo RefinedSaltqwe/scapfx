@@ -23,7 +23,7 @@ import {
   Store,
   X,
 } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -49,12 +49,8 @@ export default function Example({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession();
   const router = useRouter();
   const user = useLoggedUser((state) => state.user);
+  const removeLoggedUser = useLoggedUser((state) => state.removeUser);
   const pathname = usePathname();
-
-  const userNavigation = [
-    { name: "Purchase History", href: `/account/${user?.id}` },
-    { name: "Sign out", href: "#" },
-  ];
   return (
     <>
       <div>
@@ -105,7 +101,8 @@ export default function Example({ children }: { children: React.ReactNode }) {
                           return (
                             <li key={item.name}>
                               <Link
-                                href={item.href}
+                                onClick={() => setSidebarOpen(false)}
+                                href={isActive ? "#" : item.href}
                                 className={cn(
                                   "group flex gap-x-3 rounded-md p-2 text-sm font-semibold",
                                   isActive
@@ -288,16 +285,26 @@ export default function Example({ children }: { children: React.ReactNode }) {
                     transition
                     className="ring-primary/5 absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
                   >
-                    {userNavigation.map((item) => (
-                      <MenuItem key={item.name}>
-                        <Link
-                          href={item.href}
-                          className="data-[focus]:bg-muted text-primary block px-3 py-1 text-sm/6 data-[focus]:outline-none"
-                        >
-                          {item.name}
-                        </Link>
-                      </MenuItem>
-                    ))}
+                    <MenuItem>
+                      <Link
+                        href={`/account/${user?.id}`}
+                        className="data-[focus]:bg-muted text-primary block px-3 py-1 text-sm/6 data-[focus]:outline-none"
+                      >
+                        Purchase History
+                      </Link>
+                    </MenuItem>
+                    <MenuItem>
+                      <span
+                        className="data-[focus]:bg-muted text-primary mt-1 block px-3 py-1 text-sm/6 data-[focus]:outline-none"
+                        onClick={async () => {
+                          removeLoggedUser();
+                          await signOut();
+                          router.push(`/login`);
+                        }}
+                      >
+                        Logout
+                      </span>
+                    </MenuItem>
                   </MenuItems>
                 </Menu>
               </div>

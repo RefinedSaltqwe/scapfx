@@ -20,6 +20,7 @@ declare module "next-auth" {
       email: string;
       ownedPresets: string[];
       name: string;
+      type: string;
       currentUser: CurrentUserPrisma;
       // ...other properties
       // role: UserRole;
@@ -32,6 +33,7 @@ declare module "next-auth" {
     id?: string | undefined; // Example: Add custom user properties like ID
     name?: string | undefined | null; // Example: Add custom user properties like ID
     ownedPresets?: string[] | undefined; // Example: Add custom user properties like ID
+    type?: string | undefined; // Example: Add custom user properties like ID
     currentUser?: CurrentUserPrisma | undefined;
   }
 }
@@ -48,7 +50,7 @@ export const authConfig = {
   //     name: `__Secure-next-auth.session-token`,
   //     options: {
   //       httpOnly: true,
-  //       secure: process.env.NODE_ENV === "production", // Ensure cookies are sent over HTTPS in production
+  //       secure: env.NODE_ENV === "production", // Ensure cookies are sent over HTTPS in production
   //       sameSite: "lax", // Adjust if necessary (Strict, Lax, None)
   //       path: "/",
   //     },
@@ -100,6 +102,7 @@ export const authConfig = {
           id: user.id,
           name: user.name ?? "Client",
           email: user.email,
+          type: user.type,
           ownedPresets: presetIds,
           currentUser: { user } as unknown as CurrentUserPrisma,
         };
@@ -119,6 +122,7 @@ export const authConfig = {
         token.id = user.id; // Add user ID to the token
         token.email = user.email; // Add user email to the token
         token.name = user.name; // Add user email to the token
+        token.type = user.type ?? "";
         token.ownedPresets = user.ownedPresets ?? [];
         token.currentUser = user.currentUser ?? { user: defaultUser };
       }
@@ -130,6 +134,7 @@ export const authConfig = {
       session.userId = token.id as string;
       session.user.id = token.id as string;
       session.user.name = token.name!;
+      session.user.type = token.type as string;
       session.user.ownedPresets = token.ownedPresets as string[]; // Attach presets to the session
       session.user.currentUser = token.currentUser as CurrentUserPrisma; // Attach presets to the session
 

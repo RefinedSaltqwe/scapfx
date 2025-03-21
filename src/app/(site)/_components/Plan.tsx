@@ -1,4 +1,5 @@
 "use client";
+import Loader from "@/components/Loader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type PresetAndChildren } from "@/types/prisma";
 import { siteConfig } from "config/site";
@@ -14,6 +15,7 @@ type PlanProps = {
 const Plan: React.FC<PlanProps> = ({ preset, selectedPreset, index }) => {
   // Ensure state only applies on the client after mounting
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -23,6 +25,7 @@ const Plan: React.FC<PlanProps> = ({ preset, selectedPreset, index }) => {
 
   const handleChange = () => {
     if (selectedPreset !== preset.name) {
+      setLoading(true);
       router.push(`/shop/${preset.name}`);
     }
   };
@@ -44,14 +47,19 @@ const Plan: React.FC<PlanProps> = ({ preset, selectedPreset, index }) => {
       className="group border-border has-[:checked]:border-primary has-[:checked]:bg-primary/10 flex cursor-pointer flex-row justify-between border p-4 first:rounded-tl-md first:rounded-tr-md last:rounded-br-md last:rounded-bl-md focus:outline-none has-[:checked]:relative md:pr-6 md:pl-4"
     >
       <span className="flex items-center gap-3 text-sm">
-        <input
-          value={preset.name}
-          checked={selectedPreset === preset.name}
-          onChange={handleChange}
-          name="pricing-preset"
-          type="radio"
-          className="border-border checked:border-primary checked:bg-primary focus-visible:outline-primary disabled:border-border bg-background disabled:bg-muted relative size-4 appearance-none rounded-full border before:absolute before:inset-1 before:rounded-full before:bg-white focus-visible:outline focus-visible:outline-offset-2 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
-        />
+        {loading ? (
+          <Loader classNames="h-4 w-4 border-4 border-primary animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+        ) : (
+          <input
+            value={preset.name}
+            checked={selectedPreset === preset.name}
+            onChange={handleChange}
+            name="pricing-preset"
+            type="radio"
+            className="border-border checked:border-primary checked:bg-primary focus-visible:outline-primary disabled:border-border bg-background disabled:bg-muted relative size-4 appearance-none rounded-full border before:absolute before:inset-1 before:rounded-full before:bg-white focus-visible:outline focus-visible:outline-offset-2 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
+          />
+        )}
+
         <span className="group-has-[:checked]:text-primary text-muted-foreground font-medium uppercase">
           {`${presetName}`}
         </span>

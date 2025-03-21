@@ -3,7 +3,7 @@
 import { useCart } from "@/hooks/stores/useCart";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
 import { cn } from "@/lib/utils";
-import { ShoppingBasket, User } from "lucide-react";
+import { LayoutDashboard, ShoppingBasket, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { usePresets } from "@/hooks/stores/usePresets";
+import { Button } from "./ui/button";
 
 const Navigation: React.FC = () => {
   const { data: session, status } = useSession();
@@ -117,7 +118,7 @@ const Navigation: React.FC = () => {
                     <>
                       <Image
                         src="/assets/images/logo-black.png"
-                        alt="ScapCreative White Logo"
+                        alt="ScapCreative Black Logo"
                         width={175}
                         height={23.2}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -125,7 +126,7 @@ const Navigation: React.FC = () => {
                       />
                       <Image
                         src="/assets/images/logo-black-short.png"
-                        alt="ScapCreative White Short Logo"
+                        alt="ScapCreative Black Short Logo"
                         width={85}
                         height={22.95}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -156,6 +157,23 @@ const Navigation: React.FC = () => {
               </div>
 
               <div className="flex items-center justify-end">
+                {session?.user.type === "ADMIN" && (
+                  <div className="mr-4 flow-root lg:mr-8">
+                    <Button
+                      variant={"ghost"}
+                      onClick={() => router.push("/admin/dashboard")}
+                      className={cn(
+                        "hover:text-primary-foreground text-primary-foreground hover:bg-transparent",
+                      )}
+                    >
+                      <span className="sr-only">Dashboard Icon</span>
+                      <LayoutDashboard
+                        aria-hidden="true"
+                        className={iconClassNames}
+                      />
+                    </Button>
+                  </div>
+                )}
                 {/* Account */}
                 {session ? (
                   <DropdownMenu>

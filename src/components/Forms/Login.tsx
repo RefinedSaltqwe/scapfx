@@ -69,9 +69,15 @@ const LoginForm: React.FC<LoginFormProps> = () => {
   }, []);
 
   useEffect(() => {
-    if (isClient && session?.user) {
-      router.push(`/shop/${allPresets[0]?.name}`);
-    }
+    if (!isClient || !session?.user.type) return;
+
+    const routes: Record<string, string> = {
+      CLIENT: `/shop/${allPresets[0]?.name}`,
+      ADMIN: "/admin/dashboard",
+    };
+
+    const redirectTo = routes[session.user.type];
+    if (redirectTo) router.push(redirectTo);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, isClient]);
 

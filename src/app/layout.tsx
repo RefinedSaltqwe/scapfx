@@ -1,10 +1,16 @@
-import Footer from "@/components/Footer";
 import NextTopLoaderWrapper from "@/components/NextTopLoaderWrapper";
 import DataProvider from "@/components/providers/DataProvider";
 import ModalProvider from "@/components/providers/ModalProvider";
 import QueryProvider from "@/components/providers/QueryProvider";
+import { env } from "@/env";
 import { cn } from "@/lib/utils";
+import { getPresets } from "@/server/queries/fetch-presets";
 import "@/styles/globals.css";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "config/site";
@@ -14,11 +20,6 @@ import { SessionProvider } from "next-auth/react";
 import { Poppins } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "sonner";
-import Navigation from "../components/Navigation";
-import { QueryClient, dehydrate } from "@tanstack/react-query";
-import { getPresets } from "@/server/queries/fetch-presets";
-import { HydrationBoundary } from "@tanstack/react-query";
-import { env } from "@/env";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -118,13 +119,11 @@ export default async function RootLayout({
               <ModalProvider />
               <NextTopLoaderWrapper>
                 <DataProvider pixel_id={env.FB_PIXEL_ID}>
-                  <Navigation />
                   {children}
-                  <Footer />
-                  <Toaster />
-                  <SpeedInsights />
-                  <Analytics />
                 </DataProvider>
+                <Toaster />
+                <SpeedInsights />
+                <Analytics />
               </NextTopLoaderWrapper>
             </HydrationBoundary>
           </SessionProvider>

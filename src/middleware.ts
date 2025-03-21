@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest) {
   }
 
   // Handle /account routes: check login status and redirect accordingly
-  if (pathname.startsWith("/account/")) {
+  if (pathname.startsWith("/account/") || pathname.startsWith("/admin/")) {
     if (sessionToken) {
       return NextResponse.next(); // User is logged in, allow access
     }
@@ -39,5 +39,5 @@ export async function middleware(req: NextRequest) {
 
 // Apply middleware to /shop and all /account/[userId] pages (including purchase-history) , "/account", "/account/:path*"
 export const config = {
-  matcher: ["/shop", "/account", "/account/:path*", "/login"],
+  matcher: ["/shop", "/account", "/account/:path*", "/login", "/admin/:path*"],
 };

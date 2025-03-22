@@ -152,14 +152,14 @@ export function DataTable<TData, TValue>({
         />
       </div>
       {/* Data Table */}
-      <div className="border-b-[1px] border-b-slate-200 dark:border-b-slate-700">
+      <div className="border-muted-foreground/20 border-b-[1px]">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
                 className={cn(
-                  "border-b-slate-200 bg-slate-100/80 dark:border-b-slate-700 dark:bg-slate-500/20 dark:hover:bg-slate-500/20",
+                  "border-b-muted-foreground/20 bg-muted/80",
                   extractTableIndex(rowSelection).length > 0 &&
                     "!bg-primary/30",
                 )}
@@ -191,7 +191,7 @@ export function DataTable<TData, TValue>({
                           onClick={() => null}
                           variant={"ghost"}
                           size={"sm"}
-                          className="hover:bg-primary/20 rounded-full"
+                          className="hover:bg-primary/20 rounded-md"
                           // disabled={isLoading}
                         >
                           {false ? (
@@ -219,7 +219,7 @@ export function DataTable<TData, TValue>({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
-                    className="border-b-slate-200 dark:border-b-slate-700"
+                    className="border-b-muted-foreground/20"
                   >
                     {row.getVisibleCells().map((cell) => {
                       return (

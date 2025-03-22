@@ -1,3 +1,14 @@
+export const defaultBeforeAfterImages = {
+  id: "",
+  presetId: "",
+  beforeImage: "",
+  afterImage: "",
+};
+export const defaultGallery = {
+  id: "",
+  link: "",
+  presetId: "",
+};
 export const defaultPreset = {
   id: "",
   productId: "",
@@ -7,11 +18,16 @@ export const defaultPreset = {
   price: 0,
   prevPrice: 0,
   color: "",
-  beforeAfterImages: [
-    { id: "", presetId: "", beforeImage: "", afterImage: "" },
+  beforeAfterImages: [defaultBeforeAfterImages],
+  inclusions: [
+    {
+      id: "",
+      presetId: "",
+      name: "",
+      description: "",
+    },
   ],
-  inclusions: [{ id: "", presetId: "", name: "", description: "" }],
-  gallery: [{ id: "", presetId: "", link: "" }], // Ensure no undefined values here
+  gallery: [defaultGallery],
 };
 
 export const defaultUser = {

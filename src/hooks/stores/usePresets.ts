@@ -1,21 +1,27 @@
-import { defaultPreset } from "@/data/default";
 import { type PresetAndChildren } from "@/types/prisma";
 import { create } from "zustand";
 
 type UserStore = {
   presets: PresetAndChildren[];
-  addPreset: (data: PresetAndChildren[]) => void;
+  addPresets: (data: PresetAndChildren[]) => void;
+  addPreset: (data: PresetAndChildren) => void;
+  updatePreset: (data: PresetAndChildren) => void;
   removeUser: () => void;
 };
 
 export const usePresets = create<UserStore>((set) => ({
-  presets: [defaultPreset],
-  addPreset: (data) =>
+  presets: [],
+  addPresets: (data) =>
     set(() => ({
       presets: data,
     })),
+  addPreset: (data) => set((prev) => ({ presets: [...prev.presets, data] })),
+  updatePreset: (data) =>
+    set((prev) => ({
+      presets: prev.presets.map((item) => (item.id === data.id ? data : item)),
+    })),
   removeUser: () =>
     set(() => ({
-      presets: [defaultPreset],
+      presets: [],
     })),
 }));

@@ -18,7 +18,7 @@ type DataProviderProps = {
 const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
   const { data: session } = useSession();
   const addLoggedUser = useLoggedUser((state) => state.addUser);
-  const addAllPresets = usePresets((state) => state.addPreset);
+  const addAllPresets = usePresets((state) => state.addPresets);
   const pathname = usePathname(); // Get the current path
 
   const { data: user } = useQuery({

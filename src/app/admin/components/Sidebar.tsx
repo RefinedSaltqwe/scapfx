@@ -97,7 +97,7 @@ export default function Example({ children }: { children: React.ReactNode }) {
                     <li>
                       <ul role="list" className="-mx-2 space-y-1">
                         {navigation.map((item) => {
-                          const isActive = pathname === item.href;
+                          const isActive = pathname.includes(item.href);
                           return (
                             <li key={item.name}>
                               <Link
@@ -162,7 +162,7 @@ export default function Example({ children }: { children: React.ReactNode }) {
                 <li>
                   <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => {
-                      const isActive = pathname === item.href;
+                      const isActive = pathname.includes(item.href);
                       return (
                         <li key={item.name}>
                           <Link
@@ -283,12 +283,12 @@ export default function Example({ children }: { children: React.ReactNode }) {
                   </MenuButton>
                   <MenuItems
                     transition
-                    className="ring-primary/5 absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
+                    className="ring-primary/5 bg-background absolute right-0 z-10 mt-2.5 w-auto origin-top-right rounded-md py-2 shadow-lg ring-1 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
                   >
                     <MenuItem>
                       <Link
                         href={`/account/${user?.id}`}
-                        className="data-[focus]:bg-muted text-primary block px-3 py-1 text-sm/6 data-[focus]:outline-none"
+                        className="data-[focus]:bg-muted text-primary inline-block px-3 py-1 text-sm/6 whitespace-nowrap data-[focus]:outline-none"
                       >
                         Purchase History
                       </Link>

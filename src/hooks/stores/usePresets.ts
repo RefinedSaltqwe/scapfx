@@ -6,7 +6,7 @@ type UserStore = {
   addPresets: (data: PresetAndChildren[]) => void;
   addPreset: (data: PresetAndChildren) => void;
   updatePreset: (data: PresetAndChildren) => void;
-  removeUser: () => void;
+  removePresets: (id: string[]) => void;
 };
 
 export const usePresets = create<UserStore>((set) => ({
@@ -20,8 +20,8 @@ export const usePresets = create<UserStore>((set) => ({
     set((prev) => ({
       presets: prev.presets.map((item) => (item.id === data.id ? data : item)),
     })),
-  removeUser: () =>
-    set(() => ({
-      presets: [],
+  removePresets: (id) =>
+    set((prev) => ({
+      presets: prev.presets.filter((item) => !id.includes(item.id)),
     })),
 }));

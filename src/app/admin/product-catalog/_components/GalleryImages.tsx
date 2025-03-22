@@ -4,8 +4,10 @@ import { Input } from "@headlessui/react";
 import { type Gallery } from "@prisma/client";
 import { siteConfig } from "config/site";
 import { Trash2 } from "lucide-react";
-import React from "react";
+import React, { memo } from "react";
 import Image from "next/image";
+import { isImageUrl } from "@/lib/utils";
+import { toast } from "sonner";
 
 type GalleryInputProps = {
   data: Gallery;
@@ -37,16 +39,20 @@ const GalleryInput: React.FC<GalleryInputProps> = ({
           id={`after` + index}
           value={data.link}
           onChange={(e) => {
-            setGalleryImages((prev) => [
-              ...prev.map((item, idx) =>
-                index === idx
-                  ? {
-                      ...item,
-                      link: e.target.value,
-                    }
-                  : item,
-              ),
-            ]);
+            if (isImageUrl(e.target.value)) {
+              setGalleryImages((prev) => [
+                ...prev.map((item, idx) =>
+                  index === idx
+                    ? {
+                        ...item,
+                        link: e.target.value,
+                      }
+                    : item,
+                ),
+              ]);
+            } else {
+              toast.error("Invalid image url");
+            }
           }}
           autoComplete="after"
           placeholder="Image Link"
@@ -74,4 +80,11 @@ const GalleryInput: React.FC<GalleryInputProps> = ({
     </div>
   );
 };
-export default GalleryInput;
+
+export default memo(GalleryInput, (prevProps, nextProps) => {
+  return (
+    prevProps.data.link === nextProps.data.link &&
+    prevProps.index === nextProps.index &&
+    prevProps.count === nextProps.count
+  );
+});

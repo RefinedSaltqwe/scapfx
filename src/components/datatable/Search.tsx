@@ -1,4 +1,4 @@
-import { Input } from "@/components/ui/input";
+import { Input } from "@headlessui/react";
 import React, { memo } from "react";
 
 type SearchProps = {
@@ -22,7 +22,7 @@ const Search: React.FC<SearchProps> = ({
       placeholder={placeholder ?? "Search..."}
       value={globalFilterString}
       onChange={handleChange} // Use the typed handler
-      className="splash-base-input splash-inputs flex flex-1 placeholder:text-gray-400 dark:placeholder:text-gray-600"
+      className="bg-background text-primary focus:outline-primary block h-12 w-full rounded-md px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
     />
   );
 };

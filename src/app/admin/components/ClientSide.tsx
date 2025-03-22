@@ -1,7 +1,7 @@
 "use client";
 import Loader from "@/components/Loader";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useEffect } from "react";
 
 type ClientSideProps = {

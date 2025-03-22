@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 export const UpsertPresetSchema = z.object({
-  id: z.string().cuid(),
+  id: z.string(),
   productId: z.string(),
   name: z.string(),
-  heroImg: z.string().url(),
+  heroImg: z.string(),
   description: z.string(),
   price: z.number(),
   prevPrice: z.number(),
@@ -12,17 +12,17 @@ export const UpsertPresetSchema = z.object({
   beforeAfterImages: z
     .array(
       z.object({
-        id: z.string().cuid(),
+        id: z.string(),
         presetId: z.string(),
-        beforeImage: z.string().url(),
-        afterImage: z.string().url(),
+        beforeImage: z.string(),
+        afterImage: z.string(),
       }),
     )
     .optional(),
   inclusions: z
     .array(
       z.object({
-        id: z.string().cuid(),
+        id: z.string(),
         presetId: z.string(),
         name: z.string(),
         description: z.string(),
@@ -32,8 +32,8 @@ export const UpsertPresetSchema = z.object({
   gallery: z
     .array(
       z.object({
-        id: z.string().cuid(),
-        link: z.string().url(),
+        id: z.string(),
+        link: z.string(),
         presetId: z.string(),
       }),
     )

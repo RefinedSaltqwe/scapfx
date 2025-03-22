@@ -1,12 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { isImageUrl } from "@/lib/utils";
 import { Input } from "@headlessui/react";
 import { type BeforeAfter } from "@prisma/client";
-import { Trash2 } from "lucide-react";
-import React from "react";
-import Image from "next/image";
 import { siteConfig } from "config/site";
+import { Trash2 } from "lucide-react";
+import Image from "next/image";
+import React, { memo } from "react";
+import { toast } from "sonner";
 
 type ComparisonInputsProps = {
   data: BeforeAfter;
@@ -31,16 +33,20 @@ const ComparisonInputs: React.FC<ComparisonInputsProps> = ({
           id={`before` + index}
           value={data.beforeImage}
           onChange={(e) => {
-            setComparisonImages((prev) => [
-              ...prev.map((item, idx) =>
-                index === idx
-                  ? {
-                      ...item,
-                      beforeImage: e.target.value,
-                    }
-                  : item,
-              ),
-            ]);
+            if (isImageUrl(e.target.value)) {
+              setComparisonImages((prev) => [
+                ...prev.map((item, idx) =>
+                  index === idx
+                    ? {
+                        ...item,
+                        beforeImage: e.target.value,
+                      }
+                    : item,
+                ),
+              ]); // Set the hero image if valid URL
+            } else {
+              toast.error("Invalid image url");
+            }
           }}
           autoComplete="before"
           placeholder="Image Link"
@@ -68,16 +74,20 @@ const ComparisonInputs: React.FC<ComparisonInputsProps> = ({
           id={`after` + index}
           value={data.afterImage}
           onChange={(e) => {
-            setComparisonImages((prev) => [
-              ...prev.map((item, idx) =>
-                index === idx
-                  ? {
-                      ...item,
-                      afterImage: e.target.value,
-                    }
-                  : item,
-              ),
-            ]);
+            if (isImageUrl(e.target.value)) {
+              setComparisonImages((prev) => [
+                ...prev.map((item, idx) =>
+                  index === idx
+                    ? {
+                        ...item,
+                        afterImage: e.target.value,
+                      }
+                    : item,
+                ),
+              ]); // Set the hero image if valid URL
+            } else {
+              toast.error("Invalid image url");
+            }
           }}
           autoComplete="after"
           placeholder="Image Link"
@@ -117,4 +127,12 @@ const ComparisonInputs: React.FC<ComparisonInputsProps> = ({
     </div>
   );
 };
-export default ComparisonInputs;
+
+export default memo(ComparisonInputs, (prevProps, nextProps) => {
+  return (
+    prevProps.data.beforeImage === nextProps.data.beforeImage &&
+    prevProps.data.afterImage === nextProps.data.afterImage &&
+    prevProps.index === nextProps.index &&
+    prevProps.count === nextProps.count
+  );
+});

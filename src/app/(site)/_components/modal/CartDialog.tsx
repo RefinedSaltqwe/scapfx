@@ -27,7 +27,7 @@ import { siteConfig } from "config/site";
 import { Info, X, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import React, { lazy, useCallback, useMemo, useState } from "react";
 import TermsAndConditionPage from "../../terms-and-conditions/page";
 

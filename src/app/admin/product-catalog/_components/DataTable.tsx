@@ -28,8 +28,13 @@ import { cn } from "@/lib/utils";
 import { type Preset } from "@prisma/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DataTableFilters } from "./DataTableFilters";
+import { useAction } from "@/hooks/useSafeAction";
+import { deletePresets } from "@/server/actions/delete-presets";
+import { toast } from "sonner";
+import { useDeleteManyModal } from "@/hooks/stores/useDeleteManyModal";
+import { usePresets } from "@/hooks/stores/usePresets";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -66,6 +71,12 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [globalFilterString, setGlobalFilterString] = useState("");
+  const modalIds = useDeleteManyModal((state) => state.modalIds);
+  const isProceed = useDeleteManyModal((state) => state.proceed);
+  const onIsProceed = useDeleteManyModal((state) => state.onIsProceed);
+  const onClose = useDeleteManyModal((state) => state.onClose);
+  const presetModal = useDeleteManyModal();
+  const removePresets = usePresets((state) => state.removePresets);
   const table = useReactTable({
     data,
     columns,
@@ -90,30 +101,36 @@ export function DataTable<TData, TValue>({
   });
 
   const queryClient = useQueryClient();
-  // const { execute, isLoading } = useAction(deleteService, {
-  //   onSuccess: () => {
-  //     toast.success(
-  //       `${
-  //         modalIds?.length && modalIds?.length > 1
-  //           ? "Services have"
-  //           : "Service has"
-  //       } been deleted.`,
-  //     );
-  //     void queryClient.invalidateQueries({
-  //       queryKey: ["serviceTypes", agencyId],
-  //     });
-  //   },
-  //   onError: (error) => {
-  //     toast.error(error, {
-  //       duration: 5000,
-  //     });
-  //   },
-  //   onComplete: () => {
-  //     setRowSelection([]);
-  //     onIsProceed(false);
-  //     onClose();
-  //   },
-  // });
+  const { execute: executeDeletePresets, isLoading } = useAction(
+    deletePresets,
+    {
+      onSuccess: () => {
+        toast.success(
+          `${
+            modalIds?.length && modalIds?.length > 1
+              ? "Presets have"
+              : "Preset has"
+          } been deleted.`,
+        );
+        if (modalIds?.length && modalIds?.length > 0) {
+          removePresets(modalIds);
+        }
+        void queryClient.invalidateQueries({
+          queryKey: ["all_presets"],
+        });
+      },
+      onError: (error) => {
+        toast.error(error, {
+          duration: 5000,
+        });
+      },
+      onComplete: () => {
+        setRowSelection([]);
+        onIsProceed(false);
+        onClose();
+      },
+    },
+  );
 
   const searchFilter = useCallback(
     (val: string) => {
@@ -122,23 +139,21 @@ export function DataTable<TData, TValue>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [globalFilterString],
   );
-  // const deleteSelecetedUsers = () => {
-  //   const getUsers = extractRowIds(
-  //     extractTableIndex(rowSelection),
-  //     serviceType,
-  //   );
-  //   serviceModal.onOpen(getUsers, "serviceType");
-  // };
+  const deleteSelecetedPresets = () => {
+    const getPresets = extractRowIds(extractTableIndex(rowSelection), presets);
+    presetModal.onOpen(getPresets, "preset");
+  };
 
-  // useEffect(() => {
-  //   if (isProceed) {
-  //     void execute({
-  //       ids: modalIds!,
-  //     });
-  //   } else {
-  //     return;
-  //   }
-  // }, [isProceed]);
+  useEffect(() => {
+    if (isProceed) {
+      void executeDeletePresets({
+        ids: modalIds!,
+      });
+    } else {
+      return;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isProceed]);
 
   return (
     <div className="flex w-full flex-col pt-4 pb-6">
@@ -188,13 +203,13 @@ export function DataTable<TData, TValue>({
                     return (
                       <TableHead key={header.id} className="text-right">
                         <Button
-                          onClick={() => null}
+                          onClick={deleteSelecetedPresets}
                           variant={"ghost"}
                           size={"sm"}
                           className="hover:bg-primary/20 rounded-md"
-                          // disabled={isLoading}
+                          disabled={isLoading}
                         >
-                          {false ? (
+                          {isLoading ? (
                             <Loader classNames="h-4 w-4 border-2 border-primary brightness-100 saturate-200 border-r-transparent" />
                           ) : (
                             <Trash2

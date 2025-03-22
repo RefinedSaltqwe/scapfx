@@ -1,16 +1,11 @@
 "use client";
 
 import { DataTableColumnHeader } from "@/components/datatable/DataTableColumnHeader";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { type Preset } from "@prisma/client";
 import { type ColumnDef } from "@tanstack/react-table";
-import { Pencil, Trash2 } from "lucide-react";
-import { redirect } from "next/navigation";
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+import CellActionButtons from "./CellActionButtons";
 
 export const columns: ColumnDef<Preset>[] = [
   {
@@ -58,12 +53,7 @@ export const columns: ColumnDef<Preset>[] = [
     cell: ({ row }) => {
       const data = row.original;
       return (
-        <span
-          onClick={() =>
-            console.log("Columns.tsx: line 97: ", row.getValue("id"))
-          }
-          className="min-w-[1000px] text-left font-medium capitalize hover:cursor-pointer hover:underline"
-        >
+        <span className="min-w-[1000px] text-left font-medium capitalize hover:cursor-pointer hover:underline">
           {data.name}
         </span>
       );
@@ -73,26 +63,7 @@ export const columns: ColumnDef<Preset>[] = [
     id: "actions",
     cell: ({ row }) => {
       const item = row.original;
-      return (
-        <div className="text-muted-foreground flex flex-row justify-end space-x-1">
-          <Button
-            variant="ghost"
-            className="hover:!bg-muted-foreground/20 rounded-md"
-            size={"icon"}
-            onClick={() => redirect(`/admin/product-catalog/update/${item.id}`)}
-          >
-            <Pencil size={20} />
-          </Button>
-          <Button
-            variant="ghost"
-            size={"icon"}
-            className="hover:!bg-destructive/20 rounded-md"
-            onClick={() => null}
-          >
-            <Trash2 className="text-destructive" size={20} />
-          </Button>
-        </div>
-      );
+      return <CellActionButtons item={item} />;
     },
   },
 ];

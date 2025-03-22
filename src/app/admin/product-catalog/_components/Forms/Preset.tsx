@@ -41,6 +41,7 @@ import { useAction } from "@/hooks/useSafeAction";
 import { upsertPreset } from "@/server/actions/upsert-preset";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { siteConfig } from "config/site";
 
 const Loader = lazy(() => import("@/components/Loader"));
 
@@ -149,7 +150,7 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
                   <Image
                     alt=""
                     src={
-                      currentPreset?.heroImg ?? "https://github.com/shadcn.png"
+                      currentPreset?.heroImg ?? siteConfig.defaultProductImage
                     }
                     className="size-24 flex-none rounded-lg bg-gray-800 object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -389,17 +390,7 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
           </div>
 
           <div className="grid w-full grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
-            <div>
-              <h2 className="text-foreground text-base/7 font-semibold">
-                Log out other sessions
-              </h2>
-              <p className="text-muted-foreground mt-1 text-sm/6">
-                Please enter your password to confirm you would like to log out
-                of your other sessions across all of your devices.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+            <div className="grid gap-y-8 sm:max-w-xl md:col-start-2">
               <div className="col-span-full">
                 <Button
                   className="bg-primary hover:bg-primary focus-visible:outline-primary flex h-12 w-full justify-center rounded-md px-3 py-1.5 text-sm/6 font-semibold text-white uppercase shadow-sm focus-visible:outline focus-visible:outline-offset-2"

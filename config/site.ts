@@ -11,4 +11,5 @@ export const siteConfig = {
   og_url: "scapcreative.com",
   og_image: "/assets/images/preview-dark.jpg",
   og_type: "website",
+  defaultProductImage: "https://github.com/shadcn.png",
 };

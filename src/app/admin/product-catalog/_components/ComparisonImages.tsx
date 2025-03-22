@@ -5,6 +5,8 @@ import { Input } from "@headlessui/react";
 import { type BeforeAfter } from "@prisma/client";
 import { Trash2 } from "lucide-react";
 import React from "react";
+import Image from "next/image";
+import { siteConfig } from "config/site";
 
 type ComparisonInputsProps = {
   data: BeforeAfter;
@@ -44,6 +46,18 @@ const ComparisonInputs: React.FC<ComparisonInputsProps> = ({
           placeholder="Image Link"
           className="bg-background text-primary focus:outline-primary block h-12 w-full rounded-md px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
         />
+        <Image
+          alt=""
+          src={
+            data.beforeImage !== ""
+              ? data.beforeImage
+              : siteConfig.defaultProductImage
+          }
+          className="mt-4 size-24 flex-none rounded-lg bg-gray-800 object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          width={24}
+          height={24}
+        />
       </div>
 
       <div className="flex-1">
@@ -68,6 +82,18 @@ const ComparisonInputs: React.FC<ComparisonInputsProps> = ({
           autoComplete="after"
           placeholder="Image Link"
           className="bg-background text-primary focus:outline-primary block h-12 w-full rounded-md px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+        />
+        <Image
+          alt=""
+          src={
+            data.afterImage !== ""
+              ? data.afterImage
+              : siteConfig.defaultProductImage
+          }
+          className="mt-4 size-24 flex-none rounded-lg bg-gray-800 object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          width={24}
+          height={24}
         />
       </div>
 

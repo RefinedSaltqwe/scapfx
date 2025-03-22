@@ -2,10 +2,23 @@
 
 import { db } from "@/server/db";
 import { type PresetAndChildren } from "@/types/prisma";
+import {
+  type BeforeAfter,
+  type Gallery,
+  type Inclusions,
+} from "@prisma/client";
 import cuid from "cuid";
 
+// Utility function to check if two objects are different (shallow comparison)
+const hasChanges = (
+  oldData: BeforeAfter | Inclusions | Gallery,
+  newData: BeforeAfter | Inclusions | Gallery,
+) => {
+  return JSON.stringify(oldData) !== JSON.stringify(newData);
+};
+
 export const upsertPresetQuery = async (item: PresetAndChildren) => {
-  // First, upsert the preset
+  // First, upsert the preset (create or update)
   const preset = await db.preset.upsert({
     where: item.id ? { id: item.id } : { id: cuid() }, // Ensure `where` always has a valid value
     update: {
@@ -34,41 +47,82 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
     },
   });
 
-  // Then, upsert the related beforeAfterImages
+  // Then, handle related beforeAfterImages
   if (item.beforeAfterImages?.length) {
     await Promise.all(
       item.beforeAfterImages.map(async (image) => {
-        await db.beforeAfter.upsert({
-          where: { id: image.id }, // Look for existing record by ID
-          update: image, // Update existing entry with new data
-          create: { ...image, presetId: preset.id }, // Create new entry if not found
-        });
+        if (image.id) {
+          // If image has an id, check if it exists in the database
+          const existingImage = await db.beforeAfter.findUnique({
+            where: { id: image.id },
+          });
+
+          if (!existingImage || hasChanges(existingImage, image)) {
+            await db.beforeAfter.upsert({
+              where: { id: image.id },
+              update: image, // Update if changed
+              create: { ...image, presetId: preset.id }, // Create if new
+            });
+          }
+        } else {
+          // If no id (new image), create the image
+          await db.beforeAfter.create({
+            data: { ...image, presetId: preset.id },
+          });
+        }
       }),
     );
   }
 
-  // Upsert the related inclusions
+  // Handle related inclusions
   if (item.inclusions?.length) {
     await Promise.all(
       item.inclusions.map(async (inclusion) => {
-        await db.inclusions.upsert({
-          where: { id: inclusion.id }, // Look for existing record by ID
-          update: inclusion, // Update existing entry with new data
-          create: { ...inclusion, presetId: preset.id }, // Create new entry if not found
-        });
+        if (inclusion.id) {
+          const existingInclusion = await db.inclusions.findUnique({
+            where: { id: inclusion.id },
+          });
+
+          if (!existingInclusion || hasChanges(existingInclusion, inclusion)) {
+            await db.inclusions.upsert({
+              where: { id: inclusion.id },
+              update: inclusion, // Update if changed
+              create: { ...inclusion, presetId: preset.id }, // Create if new
+            });
+          }
+        } else {
+          await db.inclusions.create({
+            data: { ...inclusion, presetId: preset.id },
+          });
+        }
       }),
     );
   }
 
-  // Upsert the related gallery items
+  // Handle related gallery items
   if (item.gallery?.length) {
     await Promise.all(
       item.gallery.map(async (galleryItem) => {
-        await db.gallery.upsert({
-          where: { id: galleryItem.id }, // Look for existing record by ID
-          update: galleryItem, // Update existing entry with new data
-          create: { ...galleryItem, presetId: preset.id }, // Create new entry if not found
-        });
+        if (galleryItem.id) {
+          const existingGalleryItem = await db.gallery.findUnique({
+            where: { id: galleryItem.id },
+          });
+
+          if (
+            !existingGalleryItem ||
+            hasChanges(existingGalleryItem, galleryItem)
+          ) {
+            await db.gallery.upsert({
+              where: { id: galleryItem.id },
+              update: galleryItem, // Update if changed
+              create: { ...galleryItem, presetId: preset.id }, // Create if new
+            });
+          }
+        } else {
+          await db.gallery.create({
+            data: { ...galleryItem, presetId: preset.id },
+          });
+        }
       }),
     );
   }

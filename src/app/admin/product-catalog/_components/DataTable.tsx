@@ -1,5 +1,4 @@
 "use client";
-
 import {
   flexRender,
   getCoreRowModel,
@@ -33,8 +32,8 @@ import { DataTableFilters } from "./DataTableFilters";
 import { useAction } from "@/hooks/useSafeAction";
 import { deletePresets } from "@/server/actions/delete-presets";
 import { toast } from "sonner";
-import { useDeleteManyModal } from "@/hooks/stores/useDeleteManyModal";
-import { usePresets } from "@/hooks/stores/usePresets";
+import { useDeleteManyModal } from "@/hooks/stores/useDeleteManyModalStore";
+import { usePresets } from "@/hooks/stores/usePresetsStore";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

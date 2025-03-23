@@ -3,8 +3,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { supportedSoftwares } from "@/data";
-import { useCart } from "@/hooks/stores/useCart";
-import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
+import { useCart } from "@/hooks/stores/useCartStore";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
 import React, { useMemo } from "react";
 import Plan from "./Plan";
 import { type PresetAndChildren } from "@/types/prisma";

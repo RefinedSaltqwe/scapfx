@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Trash2, Pencil } from "lucide-react";
-import { useDeleteManyModal } from "@/hooks/stores/useDeleteManyModal";
+import { useDeleteManyModal } from "@/hooks/stores/useDeleteManyModalStore";
 import { redirect } from "next/navigation";
 import { type Preset } from "@prisma/client";
 

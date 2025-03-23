@@ -2,7 +2,7 @@
 import React, { Suspense } from "react";
 import { columns } from "./Columns";
 import { DataTable } from "./DataTable";
-import { usePresets } from "@/hooks/stores/usePresets";
+import { usePresets } from "@/hooks/stores/usePresetsStore";
 import Loader from "@/components/Loader";
 
 const ProductList: React.FC = () => {

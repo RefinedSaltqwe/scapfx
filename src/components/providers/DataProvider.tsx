@@ -1,6 +1,6 @@
 "use client";
-import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
-import { usePresets } from "@/hooks/stores/usePresets";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
+import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { initFacebookPixel, trackPageView } from "@/lib/fbpixels";
 import { fetchPrice } from "@/lib/fetchPrice";
 import { getPresets } from "@/server/queries/fetch-presets";

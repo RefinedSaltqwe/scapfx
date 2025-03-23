@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { env } from "@/env";
-import { useCart } from "@/hooks/stores/useCart";
-import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
+import { useCart } from "@/hooks/stores/useCartStore";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
 import { cn } from "@/lib/utils";
 import {
   Dialog,

@@ -130,4 +130,14 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* Dropdown */
+  .bg-drop-downmenu {
+    @apply bg-card/75 dark:dark:bg-muted/75 border-transparent backdrop-blur-md;
+  }
+
+  .bg-drop-downmenu div[role="menuitem"],
+  div[role="option"],
+  div[role="menuitemcheckbox"] {
+    @apply hover:bg-muted-foreground/5 data-[state=open]:bg-muted-foreground/5 mt-1 cursor-pointer;
+  }
 }

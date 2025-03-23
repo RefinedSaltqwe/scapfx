@@ -51,7 +51,7 @@ export default async function RootLayout({
   // Prefetch presets once
   await queryClient.prefetchQuery({
     queryFn: getPresets,
-    queryKey: ["all_presets_"],
+    queryKey: ["all_presets"],
   });
 
   return (

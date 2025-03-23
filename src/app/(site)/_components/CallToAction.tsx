@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useCart } from "@/hooks/stores/useCart";
+import { useCart } from "@/hooks/stores/useCartStore";
 import { trackEvent } from "@/lib/fbpixels";
 import { type PresetAndChildren } from "@/types/prisma";
 import { siteConfig } from "config/site";

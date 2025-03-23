@@ -1,7 +1,7 @@
 "use client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { env } from "@/env";
-import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
 import { type Preset } from "@prisma/client";
 import { siteConfig } from "config/site";
 import { CheckCircleIcon } from "lucide-react";

@@ -1,7 +1,7 @@
 "use client";
 
-import { useCart } from "@/hooks/stores/useCart";
-import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
+import { useCart } from "@/hooks/stores/useCartStore";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, ShoppingBasket, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
@@ -18,7 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { usePresets } from "@/hooks/stores/usePresets";
+import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { Button } from "./ui/button";
 
 const Navigation: React.FC = () => {

@@ -11,8 +11,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { useDeleteManyModal } from "@/hooks/stores/useDeleteManyModal";
-import { usePresets } from "@/hooks/stores/usePresets";
+import { useDeleteManyModal } from "@/hooks/stores/useDeleteManyModalStore";
+import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { Input } from "@headlessui/react";
 import React, { lazy, useEffect, useState } from "react";
 

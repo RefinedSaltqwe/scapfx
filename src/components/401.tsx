@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 import Image from "next/image";
-import { usePresets } from "@/hooks/stores/usePresets";
+import { usePresets } from "@/hooks/stores/usePresetsStore";
 
 const Custom401 = () => {
   const preset = usePresets((state) => state.presets);

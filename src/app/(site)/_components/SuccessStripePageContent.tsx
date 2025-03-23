@@ -1,7 +1,7 @@
 "use client";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
-import { usePresets } from "@/hooks/stores/usePresets";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
+import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { useAction } from "@/hooks/useSafeAction";
 import { createUserPreset } from "@/server/actions/create-user-checkout-success";
 import { getUserByStripeSessionId } from "@/server/queries/fetch-user-preset-by-session";

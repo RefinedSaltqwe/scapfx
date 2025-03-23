@@ -6,7 +6,7 @@ import Gallery from "@/app/(site)/_components/Gallery";
 import Hero from "@/app/(site)/_components/Hero";
 import Product from "@/app/(site)/_components/Product";
 import Container from "@/components/Container";
-import { usePresets } from "@/hooks/stores/usePresets";
+import { usePresets } from "@/hooks/stores/usePresetsStore";
 import React, { lazy, useMemo } from "react";
 const Loader = lazy(() => import("@/components/Loader"));
 

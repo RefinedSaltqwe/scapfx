@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { type Preset } from "@prisma/client";
 import { type ColumnDef } from "@tanstack/react-table";
 import CellActionButtons from "./CellActionButtons";
+import { QuickEditModal } from "@/components/modal/QuickEditModal";
 
 export const columns: ColumnDef<Preset>[] = [
   {
@@ -14,7 +15,6 @@ export const columns: ColumnDef<Preset>[] = [
       <Checkbox
         className={cn(
           "font-normal placeholder:text-gray-400 dark:placeholder:text-gray-600",
-          "splash-base-input splash-inputs",
         )}
         checked={
           table.getIsAllPageRowsSelected() ||
@@ -53,9 +53,9 @@ export const columns: ColumnDef<Preset>[] = [
     cell: ({ row }) => {
       const data = row.original;
       return (
-        <span className="min-w-[1000px] text-left font-medium capitalize hover:cursor-pointer hover:underline">
-          {data.name}
-        </span>
+        <QuickEditModal
+          data={{ name: data.name, id: data.id, productId: data.productId }}
+        />
       );
     },
   },

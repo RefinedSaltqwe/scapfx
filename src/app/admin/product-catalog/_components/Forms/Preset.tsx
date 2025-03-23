@@ -14,7 +14,7 @@ import {
   defaultGallery,
   defaultPreset,
 } from "@/data/default";
-import { usePresets } from "@/hooks/stores/usePresets";
+import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { useAction } from "@/hooks/useSafeAction";
 import { upsertPreset } from "@/server/actions/upsert-preset";
 import { UpsertPresetSchema } from "@/server/actions/upsert-preset/schema";
@@ -175,7 +175,10 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
                   Preset Information
                 </h2>
                 <p className="text-muted-foreground mt-1 text-sm/6">
-                  Use a permanent address where you can receive mail.
+                  Use this form to provide details and suggestions for your
+                  preset, which will be displayed on our website. Share any key
+                  features or descriptions to help customers understand its
+                  unique value.
                 </p>
               </div>
 
@@ -351,7 +354,9 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
                   Comparison Slider
                 </h2>
                 <p className="text-muted-foreground mt-1 text-sm/6">
-                  This for the before and after comprasion slider images.
+                  Use this slider to showcase a before-and-after comparison of
+                  your preset in action. It allows customers to see the
+                  transformation with your preset applied.
                 </p>
               </div>
 
@@ -400,7 +405,9 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
                   Gallery
                 </h2>
                 <p className="text-muted-foreground mt-1 text-sm/6">
-                  This for the gallery.
+                  Display a collection of images showcasing the impact of your
+                  preset. This gallery helps customers visualize the preset's
+                  effect across different styles and settings.
                 </p>
               </div>
 

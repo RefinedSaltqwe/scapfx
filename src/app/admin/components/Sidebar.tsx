@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useLoggedUser } from "@/hooks/stores/useLoggedUser";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -242,10 +242,13 @@ export default function Example({ children }: { children: React.ReactNode }) {
                 <Button
                   variant={"ghost"}
                   onClick={() => router.push("/shop/")}
-                  className="hover:text-muted0 text-muted-foreground -m-2.5 p-2.5"
+                  className="hover:text-foreground text-foreground -m-2.5 p-2.5 hover:bg-transparent"
                 >
                   <span className="sr-only">Store Icon</span>
-                  <Store aria-hidden="true" className="size-6" />
+                  <Store
+                    aria-hidden="true"
+                    className="text-foreground size-6 stroke-1"
+                  />
                 </Button>
 
                 {/* Separator */}
@@ -255,8 +258,8 @@ export default function Example({ children }: { children: React.ReactNode }) {
                 />
 
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative">
-                  <MenuButton className="-m-1.5 flex items-center p-1.5">
+                <Menu as="div" className="relative cursor-pointer">
+                  <MenuButton className="-m-1.5 flex cursor-pointer items-center p-1.5">
                     <span className="sr-only">Open user menu</span>
                     <Image
                       alt=""

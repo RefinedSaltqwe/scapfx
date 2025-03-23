@@ -13,9 +13,12 @@ const Details: React.FC<DetailsProps> = () => {
     <div className="bg-background py-6">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-          <div className="col-span-2">
+          <div className="col-span-2 text-center md:text-left">
             <p className="text-primary text-xl font-bold tracking-tight sm:text-2xl">
               {`What's included?`}
+            </p>
+            <p className="text-muted-foreground mt-6 text-base/7">
+              These are the items included in this pack.
             </p>
           </div>
           <dl className="text-muted-foreground col-span-3 grid grid-cols-1 gap-x-8 gap-y-10 text-base/7 sm:grid-cols-2 lg:gap-y-16">

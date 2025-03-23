@@ -113,12 +113,6 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
   const onSubmit = useCallback(
     async (values: z.infer<typeof UpsertPresetSchema>) => {
       try {
-        console.log("Form values before submission:", {
-          ...values,
-          beforeAfterImages: comparisonImages,
-          gallery: galleryImages,
-        });
-
         await executeUpsertPreset({
           ...values,
           beforeAfterImages: comparisonImages,

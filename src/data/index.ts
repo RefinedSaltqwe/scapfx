@@ -219,7 +219,12 @@ export const whatsIncluded = [
   {
     name: "Shooting Tips",
     description:
-      "To help you get the best results from my Lightroom presets, I'll share some of the methods I personally use when shooting my photos. In this guide, I'll walk you through my camera settings and tips on how to capture images that work perfectly with my presets in post-processing.",
+      "To help you get the best results from my Lightroom presets, I'll share some of the methods I personally use when shooting my photos. In this guide, I'll walk you through on how I capture my images that work perfectly with my presets in post-processing.",
+  },
+  {
+    name: "Camera Settings",
+    description:
+      "This section covers the camera settings I use to capture images that align perfectly with my Lightroom presets.",
   },
   {
     name: "Preset Tutorial",

@@ -47,7 +47,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({
 
   return (
     <Dialog open={isOpen.open} onOpenChange={onClose}>
-      <DialogContent className="mb-5 border-0 bg-transparent p-0">
+      <DialogContent className="mb-5 w-full border-0 bg-transparent p-0 sm:!max-w-xl lg:!max-w-3xl">
         <DialogTitle className="sr-only">{isOpen.idx}</DialogTitle>
         <DialogDescription className="sr-only">{isOpen.idx}</DialogDescription>
         <div className="relative aspect-5/6 h-full w-full">

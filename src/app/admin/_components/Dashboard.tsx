@@ -25,22 +25,22 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <DashboardCard
           title="Total Revenue"
-          description="Desciptiom"
+          description="The total income from all sales before expenses."
           content={`$${data?.totalRevenue.toFixed(2)}`}
         />
         <DashboardCard
           title="Total Customers"
-          description="Desciptiom"
+          description="The total number of unique buyers."
           content={`${data?.totalCustomers}`}
         />
         <DashboardCard
           title="Total Payments"
-          description="Desciptiom"
+          description="The total number of completed transactions."
           content={`${data?.totalPayments}`}
         />
         <DashboardCard
           title="Total Subscriptions"
-          description="Desciptiom"
+          description="The total number of active subscribers."
           content={`${data?.totalSubscriptions}`}
         />
       </div>

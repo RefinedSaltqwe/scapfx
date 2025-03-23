@@ -405,9 +405,9 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
                   Gallery
                 </h2>
                 <p className="text-muted-foreground mt-1 text-sm/6">
-                  Display a collection of images showcasing the impact of your
+                  {`Display a collection of images showcasing the impact of your
                   preset. This gallery helps customers visualize the preset's
-                  effect across different styles and settings.
+                  effect across different styles and settings.`}
                 </p>
               </div>
 

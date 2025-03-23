@@ -1,6 +1,6 @@
 import React from "react";
-import ClientSide from "./components/ClientSide";
-import Sidebar from "./components/Sidebar";
+import ClientSide from "./_components/ClientSide";
+import Sidebar from "./_components/Sidebar";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;

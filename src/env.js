@@ -29,6 +29,8 @@ export const env = createEnv({
     FB_CONVERSIONS_API: z.string(),
     SUPABASE_BUCKET_NAME: z.string(),
     STRIPE_BUNDLE_DISCOUNT: z.string(),
+    VERCEL_API_TOKEN: z.string(),
+    VERCEL_PROJECT_ID: z.string(),
   },
 
   /**
@@ -70,6 +72,8 @@ export const env = createEnv({
     SUPABASE_BUCKET_NAME: process.env.SUPABASE_BUCKET_NAME,
     STRIPE_BUNDLE_DISCOUNT: process.env.STRIPE_BUNDLE_DISCOUNT,
     NEXT_PUBLIC_STRIPE_DISCOUNT: process.env.NEXT_PUBLIC_STRIPE_DISCOUNT,
+    VERCEL_API_TOKEN: process.env.VERCEL_API_TOKEN,
+    VERCEL_PROJECT_ID: process.env.VERCEL_PROJECT_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

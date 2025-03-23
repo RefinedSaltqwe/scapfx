@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
-import Heading from "../components/Heading";
+import Heading from "../_components/Heading";
 import ProductList from "./_components/ProductsList";
 
 const ProductCatalogPage: React.FC = () => {

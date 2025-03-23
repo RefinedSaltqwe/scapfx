@@ -1,6 +1,6 @@
 import React from "react";
-import Dashboard from "../components/Dashboard";
-import Heading from "../components/Heading";
+import Dashboard from "../_components/Dashboard";
+import Heading from "../_components/Heading";
 
 const DashboardPage: React.FC = () => {
   return (

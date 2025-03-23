@@ -43,7 +43,7 @@ import { ColorPicker } from "../ColorPicker";
 import ComparisonInputs from "../ComparisonImages";
 import GalleryInput from "../GalleryImages";
 import FloatingFormSubmitBtn from "../FloatingFormSubmitBtn";
-import Heading from "@/app/admin/components/Heading";
+import Heading from "@/app/admin/_components/Heading";
 import { isImageUrl } from "@/lib/utils";
 
 const Loader = lazy(() => import("@/components/Loader"));

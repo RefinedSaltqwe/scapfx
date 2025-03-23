@@ -123,7 +123,7 @@ export default async function RootLayout({
                 </DataProvider>
                 <Toaster />
                 <SpeedInsights />
-                <Analytics />
+                <Analytics mode="production" />
               </NextTopLoaderWrapper>
             </HydrationBoundary>
           </SessionProvider>

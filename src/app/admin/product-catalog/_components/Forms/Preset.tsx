@@ -177,13 +177,13 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
               </div>
 
               <div className="col-span-full md:col-span-2">
-                <div className="grid grid-cols-1 gap-y-8 sm:max-w-xl sm:grid-cols-6 sm:gap-x-4">
+                <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-6 sm:gap-x-4">
                   <div className="col-span-full flex flex-col items-center gap-x-8">
                     {/* Display Hero Image */}
                     <Image
                       alt=""
                       src={hero} // Use the hero state here
-                      className="mb-6 h-52 w-full flex-none rounded-lg bg-gray-800 object-cover"
+                      className="mb-6 h-64 w-full flex-none rounded-lg bg-gray-800 object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       width={24}
                       height={24}
@@ -354,7 +354,7 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
                 </p>
               </div>
 
-              <div className="col-span-2 grid grid-cols-1 gap-y-8 sm:max-w-xl">
+              <div className="col-span-2 grid grid-cols-1 gap-y-8">
                 {comparisonImages.map((item, index) => {
                   return (
                     <div key={index}>
@@ -406,7 +406,7 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
                 </p>
               </div>
 
-              <div className="col-span-2 grid grid-cols-1 gap-y-8 sm:max-w-xl">
+              <div className="col-span-2 grid grid-cols-1 gap-y-8">
                 {galleryImages.map((item, index) => {
                   return (
                     <div key={index}>

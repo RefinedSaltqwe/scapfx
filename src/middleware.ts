@@ -9,7 +9,7 @@ export async function middleware(req: NextRequest) {
     cookie.name?.includes("session-token"),
   );
 
-  const apiUrl = `${req.nextUrl.origin}/api/fetch-first-preset`; // Adjust based on your API route
+  const apiUrl = `${req.nextUrl.origin}/api/fetch-first-preset`;
 
   try {
     const response = await fetch(apiUrl);

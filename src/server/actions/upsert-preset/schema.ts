@@ -6,6 +6,7 @@ export const UpsertPresetSchema = z.object({
   name: z.string(),
   heroImg: z.string(),
   description: z.string(),
+  createdAt: z.date(),
   price: z.number(),
   prevPrice: z.number(),
   color: z.string(),
@@ -16,6 +17,7 @@ export const UpsertPresetSchema = z.object({
         presetId: z.string(),
         beforeImage: z.string(),
         afterImage: z.string(),
+        sequence: z.number().nullable(),
       }),
     )
     .optional(),
@@ -35,6 +37,7 @@ export const UpsertPresetSchema = z.object({
         id: z.string(),
         link: z.string(),
         presetId: z.string(),
+        sequence: z.number().nullable(),
       }),
     )
     .optional(),

@@ -3,15 +3,18 @@ export const defaultBeforeAfterImages = {
   presetId: "",
   beforeImage: "",
   afterImage: "",
+  sequence: null,
 };
 export const defaultGallery = {
   id: "",
   link: "",
   presetId: "",
+  sequence: null,
 };
 export const defaultPreset = {
   id: "",
   productId: "",
+  createdAt: new Date(),
   name: "",
   heroImg: "",
   description: "",

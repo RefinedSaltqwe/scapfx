@@ -103,6 +103,7 @@ model Preset {
   price              Float
   prevPrice          Float
   color              String
+  createdAt         DateTime @default(now())
   beforeAfterImages  BeforeAfter[]
   inclusions         Inclusions[]
   users              PresetUser[]
@@ -115,6 +116,7 @@ model BeforeAfter {
     presetId            String
     beforeImage         String
     afterImage          String
+    sequence            Float?
 
     preset             Preset @relation(fields: [presetId], references: [id], onDelete: Cascade)
 }
@@ -132,6 +134,7 @@ model Gallery {
   id                      String @id @default(cuid())
   link                    String
   presetId                String
+  sequence                Float?
 
   preset                  Preset @relation(fields: [presetId], references: [id], onDelete: Cascade)
 }

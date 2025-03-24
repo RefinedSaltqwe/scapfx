@@ -15,7 +15,7 @@ const FloatingFormSubmitBtn: React.FC<FloatingFormSubmitBtnProps> = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="justify bg-background border-muted-foreground/20 sticky bottom-8 flex w-full items-center justify-between rounded-md border-[1px] py-2 pr-2 pl-6 shadow-md">
+    <div className="justify bg-background border-muted-foreground/20 sticky bottom-8 flex w-full items-center justify-between rounded-md border-[1px] py-2 pr-2 pl-6 shadow-md lg:bottom-4">
       <div className="font-bold">
         {type === "update" ? "Save changes" : "New preset"}
       </div>

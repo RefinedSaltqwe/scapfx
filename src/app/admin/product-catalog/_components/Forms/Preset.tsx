@@ -1,4 +1,5 @@
 "use client";
+import Heading from "@/app/admin/_components/Heading";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,6 +17,7 @@ import {
 } from "@/data/default";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { useAction } from "@/hooks/useSafeAction";
+import { isImageUrl } from "@/lib/utils";
 import { upsertPreset } from "@/server/actions/upsert-preset";
 import { UpsertPresetSchema } from "@/server/actions/upsert-preset/schema";
 import { Input, Textarea } from "@headlessui/react";
@@ -41,10 +43,8 @@ import { toast } from "sonner";
 import { type z } from "zod";
 import { ColorPicker } from "../ColorPicker";
 import ComparisonInputs from "../ComparisonImages";
-import GalleryInput from "../GalleryImages";
 import FloatingFormSubmitBtn from "../FloatingFormSubmitBtn";
-import Heading from "@/app/admin/_components/Heading";
-import { isImageUrl } from "@/lib/utils";
+import GalleryInput from "../GalleryImages";
 
 const Loader = lazy(() => import("@/components/Loader"));
 
@@ -382,6 +382,7 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
                           presetId: currentPreset?.id ?? "",
                           beforeImage: "",
                           afterImage: "",
+                          sequence: null,
                         },
                       ])
                     }
@@ -432,6 +433,7 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
                           id: newCuid,
                           link: "",
                           presetId: currentPreset?.id ?? "",
+                          sequence: null,
                         },
                       ])
                     }

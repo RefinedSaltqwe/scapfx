@@ -16,7 +16,7 @@ const NextTopLoaderWrapper: React.FC<NextTopLoaderWrapperProps> = ({
 
   // Memoized color computation to avoid unnecessary re-renders
   const color = useMemo(
-    () => presets?.find((p) => pathname.includes(p.name))?.color ?? "#000",
+    () => presets?.find((p) => pathname.includes(p.id))?.color ?? "#000",
     [pathname, presets],
   );
 

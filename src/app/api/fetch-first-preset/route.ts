@@ -6,7 +6,7 @@ export const runtime = "nodejs"; // Ensure this API runs in Node.js
 export async function GET() {
   try {
     const firstPreset = await db.preset.findFirst({
-      orderBy: { name: "asc" },
+      orderBy: { createdAt: "desc" },
     });
 
     return NextResponse.json({ firstPreset });

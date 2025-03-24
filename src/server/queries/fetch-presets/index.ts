@@ -9,7 +9,7 @@ export const getPresets = async () => {
       gallery: true,
     },
     orderBy: {
-      name: "asc",
+      createdAt: "desc",
     },
   });
 

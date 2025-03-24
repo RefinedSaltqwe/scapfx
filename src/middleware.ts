@@ -15,13 +15,13 @@ export async function middleware(req: NextRequest) {
     const response = await fetch(apiUrl);
     const { firstPreset } = (await response.json()) as { firstPreset: Preset };
 
+    // Redirect only if firstPreset exists and has an ID
     if ((pathname === "/" || pathname === "/shop") && firstPreset) {
       return NextResponse.redirect(`${origin}/shop/${firstPreset.id}`);
     }
   } catch (error) {
     console.error("Error fetching preset in middleware:", error);
   }
-  // Redirect only if firstPreset exists and has an ID
   // Handle /account routes: check login status and redirect accordingly
   if (pathname.startsWith("/account/") || pathname.startsWith("/admin/")) {
     if (sessionToken) {
@@ -35,7 +35,7 @@ export async function middleware(req: NextRequest) {
 
   // Handle /login: if user is logged in, redirect to store page
   if (pathname.startsWith("/login") && sessionToken) {
-    const mainStore = new URL("/shop/aether", req.nextUrl.origin);
+    const mainStore = new URL("/shop", req.nextUrl.origin);
     mainStore.searchParams.set("callbackUrl", href);
     return NextResponse.redirect(mainStore);
   }

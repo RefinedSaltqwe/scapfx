@@ -6,7 +6,9 @@ import Gallery from "@/app/(site)/_components/Gallery";
 import Hero from "@/app/(site)/_components/Hero";
 import Product from "@/app/(site)/_components/Product";
 import Container from "@/components/Container";
+import DynamicTitle from "@/components/DynamicTitle";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
+import { siteConfig } from "config/site";
 import React, { lazy, useMemo } from "react";
 const Loader = lazy(() => import("@/components/Loader"));
 
@@ -34,6 +36,10 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
     [allPresets, current_preset],
   );
 
+  function capitalize(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   if (isLoading || !currentPreset) {
     return (
       <div className="flex h-80 items-center justify-center">
@@ -44,6 +50,9 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
 
   return (
     <>
+      <DynamicTitle
+        title={`${capitalize(currentPreset.name)} | ${siteConfig.name}`}
+      />
       <Hero currentPreset={currentPreset} />
       <Product
         currentPreset={currentPreset}

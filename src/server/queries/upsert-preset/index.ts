@@ -38,7 +38,7 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
       price: item.price,
       prevPrice: item.prevPrice,
       color: item.color,
-      id: cuid(), // Generate random UUID for new preset
+      id: undefined,
     },
     include: {
       beforeAfterImages: true,
@@ -72,7 +72,7 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
     // Handle new and updated beforeAfterImages
     await Promise.all(
       item.beforeAfterImages.map(async (image) => {
-        if (image.id) {
+        if (image.id !== "") {
           // If beforeAfterImage has an id, check if it exists in the database
           const existingImage = await db.beforeAfter.findUnique({
             where: { id: image.id },
@@ -88,7 +88,7 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
         } else {
           // If no id (new image), create the image
           await db.beforeAfter.create({
-            data: { ...image, presetId: preset.id },
+            data: { ...image, presetId: preset.id, id: undefined },
           });
         }
       }),
@@ -99,7 +99,7 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
   if (item.inclusions?.length) {
     await Promise.all(
       item.inclusions.map(async (inclusion) => {
-        if (inclusion.id) {
+        if (inclusion.id !== "") {
           const existingInclusion = await db.inclusions.findUnique({
             where: { id: inclusion.id },
           });
@@ -113,7 +113,7 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
           }
         } else {
           await db.inclusions.create({
-            data: { ...inclusion, presetId: preset.id },
+            data: { ...inclusion, presetId: preset.id, id: undefined },
           });
         }
       }),
@@ -147,7 +147,7 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
     // Handle new and updated gallery images
     await Promise.all(
       item.gallery.map(async (galleryItem) => {
-        if (galleryItem.id) {
+        if (galleryItem.id !== "") {
           // If galleryItem has an id, check if it exists in the database
           const existingGalleryItem = await db.gallery.findUnique({
             where: { id: galleryItem.id },
@@ -166,7 +166,7 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
         } else {
           // If no id (new image), create the image
           await db.gallery.create({
-            data: { ...galleryItem, presetId: preset.id },
+            data: { ...galleryItem, presetId: preset.id, id: undefined },
           });
         }
       }),

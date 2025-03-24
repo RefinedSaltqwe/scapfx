@@ -84,6 +84,7 @@ model PresetUser {
   legalAgreement  Boolean?
   orderId           String? 
   purchasedPrice    Float?
+  totalAmountPaid     Float?
 
   user      User   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   preset    Preset  @relation(fields: [presetId], references: [id], onDelete: Cascade)
@@ -105,7 +106,7 @@ model Preset {
   beforeAfterImages  BeforeAfter[]
   inclusions         Inclusions[]
   users              PresetUser[]
-  gallery             Gallery[]
+  gallery            Gallery[]
 }
 
 

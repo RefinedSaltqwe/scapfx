@@ -22,14 +22,14 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
 
   // Memoized preset lookup to prevent unnecessary recalculations
   const currentPreset = useMemo(
-    () => allPresets?.find((preset) => preset.name === current_preset),
+    () => allPresets?.find((preset) => preset.id === current_preset),
     [allPresets, current_preset],
   );
 
   const currentPresetIndex = useMemo(
     () =>
       allPresets
-        ? allPresets.findIndex((preset) => preset.name === current_preset) + 1
+        ? allPresets.findIndex((preset) => preset.id === current_preset) + 1
         : 1,
     [allPresets, current_preset],
   );

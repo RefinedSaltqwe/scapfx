@@ -1,3 +1,4 @@
+import { type Preset } from "@prisma/client";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
@@ -8,20 +9,25 @@ export async function middleware(req: NextRequest) {
     cookie.name?.includes("session-token"),
   );
 
-  // console.log("TOKEN", sessionToken, cookies);
+  const apiUrl = `${req.nextUrl.origin}/api/fetch-first-preset`; // Adjust based on your API route
 
-  // Redirect /shop and root to /shop/aether
-  if (pathname === "/" || pathname === "/shop") {
-    return NextResponse.redirect(`${origin}/shop/aether`);
+  try {
+    const response = await fetch(apiUrl);
+    const { firstPreset } = (await response.json()) as { firstPreset: Preset };
+
+    if ((pathname === "/" || pathname === "/shop") && firstPreset) {
+      return NextResponse.redirect(`${origin}/shop/${firstPreset.id}`);
+    }
+  } catch (error) {
+    console.error("Error fetching preset in middleware:", error);
   }
-
+  // Redirect only if firstPreset exists and has an ID
   // Handle /account routes: check login status and redirect accordingly
   if (pathname.startsWith("/account/") || pathname.startsWith("/admin/")) {
     if (sessionToken) {
       return NextResponse.next(); // User is logged in, allow access
     }
     // User is not logged in, redirect to login
-    console.log("Redirecting to login because token is null"); // Debugging
     const loginUrl = new URL("/login", req.nextUrl.origin);
     loginUrl.searchParams.set("callbackUrl", href);
     return NextResponse.redirect(loginUrl);

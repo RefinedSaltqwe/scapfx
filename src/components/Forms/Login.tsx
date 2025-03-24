@@ -72,7 +72,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     if (!isClient || !session?.user.type) return;
 
     const routes: Record<string, string> = {
-      CLIENT: `/shop/${allPresets[0]?.name}`,
+      CLIENT: `/shop/${allPresets[0]?.id}`,
       ADMIN: "/admin/dashboard",
     };
 

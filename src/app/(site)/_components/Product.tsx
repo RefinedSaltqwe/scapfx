@@ -98,7 +98,7 @@ const Product: React.FC<ProductProps> = ({
             <Plan
               key={plan.name}
               preset={plan}
-              selectedPreset={currentPreset.name}
+              selectedPreset={currentPreset.id}
               index={index + 1}
             />
           ))}

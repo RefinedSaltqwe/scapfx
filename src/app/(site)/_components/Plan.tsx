@@ -1,10 +1,10 @@
 "use client";
-import Loader from "@/components/Loader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type PresetAndChildren } from "@/types/prisma";
 import { siteConfig } from "config/site";
 import { useRouter } from "nextjs-toploader/app";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { lazy, useEffect, useMemo, useState } from "react";
+const Loader = lazy(() => import("@/components/Loader"));
 
 type PlanProps = {
   preset: PresetAndChildren;
@@ -24,9 +24,9 @@ const Plan: React.FC<PlanProps> = ({ preset, selectedPreset, index }) => {
   const router = useRouter();
 
   const handleChange = () => {
-    if (selectedPreset !== preset.name) {
+    if (selectedPreset !== preset.id) {
       setLoading(true);
-      router.push(`/shop/${preset.name}`);
+      router.push(`/shop/${preset.id}`);
     }
   };
 
@@ -52,7 +52,7 @@ const Plan: React.FC<PlanProps> = ({ preset, selectedPreset, index }) => {
         ) : (
           <input
             value={preset.name}
-            checked={selectedPreset === preset.name}
+            checked={selectedPreset === preset.id}
             onChange={handleChange}
             name="pricing-preset"
             type="radio"

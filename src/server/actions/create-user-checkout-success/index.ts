@@ -9,6 +9,7 @@ import { revalidatePath } from "next/cache";
 import shortid from "shortid";
 import { CreateUserPresetSchema } from "./schema";
 import { type InputType, type ReturnType } from "./types";
+import { fetchTotalAmount } from "@/lib/fetchTotalAmount";
 
 // ✅ Extracted email sender function
 
@@ -33,6 +34,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       presets.map(async (preset) => {
         // Fetch the price asynchronously using fetchPrice function
         const fetchedPrice = await fetchPrice(preset.productId);
+        const tap = await fetchTotalAmount(stripeSessionId);
 
         // Return the updated preset with the fetchedPrice as purchasedPrice
         return {
@@ -43,6 +45,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
           stripeSessionId,
           createdAt: date.toISOString(),
           purchasedPrice: fetchedPrice, // Use fetchedPrice as purchasedPrice
+          totalAmountPaid: tap, //Total Amount Paid by the customer
         };
       }),
     );

@@ -23,7 +23,7 @@ const Custom401 = () => {
         credentials for the admin side.
       </p>
       <Link
-        href={`/shop/${preset[0]?.name}`}
+        href={`/shop/${preset[0]?.id}`}
         className="bg-primary text-primary-foreground mt-4 rounded-md p-2 px-2 uppercase"
       >
         <span className="px-2">Back to home</span>

@@ -244,7 +244,7 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
                   <div className="flex flex-auto flex-col">
                     <div>
                       <h4 className="text-primary font-medium capitalize">
-                        <Link href={`/shop/${product.name}`}>
+                        <Link href={`/shop/${product.id}`}>
                           {product.name} Pack
                         </Link>
                       </h4>

@@ -91,7 +91,7 @@ const Navigation: React.FC = () => {
               {/* Logo */}
               <div className="flex flex-1">
                 <Link
-                  href={`/shop/${allPresets[0]?.name}`}
+                  href={`/shop/${allPresets[0]?.id}`}
                   className="text flex h-full items-center justify-center gap-1 text-center"
                 >
                   <span className="sr-only">ScapCreative</span>

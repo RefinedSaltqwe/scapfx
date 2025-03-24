@@ -170,7 +170,7 @@ const CartDialog: React.FC = () => {
                                   <div className="text-popover-foreground flex justify-between text-base font-medium">
                                     <div className="flex flex-col items-start">
                                       <h3 className="uppercase">
-                                        <Link href={`/shop/${product.name}`}>
+                                        <Link href={`/shop/${product.id}`}>
                                           {product.name}
                                         </Link>
                                       </h3>

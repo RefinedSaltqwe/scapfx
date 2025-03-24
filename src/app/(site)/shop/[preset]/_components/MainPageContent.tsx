@@ -23,6 +23,7 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
   const isLoading = !allPresets || allPresets.length === 0;
 
   // Memoized preset lookup to prevent unnecessary recalculations
+
   const currentPreset = useMemo(
     () => allPresets?.find((preset) => preset.id === current_preset),
     [allPresets, current_preset],

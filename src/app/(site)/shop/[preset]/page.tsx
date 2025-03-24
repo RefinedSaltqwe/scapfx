@@ -1,5 +1,6 @@
 import React from "react";
 import MainPageContent from "./_components/MainPageContent";
+import { redirect } from "next/navigation";
 
 type StoreType = {
   params: {
@@ -26,6 +27,9 @@ export async function generateMetadata({ params }: StoreType) {
 
 const Store: React.FC<StoreType> = async ({ params }) => {
   const currentPreset = params?.preset ?? "";
+  if (currentPreset === "undefined") {
+    redirect("/shop");
+  }
 
   return (
     <>

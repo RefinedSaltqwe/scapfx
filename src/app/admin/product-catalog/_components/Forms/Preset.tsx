@@ -94,7 +94,6 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
         toast.success("Updated Successfully", {
           position: "top-right",
         });
-        router.push("/admin/product-catalog");
       }
       if (type === "create") {
         addPreset(data);

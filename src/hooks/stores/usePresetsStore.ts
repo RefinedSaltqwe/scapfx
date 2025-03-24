@@ -15,7 +15,7 @@ export const usePresets = create<UserStore>((set) => ({
     set(() => ({
       presets: data,
     })),
-  addPreset: (data) => set((prev) => ({ presets: [...prev.presets, data] })),
+  addPreset: (data) => set((prev) => ({ presets: [data, ...prev.presets] })),
   updatePreset: (data) =>
     set((prev) => ({
       presets: prev.presets.map((item) => (item.id === data.id ? data : item)),

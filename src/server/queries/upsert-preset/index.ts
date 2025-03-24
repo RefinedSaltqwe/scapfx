@@ -49,18 +49,15 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
 
   // Handle related beforeAfterImages
   if (item.beforeAfterImages?.length) {
-    // Get current beforeAfterImages from the database
     const existingBeforeAfterImages = await db.beforeAfter.findMany({
       where: { presetId: preset.id },
     });
 
-    // Track images that need to be deleted
     const imagesToDelete = existingBeforeAfterImages.filter(
       (existingImage) =>
         !item.beforeAfterImages.some((image) => image.id === existingImage.id),
     );
 
-    // Delete any images that were removed
     if (imagesToDelete.length) {
       await db.beforeAfter.deleteMany({
         where: {
@@ -69,11 +66,9 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
       });
     }
 
-    // Handle new and updated beforeAfterImages
     await Promise.all(
       item.beforeAfterImages.map(async (image) => {
         if (image.id !== "") {
-          // If beforeAfterImage has an id, check if it exists in the database
           const existingImage = await db.beforeAfter.findUnique({
             where: { id: image.id },
           });
@@ -81,12 +76,11 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
           if (!existingImage || hasChanges(existingImage, image)) {
             await db.beforeAfter.upsert({
               where: { id: image.id },
-              update: image, // Update if changed
-              create: { ...image, presetId: preset.id }, // Create if new
+              update: image,
+              create: { ...image, presetId: preset.id },
             });
           }
         } else {
-          // If no id (new image), create the image
           await db.beforeAfter.create({
             data: { ...image, presetId: preset.id, id: undefined },
           });
@@ -107,8 +101,8 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
           if (!existingInclusion || hasChanges(existingInclusion, inclusion)) {
             await db.inclusions.upsert({
               where: { id: inclusion.id },
-              update: inclusion, // Update if changed
-              create: { ...inclusion, presetId: preset.id }, // Create if new
+              update: inclusion,
+              create: { ...inclusion, presetId: preset.id },
             });
           }
         } else {
@@ -122,12 +116,10 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
 
   // Handle related gallery items (including removal of deleted images)
   if (item.gallery?.length) {
-    // Get the current gallery images from the database
     const existingGalleryItems = await db.gallery.findMany({
       where: { presetId: preset.id },
     });
 
-    // Track images that need to be deleted
     const imagesToDelete = existingGalleryItems.filter(
       (existingImage) =>
         !item.gallery.some(
@@ -135,7 +127,6 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
         ),
     );
 
-    // Delete any images that were removed
     if (imagesToDelete.length) {
       await db.gallery.deleteMany({
         where: {
@@ -144,11 +135,9 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
       });
     }
 
-    // Handle new and updated gallery images
     await Promise.all(
       item.gallery.map(async (galleryItem) => {
         if (galleryItem.id !== "") {
-          // If galleryItem has an id, check if it exists in the database
           const existingGalleryItem = await db.gallery.findUnique({
             where: { id: galleryItem.id },
           });
@@ -159,12 +148,11 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
           ) {
             await db.gallery.upsert({
               where: { id: galleryItem.id },
-              update: galleryItem, // Update if changed
-              create: { ...galleryItem, presetId: preset.id }, // Create if new
+              update: galleryItem,
+              create: { ...galleryItem, presetId: preset.id },
             });
           }
         } else {
-          // If no id (new image), create the image
           await db.gallery.create({
             data: { ...galleryItem, presetId: preset.id, id: undefined },
           });
@@ -173,5 +161,15 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
     );
   }
 
-  return preset;
+  // Fetch the latest data after updates
+  const updatedPreset = await db.preset.findUnique({
+    where: { id: preset.id },
+    include: {
+      beforeAfterImages: true,
+      inclusions: true,
+      gallery: true,
+    },
+  });
+
+  return updatedPreset!;
 };

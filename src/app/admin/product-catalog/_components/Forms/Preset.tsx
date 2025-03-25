@@ -109,7 +109,6 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
       });
     },
   });
-
   const onSubmit = useCallback(
     async (values: z.infer<typeof UpsertPresetSchema>) => {
       try {
@@ -118,7 +117,6 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
           beforeAfterImages: comparisonImages,
           gallery: galleryImages,
         });
-        console.log("Preset updated successfully.");
       } catch (error) {
         console.error("Error during form submission:", error);
         if (error instanceof Error) {

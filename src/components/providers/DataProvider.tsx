@@ -66,7 +66,6 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
         );
 
         // Update the presets with fetched prices
-        console.log(updatedPresets);
         addAllPresets(updatedPresets);
       } catch (error) {
         console.error("Error fetching all prices:", error);

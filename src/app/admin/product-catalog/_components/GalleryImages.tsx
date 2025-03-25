@@ -23,15 +23,7 @@ const GalleryInput: React.FC<GalleryInputProps> = ({
   setGalleryImages,
 }) => {
   return (
-    <div className="flex flex-col gap-4 sm:flex-row">
-      <Image
-        alt=""
-        src={data.link !== "" ? data.link : siteConfig.defaultProductImage}
-        className="size-24 flex-none rounded-lg bg-gray-800 object-cover"
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        width={24}
-        height={24}
-      />
+    <div className="flex flex-col gap-4">
       <div className="flex-1">
         <Input
           type="text"
@@ -60,6 +52,14 @@ const GalleryInput: React.FC<GalleryInputProps> = ({
         />
       </div>
 
+      <Image
+        alt=""
+        src={data.link !== "" ? data.link : siteConfig.defaultProductImage}
+        className="size-24 flex-none rounded-lg bg-gray-800 object-cover"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        width={24}
+        height={24}
+      />
       <div className="flex items-center justify-end">
         <Button
           type="button"

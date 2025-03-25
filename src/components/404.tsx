@@ -11,6 +11,7 @@ const Custom404 = () => {
     <div className="bg-background flex w-full flex-col items-center justify-center gap-4 p-4 text-center">
       <Image
         src="/assets/images/error-404.png"
+        className="mt-10"
         alt="404 Error"
         width={300}
         height={300}

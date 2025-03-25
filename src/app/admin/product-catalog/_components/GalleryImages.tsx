@@ -60,7 +60,8 @@ const GalleryInput: React.FC<GalleryInputProps> = ({
         width={24}
         height={24}
       />
-      <div className="flex items-center justify-end">
+      <div className="flex items-center justify-between">
+        <span>{data.sequence}</span>
         <Button
           type="button"
           className="hover:!bg-destructive/20 rounded-full"

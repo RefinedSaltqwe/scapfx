@@ -43,7 +43,11 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
     include: {
       beforeAfterImages: true,
       inclusions: true,
-      gallery: true,
+      gallery: {
+        orderBy: {
+          sequence: "asc", // or 'desc' depending on the order you need
+        },
+      },
     },
   });
 
@@ -167,7 +171,11 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
     include: {
       beforeAfterImages: true,
       inclusions: true,
-      gallery: true,
+      gallery: {
+        orderBy: {
+          sequence: "asc", // or 'desc' depending on the order you need
+        },
+      },
     },
   });
 

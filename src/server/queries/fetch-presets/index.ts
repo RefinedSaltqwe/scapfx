@@ -6,7 +6,11 @@ export const getPresets = async () => {
     include: {
       beforeAfterImages: true,
       inclusions: true,
-      gallery: true,
+      gallery: {
+        orderBy: {
+          sequence: "asc",
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",

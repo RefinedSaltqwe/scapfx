@@ -90,6 +90,8 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
         queryKey: ["all_presets"],
       });
       if (type === "update") {
+        setComparisonImages(data.beforeAfterImages);
+        setGalleryImages(data.gallery);
         updatePreset(data);
         toast.success("Updated Successfully", {
           position: "top-right",
@@ -112,10 +114,15 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
   const onSubmit = useCallback(
     async (values: z.infer<typeof UpsertPresetSchema>) => {
       try {
+        const gal = galleryImages.map((item, index) => ({
+          ...item,
+          sequence: index + 1,
+        }));
+        // console.log(gal);
         await executeUpsertPreset({
           ...values,
           beforeAfterImages: comparisonImages,
-          gallery: galleryImages,
+          gallery: gal,
         });
       } catch (error) {
         console.error("Error during form submission:", error);
@@ -430,7 +437,7 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
                           id: newCuid,
                           link: "",
                           presetId: currentPreset?.id ?? "",
-                          sequence: null,
+                          sequence: galleryImages.length + 1,
                         },
                       ])
                     }

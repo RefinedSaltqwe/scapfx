@@ -19,7 +19,11 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       include: {
         beforeAfterImages: true,
         inclusions: true,
-        gallery: true,
+        gallery: {
+          orderBy: {
+            sequence: "asc", // or 'desc' depending on the order you need
+          },
+        },
       },
     });
 

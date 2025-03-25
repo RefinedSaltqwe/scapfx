@@ -8,7 +8,7 @@ import { usePresets } from "@/hooks/stores/usePresetsStore";
 const Custom404 = () => {
   const preset = usePresets((state) => state.presets);
   return (
-    <div className="bg-background flex min-h-screen w-screen flex-col items-center justify-center gap-4 p-4 text-center">
+    <div className="bg-background flex w-full flex-col items-center justify-center gap-4 p-4 text-center">
       <Image
         src="/assets/images/error-404.png"
         alt="404 Error"

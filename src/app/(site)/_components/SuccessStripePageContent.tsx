@@ -54,6 +54,7 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
 
   const [loading, setLoading] = useState(true);
   const [dbData, setDbData] = useState(true);
+  const [presetCreated, setPresetCreated] = useState(false);
 
   const getCustomerStripeDetails = async (sessionId: string) => {
     try {
@@ -112,11 +113,11 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
   }, [sessionId, userPresets, dbData]);
 
   useEffect(() => {
-    async function fetchData() {
-      if (!dbData) {
-        setLoading(true);
+    if (!presetCreated && !dbData) {
+      setLoading(true);
+      // Execute user preset creation logic
+      async function fetchData() {
         try {
-          // Execute user preset creation
           await executeCreateUserPreset({
             userEmail: sessionData.email,
             legalAgreement: sessionData.legalAgreement,
@@ -124,25 +125,25 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
             createdAt: Number(sessionData.createdAt),
             priceId: sessionData.lineItems,
           });
-          // Fetch the subtotal by resolving all prices
-          const amount_paid = await fetchTotalAmount(sessionId);
 
-          // Track the purchase event
+          const amount_paid = await fetchTotalAmount(sessionId);
           await trackEvent("Purchase", {
             value: amount_paid,
             currency: siteConfig.currency,
           });
+
+          setPresetCreated(true);
         } catch (error) {
           console.error("Error in effect:", error);
         } finally {
           setLoading(false);
         }
       }
-    }
 
-    void fetchData();
+      void fetchData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dbData]);
+  }, [dbData, presetCreated]);
 
   useEffect(() => {
     // Update useLoggedUser when user is logged in only

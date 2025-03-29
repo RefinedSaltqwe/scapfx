@@ -152,7 +152,7 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
                             {" "}
                             {/* Move Total amount to the right */}
                             <dt className="text-foreground font-medium">
-                              Total amount
+                              Total paid
                             </dt>
                             <dd className="text-foreground mt-1 font-medium">
                               {`$${order.totalAmountPaid.toFixed(2)} ${siteConfig.currency}`}

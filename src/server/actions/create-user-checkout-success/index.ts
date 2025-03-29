@@ -20,13 +20,20 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
   try {
     // Fetch presets and check user existence
-    const [presets, existingUser] = await Promise.all([
+    const [presets, existingUser, existingSessionId] = await Promise.all([
       db.preset.findMany({ where: { productId: { in: priceId } } }),
       db.user.findUnique({
         where: { email: userEmail },
         include: { ownedPresets: true },
       }),
+      db.presetUser.findFirst({
+        where: { stripeSessionId },
+      }),
     ]);
+
+    if (existingSessionId) {
+      throw new Error("PresetUser already exist.");
+    }
 
     const orderId = shortid.generate();
 

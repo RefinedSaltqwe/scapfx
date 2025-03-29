@@ -38,8 +38,13 @@ const GalleryModal: React.FC<GalleryModalProps> = ({
   const handleImageNavigation = (direction: "prev" | "next") => {
     setIsOpen((prev) => {
       let newIdx = direction === "prev" ? prev.idx - 1 : prev.idx + 1;
-      if (newIdx < 0) newIdx = prev.length - 1; // Loop to last image
-      if (newIdx >= prev.length) newIdx = 0; // Loop to first image
+
+      if (newIdx > prev.length) {
+        newIdx = 0;
+      } else if (newIdx < 0) {
+        newIdx = prev.length;
+      }
+
       return { ...prev, idx: newIdx, img: gallery[newIdx] ?? "#" };
     });
   };

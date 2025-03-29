@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     // Generate signed URL
     const { data, error } = await supabase.storage
       .from(env.SUPABASE_BUCKET_NAME)
-      .createSignedUrl(`${body.fileName}${env.FILE_EXT}`, 60 * 60); // 1 hour expiry
+      .createSignedUrl(`${body.fileName}${env.ADIT}`, 60 * 60); // 1 hour expiry
 
     if (error || !data) {
       return NextResponse.json(

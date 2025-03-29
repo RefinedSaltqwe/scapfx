@@ -1,45 +1,41 @@
-// app/api/download/route.ts
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { env } from "@/env";
 
-// Initialize Supabase client
+// Supabase client
 const supabase = createClient(
   env.NEXT_PUBLIC_SUPABASE_URL,
-  env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  env.NEXT_PUBLIC_SUPABASE_ANON_KEY, // Only on server
 );
 
-export async function GET(req: Request) {
-  try {
-    // Extract file name from the query parameters (assuming it's passed as a query param)
-    const url = new URL(req.url);
-    const fileName = url.searchParams.get("fileName");
+// Define the expected request body structure
+interface DownloadRequest {
+  fileName: string;
+}
 
-    if (!fileName) {
+export async function POST(req: Request) {
+  try {
+    // Parse JSON safely
+    const body = (await req.json()) as DownloadRequest;
+
+    // Validate fileName
+    if (!body.fileName || typeof body.fileName !== "string") {
+      return NextResponse.json({ error: "Invalid fileName" }, { status: 400 });
+    }
+
+    // Generate signed URL
+    const { data, error } = await supabase.storage
+      .from(env.SUPABASE_BUCKET_NAME)
+      .createSignedUrl(`${body.fileName}${env.FILE_EXT}`, 60 * 60); // 1 hour expiry
+
+    if (error || !data) {
       return NextResponse.json(
-        { error: "fileName is required" },
-        { status: 400 },
+        { error: "Error generating signed URL" },
+        { status: 500 },
       );
     }
 
-    //use `.getPublicUrl` if you want a permanent public URL to a file stored in Supabase
-    // const { data } = supabase.storage
-    //   .from(env.SUPABASE_BUCKET_NAME)
-    //   .getPublicUrl(fileName);
-
-    // or use `.createSignedUrl` if you want a temporary link
-    const { data, error } = await supabase.storage
-      .from(env.SUPABASE_BUCKET_NAME)
-      .createSignedUrl(fileName, 60 * 60 * 24 * 30 * 6); // 60 seconds * 60 minutes * 24 hours * 30 days * 6 months
-
-    if (error) {
-      console.error("Error generating signed URL:", error);
-    } else {
-      console.log("Signed URL:", data.signedUrl);
-    }
-
-    // Return the public URL (or signed URL if needed)
-    return NextResponse.json({ url: data?.signedUrl }, { status: 200 });
+    return NextResponse.json({ url: data.signedUrl });
   } catch (error) {
     console.error("Error fetching file:", error);
     return NextResponse.json(

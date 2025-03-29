@@ -31,6 +31,7 @@ export const env = createEnv({
     STRIPE_BUNDLE_DISCOUNT: z.string(),
     VERCEL_API_TOKEN: z.string(),
     VERCEL_PROJECT_ID: z.string(),
+    FILE_EXT: z.string(),
   },
 
   /**
@@ -74,6 +75,7 @@ export const env = createEnv({
     NEXT_PUBLIC_STRIPE_DISCOUNT: process.env.NEXT_PUBLIC_STRIPE_DISCOUNT,
     VERCEL_API_TOKEN: process.env.VERCEL_API_TOKEN,
     VERCEL_PROJECT_ID: process.env.VERCEL_PROJECT_ID,
+    FILE_EXT: process.env.FILE_EXT,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

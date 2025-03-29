@@ -16,7 +16,11 @@ export default function DownloadButton({ fileName }: DownloadButton) {
     setError("");
 
     try {
-      const res = await fetch(`/api/download-zip?fileName=${fileName}.zip`);
+      const res = await fetch(`/api/download-zip`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fileName }),
+      });
       const text: string = await res.text();
       const data = (await JSON.parse(text)) as { url: string };
 

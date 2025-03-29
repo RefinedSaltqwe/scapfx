@@ -1,5 +1,6 @@
 "use server";
 
+import { fetchPrice } from "@/lib/fetchPrice";
 import { db } from "@/server/db";
 import { type PresetAndChildren } from "@/types/prisma";
 import {
@@ -18,6 +19,7 @@ const hasChanges = (
 };
 
 export const upsertPresetQuery = async (item: PresetAndChildren) => {
+  const fetchedPrice = await fetchPrice(item.productId);
   // First, upsert the preset (create or update)
   const preset = await db.preset.upsert({
     where: item.id ? { id: item.id } : { id: cuid() }, // Ensure `where` always has a valid value
@@ -26,7 +28,7 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
       productId: item.productId,
       heroImg: item.heroImg,
       description: item.description,
-      price: item.price,
+      price: fetchedPrice,
       prevPrice: item.prevPrice,
       color: item.color,
     },
@@ -35,7 +37,7 @@ export const upsertPresetQuery = async (item: PresetAndChildren) => {
       productId: item.productId,
       heroImg: item.heroImg,
       description: item.description,
-      price: item.price,
+      price: fetchedPrice,
       prevPrice: item.prevPrice,
       color: item.color,
       id: undefined,

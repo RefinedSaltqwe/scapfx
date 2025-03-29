@@ -3,20 +3,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { useAction } from "@/hooks/useSafeAction";
+import { trackEvent } from "@/lib/fbpixels";
+import { fetchTotalAmount } from "@/lib/fetchTotalAmount";
 import { createUserPreset } from "@/server/actions/create-user-checkout-success";
 import { getUserByStripeSessionId } from "@/server/queries/fetch-user-preset-by-session";
 import { getUserPresets } from "@/server/queries/fetch-user-presets";
 import { useQuery } from "@tanstack/react-query";
+import { siteConfig } from "config/site";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
 import DownloadButton from "./DownloadButton";
-import { useSession } from "next-auth/react";
-import { fetchPrice } from "@/lib/fetchPrice";
-import { trackEvent } from "@/lib/fbpixels";
-import { siteConfig } from "config/site";
 const Loader = lazy(() => import("@/components/Loader"));
 
 type SuccessStripePageContentProps = {
@@ -90,7 +90,7 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
       toast[data.success ? "success" : "error"](
         data.success
           ? "Email sent."
-          : "Something went wrong - sending the email unsuccessful.",
+          : "Something went wrong - Reload this page.",
       );
     },
   });
@@ -125,13 +125,11 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
             priceId: sessionData.lineItems,
           });
           // Fetch the subtotal by resolving all prices
-          const subTotal = await Promise.all(
-            sessionData.lineItems.map(async (d) => await fetchPrice(d)),
-          ).then((prices) => prices.reduce((acc, price) => acc + price, 0));
+          const amount_paid = await fetchTotalAmount(sessionId);
 
           // Track the purchase event
           await trackEvent("Purchase", {
-            value: subTotal,
+            value: amount_paid,
             currency: siteConfig.currency,
           });
         } catch (error) {

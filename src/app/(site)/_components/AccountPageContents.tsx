@@ -24,7 +24,14 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
     // Group presets by stripeSessionId
     const ordersMap = user.ownedPresets.reduce(
       (acc, presetUser) => {
-        const { stripeSessionId, preset, createdAt, id, orderId } = presetUser;
+        const {
+          stripeSessionId,
+          preset,
+          createdAt,
+          id,
+          orderId,
+          totalAmountPaid,
+        } = presetUser;
 
         if (!acc[stripeSessionId]) {
           acc[stripeSessionId] = {
@@ -33,6 +40,7 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
             createdAt: new Date(createdAt), // Ensure createdAt is a Date object
             presets: [],
             orderId: orderId ?? "",
+            totalAmountPaid: totalAmountPaid ?? 0,
           };
         }
 
@@ -48,6 +56,7 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
           createdAt: Date;
           id: string;
           orderId: string;
+          totalAmountPaid: number;
         }
       >,
     );
@@ -95,14 +104,10 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
                   "No orders yet."
                 )
               ) : (
-                orders.map((order) => {
-                  const total = order.presets.reduce(
-                    (sum, p) => sum + p.price,
-                    0,
-                  );
+                orders.map((order, index) => {
                   return (
                     <div
-                      key={order.stripeSessionId}
+                      key={`${order.stripeSessionId}-${index}`}
                       className="bg-background border-muted border-t border-b shadow-sm sm:rounded-lg sm:border"
                     >
                       <h3 className="sr-only">
@@ -150,7 +155,7 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
                               Total amount
                             </dt>
                             <dd className="text-foreground mt-1 font-medium">
-                              {`$${total.toFixed(2)} ${siteConfig.currency}`}
+                              {`$${order.totalAmountPaid.toFixed(2)} ${siteConfig.currency}`}
                             </dd>
                           </div>
                         </dl>

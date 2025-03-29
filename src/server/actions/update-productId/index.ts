@@ -5,16 +5,20 @@ import cuid from "cuid";
 import { revalidatePath } from "next/cache";
 import { UpdatePriceIdSchema } from "./schema";
 import { type InputType, type ReturnType } from "./types";
+import { fetchPrice } from "@/lib/fetchPrice";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { id, productId } = data;
   let response;
+
+  const fetchedPrice = await fetchPrice(productId);
 
   try {
     response = await db.preset.update({
       where: id ? { id: id } : { id: cuid() },
       data: {
         productId,
+        price: fetchedPrice,
       },
       include: {
         beforeAfterImages: true,

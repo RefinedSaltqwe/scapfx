@@ -254,14 +254,6 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
                     <div className="mt-5 ml-auto font-normal">
                       <DownloadButton fileName={product.name} />
                     </div>
-                    <div className="mt-5 flex flex-1 items-end">
-                      <dl className="divide-muted flex divide-x text-sm">
-                        <div className="flex pl-4 sm:pl-6">
-                          <dt className="text-primary font-medium">Price </dt>
-                          <dd className="text-mutedsecondary-foreground">{`: $${product.price}`}</dd>
-                        </div>
-                      </dl>
-                    </div>
                   </div>
                 </div>
               ))

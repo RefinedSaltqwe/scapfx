@@ -31,6 +31,7 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
           id,
           orderId,
           totalAmountPaid,
+          purchasedPrice,
         } = presetUser;
 
         if (!acc[stripeSessionId]) {
@@ -44,7 +45,10 @@ const AccountPageContents: React.FC<AccountPageContentsProps> = () => {
           };
         }
 
-        acc[stripeSessionId].presets.push(preset);
+        acc[stripeSessionId].presets.push({
+          ...preset,
+          price: purchasedPrice ?? 0,
+        });
 
         return acc;
       },

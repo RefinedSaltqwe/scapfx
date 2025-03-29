@@ -5,7 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 type GalleryModalProps = {
   isOpen: {
@@ -30,19 +30,42 @@ const GalleryModal: React.FC<GalleryModalProps> = ({
   setIsOpen,
   gallery,
 }) => {
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchEndX, setTouchEndX] = useState<number | null>(null);
+
   const onClose = () => setIsOpen((prev) => ({ ...prev, open: false }));
 
   const handleImageNavigation = (direction: "prev" | "next") => {
     setIsOpen((prev) => {
       let newIdx = direction === "prev" ? prev.idx - 1 : prev.idx + 1;
-      // Loop to last image:
-      // If index is less than -1 then set the index of the last image's index
-      if (newIdx < 0) newIdx = prev.length;
-      // Loop to first image:
-      // If index is greater than the number of the last image's index then set the index of the first image's index
-      if (newIdx > prev.length) newIdx = 0;
+      if (newIdx < 0) newIdx = prev.length - 1; // Loop to last image
+      if (newIdx >= prev.length) newIdx = 0; // Loop to first image
       return { ...prev, idx: newIdx, img: gallery[newIdx] ?? "#" };
     });
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches?.[0];
+    if (touch) {
+      setTouchStartX(touch.clientX);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches?.[0];
+    if (touch) {
+      setTouchEndX(touch.clientX);
+    }
+  };
+  // Handle touch end (detect swipe direction)
+  const handleTouchEnd = () => {
+    if (touchStartX !== null && touchEndX !== null) {
+      const diff = touchStartX - touchEndX;
+      if (diff > 50) handleImageNavigation("next"); // Swipe left → Next
+      if (diff < -50) handleImageNavigation("prev"); // Swipe right → Prev
+    }
+    setTouchStartX(null);
+    setTouchEndX(null);
   };
 
   return (
@@ -50,7 +73,12 @@ const GalleryModal: React.FC<GalleryModalProps> = ({
       <DialogContent className="mb-5 w-full border-0 bg-transparent p-0 sm:!max-w-xl lg:!max-w-3xl">
         <DialogTitle className="sr-only">{isOpen.idx}</DialogTitle>
         <DialogDescription className="sr-only">{isOpen.idx}</DialogDescription>
-        <div className="relative aspect-5/6 h-full w-full">
+        <div
+          className="relative aspect-5/6 h-full w-full"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <Image
             src={isOpen.img}
             alt="Gallery Image"

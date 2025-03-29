@@ -45,7 +45,7 @@ const navigation = [
   },
 ];
 
-export default function Example({ children }: { children: React.ReactNode }) {
+export default function Sidebar({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();

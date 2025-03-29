@@ -13,8 +13,8 @@ const Hero: React.FC<HeroProps> = ({ currentPreset }) => {
         {/* Background Image */}
         <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
           <Image
-            alt=""
-            src={currentPreset.heroImg} // Use dynamic image from the preset
+            alt="Preset Hero Image"
+            src={currentPreset.heroImg}
             className="size-full object-cover"
             width={4000}
             height={2667}

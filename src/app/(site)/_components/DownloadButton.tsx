@@ -31,7 +31,6 @@ export default function DownloadButton({ fileName }: DownloadButton) {
         a.download = fileName; // Specify the filename you want to download
         a.click();
       } else {
-        console.log(data.url);
         setError("Error fetching file.");
       }
     } catch (error) {

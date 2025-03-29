@@ -2,7 +2,6 @@
 import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { initFacebookPixel, trackPageView } from "@/lib/fbpixels";
-import { fetchPrice } from "@/lib/fetchPrice";
 import { getPresets } from "@/server/queries/fetch-presets";
 import { getUser } from "@/server/queries/fetch-user";
 import { useQuery } from "@tanstack/react-query";
@@ -55,24 +54,7 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
   useEffect(() => {
     if (!allPresets?.length) return;
 
-    async function fetchAllPrices() {
-      try {
-        // Fetch prices and update all presets
-        const updatedPresets = await Promise.all(
-          allPresets!.map(async (preset) => ({
-            ...preset,
-            price: await fetchPrice(preset.productId), // Fetch prices from Stripe
-          })),
-        );
-
-        // Update the presets with fetched prices
-        addAllPresets(updatedPresets);
-      } catch (error) {
-        console.error("Error fetching all prices:", error);
-      }
-    }
-
-    void fetchAllPrices();
+    addAllPresets(allPresets);
   }, [addAllPresets, allPresets]);
 
   useEffect(() => {

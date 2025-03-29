@@ -32,7 +32,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     ]);
 
     if (existingSessionId) {
-      throw new Error("PresetUser already exist.");
+      throw new Error("Order already exist.");
     }
 
     const orderId = shortid.generate();

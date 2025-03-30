@@ -9,7 +9,7 @@ export const siteConfig = {
   twitter_image:
     "https://scapcreative.com/assets/images/meta-image-twitter.jpg", // Full URL for Twitter image
   twitter_card: "summary_large_image", // Card type for Twitter preview
-  og_url: "https://scapcreative.com", // Full URL for Open Graph
+  og_url: "https://www.scapcreative.com/shop/cm7pi11vk00010cjo3ahmcfi5", // Full URL for Open Graph
   og_image: "https://scapcreative.com/assets/images/meta-image-twitter.jpg", // Full URL for Open Graph image
   og_type: "website", // Specifies the content type of the page
   defaultProductImage: "https://github.com/shadcn.png", // Placeholder image for products

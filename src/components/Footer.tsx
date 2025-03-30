@@ -1,5 +1,3 @@
-"use client";
-import { usePresets } from "@/hooks/stores/usePresetsStore";
 import Link from "next/link";
 import React from "react";
 const navigation = {
@@ -44,51 +42,47 @@ const navigation = {
 };
 
 const Footer: React.FC = () => {
-  const allPresets = usePresets((state) => state.presets);
-  const isLoading = !allPresets || allPresets.length === 0;
   const year = new Date().getFullYear();
-
-  if (!isLoading || allPresets)
-    return (
-      <footer className="bg-white">
-        <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
-          <nav
-            aria-label="Footer"
-            className="-mb-6 flex flex-wrap justify-center gap-x-12 gap-y-3 text-sm/6"
-          >
-            {navigation.main.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-gray-600 hover:text-gray-900"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-          <div className="mt-16 flex justify-center gap-x-10">
-            {navigation.social.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-gray-600 hover:text-gray-800"
-              >
-                <span className="sr-only">{item.name}</span>
-                <item.icon aria-hidden="true" className="size-6" />
-              </a>
-            ))}
-          </div>
-          <p className="mt-10 text-center text-sm/6 text-gray-600">
-            Contact Us: scapcreative@gmail.com
-          </p>
-          <p className="mt-10 text-center text-sm/6 text-gray-600">
-            &copy; {year} ScapCreative. All rights reserved.
-          </p>
-          <p className="mt-10 text-center text-xs/6 text-gray-600">
-            Developed by Stephen Pelagio.
-          </p>
+  return (
+    <footer className="relative min-h-[100px] bg-white">
+      <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
+        <nav
+          aria-label="Footer"
+          className="-mb-6 flex flex-wrap justify-center gap-x-12 gap-y-3 text-sm/6"
+        >
+          {navigation.main.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="text-gray-600 hover:text-gray-900"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
+        <div className="mt-16 flex justify-center gap-x-10">
+          {navigation.social.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className="text-gray-600 hover:text-gray-800"
+            >
+              <span className="sr-only">{item.name}</span>
+              <item.icon aria-hidden="true" className="size-6" />
+            </a>
+          ))}
         </div>
-      </footer>
-    );
+        <p className="mt-10 text-center text-sm/6 text-gray-600">
+          Contact Us: scapcreative@gmail.com
+        </p>
+        <p className="mt-10 text-center text-sm/6 text-gray-600">
+          &copy; {year} ScapCreative. All rights reserved.
+        </p>
+        <p className="mt-10 text-center text-xs/6 text-gray-600">
+          Developed by Stephen Pelagio.
+        </p>
+      </div>
+    </footer>
+  );
 };
 export default Footer;

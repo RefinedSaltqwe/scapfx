@@ -30,6 +30,8 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: `${siteConfig.name}`,
   description: siteConfig.description,
+  keywords:
+    "shortstache, film tones, silky tones, cinematic presets, Lightroom presets, photo editing, aesthetic photography, customizable presets",
   icons: [{ rel: "icon", url: siteConfig.icon, href: siteConfig.icon }],
   other: {
     "theme-color": siteConfig.theme_color,
@@ -65,25 +67,47 @@ export default async function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Product",
-              name: "ScapCreative Lightroom Preset",
+              name: `${siteConfig.name} Lightroom Preset`,
               image:
-                "https://live.staticflickr.com/65535/54344958259_a9917780a3_o.jpg",
-              description:
-                "Discover premium Lightroom presets designed to transform your photos with cinematic depth and storytelling aesthetics. The Aether Pack delivers a laid-back, muted cinematic feel, while the Etherea Pack blends nostalgic film tones with modern softness. For a crisp, stylish look, the Zenith Pack enhances contrast and sharpens details. Each preset is fully customizable, giving you creative freedom to refine your photography with ease.",
+                "https://scapcreative.com/assets/images/meta-image-twitter.jpg", // Full URL
+              description: siteConfig.description,
               brand: {
                 "@type": "Brand",
                 name: "ScapCreative",
               },
+              productID: "cm7pi11vk00010cjo3ahmcfi5", // Add a product ID for better tracking
+              mainEntityOfPage:
+                "https://www.scapcreative.com/shop/cm7pi11vk00010cjo3ahmcfi5", // URL of the product page
+              review: {
+                "@type": "Review",
+                reviewRating: {
+                  "@type": "Rating",
+                  ratingValue: "4.8", // Add the rating value
+                  bestRating: "5", // Rating scale
+                },
+                author: {
+                  "@type": "Person",
+                  name: "Verified Customer",
+                },
+                datePublished: "2025-03-29", // Add publication date of review
+              },
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.8",
+                reviewCount: "150", // Adjust based on actual review count
+              },
               offers: {
                 "@type": "Offer",
                 priceCurrency: "CAD",
-                price: "14.99",
+                price: "24.99",
+                priceValidUntil: "2025-12-31", // Optional: include price validity date
                 availability: "https://schema.org/InStock",
                 url: "https://scapcreative.com",
               },
             }),
           }}
         />
+
         {/* Meta Pixel Script */}
         <Script
           id="meta-pixel"

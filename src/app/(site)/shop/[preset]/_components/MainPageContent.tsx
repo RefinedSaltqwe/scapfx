@@ -1,16 +1,25 @@
 "use client";
-import CallToAction from "@/app/(site)/_components/CallToAction";
-import ComparisonSlider from "@/app/(site)/_components/ComparisonSlider";
 import Details from "@/app/(site)/_components/Details";
-import Gallery from "@/app/(site)/_components/Gallery";
 import Hero from "@/app/(site)/_components/Hero";
 import Product from "@/app/(site)/_components/Product";
 import Container from "@/components/Container";
 import DynamicTitle from "@/components/DynamicTitle";
+import Loader from "@/components/Loader";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { siteConfig } from "config/site";
-import React, { lazy, useMemo } from "react";
-const Loader = lazy(() => import("@/components/Loader"));
+import dynamic from "next/dynamic";
+import React from "react";
+const LazyGallery = dynamic(() => import("@/app/(site)/_components/Gallery"), {
+  ssr: false,
+});
+const LazyCallToAction = dynamic(
+  () => import("@/app/(site)/_components/CallToAction"),
+  { ssr: false },
+);
+const LazyComparisonSlider = dynamic(
+  () => import("@/app/(site)/_components/ComparisonSlider"),
+  { ssr: false },
+);
 
 type MainPageContentProps = {
   current_preset: string;
@@ -22,25 +31,14 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
   const allPresets = usePresets((state) => state.presets);
   const isLoading = !allPresets || allPresets.length === 0;
 
-  // Memoized preset lookup to prevent unnecessary recalculations
+  // Find the current preset
+  const currentPreset =
+    allPresets?.find((preset) => preset.id === current_preset) ?? null;
+  const currentPresetIndex = currentPreset
+    ? allPresets.findIndex((preset) => preset.id === current_preset) + 1
+    : 1;
 
-  const currentPreset = useMemo(
-    () => allPresets?.find((preset) => preset.id === current_preset),
-    [allPresets, current_preset],
-  );
-
-  const currentPresetIndex = useMemo(
-    () =>
-      allPresets
-        ? allPresets.findIndex((preset) => preset.id === current_preset) + 1
-        : 1,
-    [allPresets, current_preset],
-  );
-
-  function capitalize(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-
+  // If loading, show loader
   if (isLoading || !currentPreset) {
     return (
       <div className="flex h-80 items-center justify-center">
@@ -52,8 +50,9 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
   return (
     <>
       <DynamicTitle
-        title={`${capitalize(currentPreset.name)} | ${siteConfig.name}`}
+        title={`${currentPreset?.name?.replace(/\b\w/g, (char) => char.toUpperCase())} | ${siteConfig.name}`}
       />
+
       <Hero currentPreset={currentPreset} />
       <Product
         currentPreset={currentPreset}
@@ -69,17 +68,14 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
               presets.
             </h2>
             <p className="text-muted-foreground mt-4">
-              {`They're designed to work across different photography
-              styles—landscapes, portraits, night scenes, and urban
-              environments. I consistently use them in my
-              projects.`}
+              {`They're designed to work across different photography styles—landscapes, portraits, night scenes, and urban environments. I consistently use them in my projects.`}
             </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4 pb-10 lg:grid-cols-2">
-          {currentPreset.beforeAfterImages.map((group, index) => (
-            <ComparisonSlider
+          {currentPreset?.beforeAfterImages?.map((group, index) => (
+            <LazyComparisonSlider
               key={index}
               beforeImage={group.beforeImage}
               afterImage={group.afterImage}
@@ -91,10 +87,10 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
       <Container maxWidth="lg">
         <Details />
       </Container>
-      <Gallery currentPreset={currentPreset} />
-
-      <CallToAction currentPreset={currentPreset} />
+      <LazyGallery currentPreset={currentPreset} />
+      <LazyCallToAction currentPreset={currentPreset} />
     </>
   );
 };
+
 export default MainPageContent;

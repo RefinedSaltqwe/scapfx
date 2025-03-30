@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect } from "react";
 import Head from "next/head";
 
 interface DynamicTitleProps {
@@ -8,10 +5,6 @@ interface DynamicTitleProps {
 }
 
 const DynamicTitle: React.FC<DynamicTitleProps> = ({ title }) => {
-  useEffect(() => {
-    document.title = title; // Updates browser tab title
-  }, [title]);
-
   return (
     <Head>
       <title>{title}</title>

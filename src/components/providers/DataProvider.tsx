@@ -4,10 +4,11 @@ import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { initFacebookPixel, trackPageView } from "@/lib/fbpixels";
 import { getPresets } from "@/server/queries/fetch-presets";
 import { getUser } from "@/server/queries/fetch-user";
+import { type CurrentUserPrisma } from "@/types/prisma";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation"; // For App Directory
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type DataProviderProps = {
   children: React.ReactNode;
@@ -18,58 +19,81 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
   const { data: session } = useSession();
   const addLoggedUser = useLoggedUser((state) => state.addUser);
   const addAllPresets = usePresets((state) => state.addPresets);
-  const pathname = usePathname(); // Get the current path
+  const pathname = usePathname();
 
-  const { data: user } = useQuery({
-    queryFn: () => getUser(session!.user.id),
+  const [isUserDataFetched, setIsUserDataFetched] = useState(false);
+  const [isPresetsFetched, setIsPresetsFetched] = useState(false);
+  const isSessionInitialized = useRef(false);
+
+  // Fetch user data with react-query
+  const {
+    data: user,
+    isLoading: userLoading,
+    isError: userError,
+  } = useQuery<CurrentUserPrisma | null>({
     queryKey: ["user_", session?.user.id],
+    queryFn: () => getUser(session!.user.id),
     enabled: !!session,
   });
 
-  // Track if session has been initialized
-  const isSessionInitialized = useRef(false);
-
-  // Fetch presets using React Query
-  const { data: allPresets } = useQuery({
+  // Fetch presets once user data is fetched
+  const {
+    data: allPresets,
+    isLoading: presetsLoading,
+    isError: presetsError,
+  } = useQuery({
     queryFn: getPresets,
     queryKey: ["all_presets"],
     staleTime: 300_000, // 5 minutes
+    enabled: isUserDataFetched, // Only fetch presets after user data is fetched
   });
 
-  // Facebook Pixel
   useEffect(() => {
-    if (!pixel_id) return; // Prevent running if no Pixel ID
-
-    void initFacebookPixel(pixel_id); // Use void to mark promise as ignored
-    void trackPageView();
-  }, [pixel_id]); // Only runs once on mount
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      void trackPageView();
-    }
-  }, [pathname]);
-
-  // Fetch Presets and prices from stripe
-  useEffect(() => {
-    if (!allPresets?.length) return;
-
-    addAllPresets(allPresets);
-  }, [addAllPresets, allPresets]);
-
-  useEffect(() => {
-    if (user && (!isSessionInitialized.current || user !== undefined)) {
+    // If the user data has been successfully fetched
+    if (!userLoading && !userError && user && !isSessionInitialized.current) {
       const presetIds = user.ownedPresets.map((p) => p.presetId);
-
-      // Initialize user data
       addLoggedUser(user, presetIds);
-
-      // Mark session as initialized to prevent trigger on page refresh
+      setIsUserDataFetched(true);
       isSessionInitialized.current = true;
     }
-  }, [user, addLoggedUser]);
+  }, [user, userLoading, userError, addLoggedUser]);
 
-  return <>{children}</>;
+  useEffect(() => {
+    // Once presets are fetched, trigger the relevant actions
+    if (!presetsLoading && !presetsError && allPresets) {
+      addAllPresets(allPresets);
+      setIsPresetsFetched(true);
+    }
+  }, [allPresets, presetsLoading, presetsError, addAllPresets]);
+
+  // Track page view on pathname change
+  useEffect(() => {
+    if (typeof window !== "undefined" && isPresetsFetched) {
+      void trackPageView();
+    }
+  }, [pathname, isPresetsFetched]);
+
+  return (
+    <>
+      <FacebookPixel pixel_id={pixel_id} />
+      {children}
+    </>
+  );
+};
+
+// Facebook Pixel component
+type FacebookPixelProps = {
+  pixel_id: string;
+};
+
+const FacebookPixel: React.FC<FacebookPixelProps> = ({ pixel_id }) => {
+  useEffect(() => {
+    if (!pixel_id) return;
+    void initFacebookPixel(pixel_id); // Use void to mark promise as ignored
+    void trackPageView();
+  }, [pixel_id]);
+
+  return null;
 };
 
 export default DataProvider;

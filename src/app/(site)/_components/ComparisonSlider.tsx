@@ -1,7 +1,7 @@
 "use client";
 import OptimizedImage from "@/components/OptimizedImage";
 import { MoveHorizontal } from "lucide-react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 
 type ComparisonSliderProp = {
   beforeImage: string;
@@ -116,4 +116,4 @@ const ComparisonSlider: React.FC<ComparisonSliderProp> = ({
   );
 };
 
-export default ComparisonSlider;
+export default memo(ComparisonSlider);

@@ -11,15 +11,16 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "config/site";
 import { type Metadata } from "next";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { Poppins } from "next/font/google";
+import Head from "next/head";
 import Script from "next/script";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -28,17 +29,13 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} | Premium Lightroom Presets"`,
-  description: siteConfig.description,
-  keywords: siteConfig.keywords,
+  title: `${siteConfig.name} | Premium Lightroom Presets`,
   icons: [{ rel: "icon", url: siteConfig.icon, href: siteConfig.icon }],
   other: {
     "theme-color": siteConfig.theme_color,
     "color-scheme": siteConfig.color_scheme,
     "twitter:image": siteConfig.twitter_image,
     "twitter:card": siteConfig.twitter_card,
-    "og:url": siteConfig.og_url,
-    "og:image": siteConfig.og_image,
     "og:type": siteConfig.og_type,
   },
 };
@@ -58,6 +55,14 @@ export default async function RootLayout({
   return (
     <html lang="en" className={poppins.variable} suppressHydrationWarning>
       <head>
+        <Head>
+          <meta name="description" content={siteConfig.description} />
+          <meta name="keywords" content={siteConfig.keywords} />
+          <meta property="og:url" content={siteConfig.og_url} />
+          <meta property="og:image" content={siteConfig.og_image} />
+        </Head>
+
+        {/* Product Schema */}
         <Script
           id="product-schema"
           type="application/ld+json"
@@ -66,40 +71,34 @@ export default async function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Product",
-              name: `${siteConfig.name} | Premium Lightroom Presets"`,
+              name: `${siteConfig.name} | Premium Lightroom Presets`,
               image:
-                "https://scapcreative.com/assets/images/meta-image-twitter.jpg", // Full URL
+                "https://scapcreative.com/assets/images/meta-image-twitter.jpg",
               description: siteConfig.description,
-              brand: {
-                "@type": "Brand",
-                name: "ScapCreative",
-              },
-              productID: "cm7pi11vk00010cjo3ahmcfi5", // Add a product ID for better tracking
+              brand: { "@type": "Brand", name: `${siteConfig.name}` },
+              productID: "cm7pi11vk00010cjo3ahmcfi5",
               mainEntityOfPage:
-                "https://www.scapcreative.com/shop/cm7pi11vk00010cjo3ahmcfi5", // URL of the product page
+                "https://www.scapcreative.com/shop/cm7pi11vk00010cjo3ahmcfi5",
               review: {
                 "@type": "Review",
                 reviewRating: {
                   "@type": "Rating",
-                  ratingValue: "4.8", // Add the rating value
-                  bestRating: "5", // Rating scale
+                  ratingValue: "4.8",
+                  bestRating: "5",
                 },
-                author: {
-                  "@type": "Person",
-                  name: "Verified Customer",
-                },
-                datePublished: "2025-03-29", // Add publication date of review
+                author: { "@type": "Person", name: "Verified Customer" },
+                datePublished: "2025-03-29",
               },
               aggregateRating: {
                 "@type": "AggregateRating",
                 ratingValue: "4.8",
-                reviewCount: "150", // Adjust based on actual review count
+                reviewCount: "150",
               },
               offers: {
                 "@type": "Offer",
                 priceCurrency: "CAD",
                 price: "24.99",
-                priceValidUntil: "2025-12-31", // Optional: include price validity date
+                priceValidUntil: "2025-12-31",
                 availability: "https://schema.org/InStock",
                 url: "https://scapcreative.com",
               },
@@ -117,7 +116,7 @@ export default async function RootLayout({
                 if(f.fbq) return; 
                 n=f.fbq=function(){
                   n.callMethod? 
-                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                  n.callMethod.apply(n,arguments):n.queue.push(arguments)}; 
                 if(!f._fbq) f._fbq=n;
                 n.push=n;
                 n.loaded=!0;
@@ -145,12 +144,12 @@ export default async function RootLayout({
                   {children}
                 </DataProvider>
                 <Toaster />
-                <SpeedInsights />
-                <Analytics mode="production" />
               </NextTopLoaderWrapper>
             </HydrationBoundary>
           </SessionProvider>
         </QueryProvider>
+        <SpeedInsights />
+        <Analytics mode="production" />
       </body>
     </html>
   );

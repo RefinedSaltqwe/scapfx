@@ -1,13 +1,16 @@
 "use client";
-import Details from "@/app/(site)/_components/Details";
 import Hero from "@/app/(site)/_components/Hero";
 import Product from "@/app/(site)/_components/Product";
-import Container from "@/components/Container";
-import Loader from "@/components/Loader";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
 import dynamic from "next/dynamic";
 import React from "react";
 const LazyGallery = dynamic(() => import("@/app/(site)/_components/Gallery"), {
+  ssr: false,
+});
+const Details = dynamic(() => import("@/app/(site)/_components/Details"), {
+  ssr: false,
+});
+const Container = dynamic(() => import("@/components/Container"), {
   ssr: false,
 });
 const LazyCallToAction = dynamic(
@@ -18,6 +21,7 @@ const LazyComparisonSlider = dynamic(
   () => import("@/app/(site)/_components/ComparisonSlider"),
   { ssr: false },
 );
+const Loader = dynamic(() => import("@/components/Loader"), { ssr: false });
 
 type MainPageContentProps = {
   current_preset: string;

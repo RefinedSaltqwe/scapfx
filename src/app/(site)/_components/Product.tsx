@@ -110,6 +110,8 @@ const Product: React.FC<ProductProps> = ({
           onClick={() => {
             // Handle the promise rejection gracefully
             trackEvent("AddToCart", {
+              content_ids: [currentPreset.id],
+              content_type: "product",
               value: currentPreset.price,
               currency: siteConfig.currency,
             }).catch((error) =>

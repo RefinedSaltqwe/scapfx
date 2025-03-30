@@ -115,6 +115,9 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
   useEffect(() => {
     if (!presetCreated && !dbData) {
       setLoading(true);
+      const matchedPresetIds = allPresets
+        .filter((preset) => sessionData.lineItems.includes(preset.productId))
+        .map((preset) => preset.id);
       // Execute user preset creation logic
       async function fetchData() {
         try {
@@ -128,6 +131,8 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
 
           const amount_paid = await fetchTotalAmount(sessionId);
           await trackEvent("Purchase", {
+            content_ids: matchedPresetIds,
+            content_type: "product",
             value: amount_paid,
             currency: siteConfig.currency,
           });

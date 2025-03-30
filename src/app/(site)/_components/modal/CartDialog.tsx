@@ -93,7 +93,7 @@ const CartDialog: React.FC = () => {
     setLoading(true);
 
     trackEvent("InitiateCheckout", {
-      content_ids: [...extractedItems.ids],
+      content_ids: extractedItems.ids,
       content_type: "product",
       value: extractedItems.totalPrice,
       currency: siteConfig.currency,

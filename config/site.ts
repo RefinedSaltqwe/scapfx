@@ -13,4 +13,6 @@ export const siteConfig = {
   og_image: "https://scapcreative.com/assets/images/meta-image-twitter.jpg", // Full URL for Open Graph image
   og_type: "website", // Specifies the content type of the page
   defaultProductImage: "https://github.com/shadcn.png", // Placeholder image for products
+  keywords:
+    "shortstache, film tones, silky tones, cinematic presets, Lightroom presets, photo editing, aesthetic photography, customizable presets, modern filmic tones",
 };

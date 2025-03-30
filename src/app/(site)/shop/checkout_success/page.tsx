@@ -17,6 +17,16 @@ type CheckoutSuccessPageProps = {
   };
 };
 
+export async function generateMetadata() {
+  return {
+    title: `Download File(s) | ${siteConfig.name}`,
+    description:
+      "Thank you for your purchase! Your order for ScapCreative's premium Lightroom presets has been successfully processed. You can now start transforming your photos with cinematic depth, film tones, and silky finishes. Enjoy editing with our customizable presets, and don't forget to explore more products to enhance your photography journey.",
+    keywords:
+      "checkout success, order confirmation, Lightroom presets, premium presets, photography, cinematic presets, film tones, customizable presets, ScapCreative, purchase confirmation",
+  };
+}
+
 const CheckoutSuccessPage: React.FC<CheckoutSuccessPageProps> = async ({
   searchParams,
 }) => {

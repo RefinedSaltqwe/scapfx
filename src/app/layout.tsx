@@ -30,8 +30,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: `${siteConfig.name} | Premium Lightroom Presets"`,
   description: siteConfig.description,
-  keywords:
-    "shortstache, film tones, silky tones, cinematic presets, Lightroom presets, photo editing, aesthetic photography, customizable presets",
+  keywords: siteConfig.keywords,
   icons: [{ rel: "icon", url: siteConfig.icon, href: siteConfig.icon }],
   other: {
     "theme-color": siteConfig.theme_color,

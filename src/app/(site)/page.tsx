@@ -1,14 +1,10 @@
 "use client";
+import Loader from "@/components/Loader";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { redirect } from "next/navigation";
-import React, { lazy, useEffect } from "react";
-const Loader = lazy(() => import("@/components/Loader"));
+import React, { useEffect } from "react";
 
-type HomeProps = {
-  a?: string;
-};
-
-const Home: React.FC<HomeProps> = () => {
+const Home: React.FC = () => {
   const presets = usePresets((state) => state.presets);
 
   useEffect(() => {

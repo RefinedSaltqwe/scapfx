@@ -28,7 +28,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name}`,
+  title: `${siteConfig.name} | Premium Lightroom Presets"`,
   description: siteConfig.description,
   keywords:
     "shortstache, film tones, silky tones, cinematic presets, Lightroom presets, photo editing, aesthetic photography, customizable presets",
@@ -67,7 +67,7 @@ export default async function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Product",
-              name: `${siteConfig.name} Lightroom Preset`,
+              name: `${siteConfig.name} | Premium Lightroom Presets"`,
               image:
                 "https://scapcreative.com/assets/images/meta-image-twitter.jpg", // Full URL
               description: siteConfig.description,

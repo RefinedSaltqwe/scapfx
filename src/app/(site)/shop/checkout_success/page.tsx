@@ -1,15 +1,14 @@
-import React from "react";
-import SuccessStripePageContent from "../../_components/SuccessStripePageContent";
-import { redirect } from "next/navigation";
+import { getUserByStripeSessionId } from "@/server/queries/fetch-user-preset-by-session";
+import { getUserPresets } from "@/server/queries/fetch-user-presets";
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import { getUserPresets } from "@/server/queries/fetch-user-presets";
-import { getUserByStripeSessionId } from "@/server/queries/fetch-user-preset-by-session";
-import DynamicTitle from "@/components/DynamicTitle";
 import { siteConfig } from "config/site";
+import { redirect } from "next/navigation";
+import React from "react";
+import SuccessStripePageContent from "../../_components/SuccessStripePageContent";
 
 type CheckoutSuccessPageProps = {
   searchParams: {
@@ -46,12 +45,9 @@ const CheckoutSuccessPage: React.FC<CheckoutSuccessPageProps> = async ({
   });
 
   return (
-    <>
-      <DynamicTitle title={`Download File(s) | ${siteConfig.name}`} />
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <SuccessStripePageContent sessionId={session_id} />
-      </HydrationBoundary>
-    </>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <SuccessStripePageContent sessionId={session_id} />
+    </HydrationBoundary>
   );
 };
 export default CheckoutSuccessPage;

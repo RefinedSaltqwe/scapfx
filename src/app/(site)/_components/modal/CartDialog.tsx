@@ -30,6 +30,7 @@ import Link from "next/link";
 import { useRouter } from "nextjs-toploader/app";
 import React, { lazy, useCallback, useMemo, useState } from "react";
 import TermsAndConditionPage from "../../terms-and-conditions/page";
+import { trackEvent } from "@/lib/fbpixels";
 
 const Loader = lazy(() => import("@/components/Loader"));
 
@@ -77,10 +78,28 @@ const CartDialog: React.FC = () => {
     productId: item.productId,
   }));
 
+  const extractedItems = presets.reduce(
+    (acc, item) => {
+      acc.totalPrice += item.price; // Summing prices
+      acc.ids.push(item.id); // Collecting ids
+      return acc;
+    },
+    { totalPrice: 0, ids: [] as string[] }, // Initial values
+  );
+
   // Stripe checkout session
   const handleCheckout = async () => {
     if (cartItemsCount === 0) return;
     setLoading(true);
+
+    trackEvent("InitiateCheckout", {
+      content_ids: [...extractedItems.ids],
+      content_type: "product",
+      value: extractedItems.totalPrice,
+      currency: siteConfig.currency,
+    }).catch((error) =>
+      console.error("Error tracking InitiateCheckout event:", error),
+    );
 
     const res = await fetch("/api/stripe/checkout_sessions", {
       method: "POST",

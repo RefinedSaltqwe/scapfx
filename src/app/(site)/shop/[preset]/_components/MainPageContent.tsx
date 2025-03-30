@@ -3,10 +3,8 @@ import Details from "@/app/(site)/_components/Details";
 import Hero from "@/app/(site)/_components/Hero";
 import Product from "@/app/(site)/_components/Product";
 import Container from "@/components/Container";
-import DynamicTitle from "@/components/DynamicTitle";
 import Loader from "@/components/Loader";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
-import { siteConfig } from "config/site";
 import dynamic from "next/dynamic";
 import React from "react";
 const LazyGallery = dynamic(() => import("@/app/(site)/_components/Gallery"), {
@@ -49,10 +47,6 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
 
   return (
     <>
-      <DynamicTitle
-        title={`${currentPreset?.name?.replace(/\b\w/g, (char) => char.toUpperCase())} | ${siteConfig.name}`}
-      />
-
       <Hero currentPreset={currentPreset} />
       <Product
         currentPreset={currentPreset}

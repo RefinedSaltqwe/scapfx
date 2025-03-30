@@ -21,21 +21,25 @@ export async function generateMetadata({ params }: StoreType) {
     };
   }
 
+  const productName = product.name.replace(/\b\w/g, (char) =>
+    char.toUpperCase(),
+  );
+
   return {
-    title: `${product.name} | ${siteConfig.name}`,
-    description: `Discover the ${product.name} Lightroom preset by ScapCreative. Transform your photos with cinematic depth, vibrant colors, and film-inspired tones. Fully customizable for any photographer.`,
+    title: `${productName} | ${siteConfig.name}`,
+    description: `Discover the ${productName} Lightroom preset pack by ScapCreative. Transform your photos with cinematic depth, vibrant colors, and film-inspired tones. Fully customizable for any photographer.`,
     keywords: `${product.name}, ${siteConfig.keywords}`,
     og: {
-      title: `${product.name} | ScapCreative Lightroom Presets`,
-      description: `Transform your photos with the ${product.name} preset by ScapCreative. Achieve professional photo editing with film tones and cinematic depth.`,
+      title: `${productName} | ScapCreative Lightroom Presets`,
+      description: `Transform your photos with the ${productName} preset by ScapCreative. Achieve professional photo editing with film tones and cinematic depth.`,
       url: `https://scapcreative.com/products/${product.id}`, // Assuming each product has a unique URL slug
       image: siteConfig.og_url, // Image specific to the product
       type: "product",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${product.name} | ScapCreative Lightroom Presets`,
-      description: `Get the ${product.name} Lightroom preset and elevate your photography with modern filmic tones.`,
+      title: `${productName} | ScapCreative Lightroom Presets`,
+      description: `Get the ${productName} Lightroom preset and elevate your photography with modern filmic tones.`,
       image: siteConfig.twitter_image, // Image specific to the product
     },
     product: {
@@ -53,11 +57,7 @@ const Store: React.FC<StoreType> = async ({ params }) => {
     redirect("/shop");
   }
 
-  return (
-    <>
-      <MainPageContent current_preset={currentPreset} />
-    </>
-  );
+  return <MainPageContent current_preset={currentPreset} />;
 };
 
 export default Store;

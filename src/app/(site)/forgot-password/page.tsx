@@ -1,6 +1,6 @@
 "use client";
 
-import DynamicTitle from "@/components/DynamicTitle";
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,22 +15,15 @@ import { forgotPassword } from "@/server/queries/forgot-password";
 import { ForgotPasswordSchema } from "@/server/queries/forgot-password/schema";
 import { Input } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { siteConfig } from "config/site";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "nextjs-toploader/app";
-import React, { lazy, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { type z } from "zod";
 
-const Loader = lazy(() => import("@/components/Loader"));
-
-type ForgotPasswordFormProps = {
-  s?: string;
-};
-
-const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = () => {
+const ForgotPasswordForm: React.FC = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [emailSent, setEmailSent] = useState<{ sent: boolean; email: string }>({
@@ -99,74 +92,69 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = () => {
   }
 
   return (
-    <>
-      <DynamicTitle title={`Forgot Password | ${siteConfig.name}`} />
-      <div className="flex min-h-full flex-1 items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-        <div className="w-full max-w-sm space-y-10">
-          <h2 className="text-primary mt-10 text-center text-2xl font-bold tracking-tight">
-            Forgot password
-          </h2>
+    <div className="flex min-h-full flex-1 items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+      <div className="w-full max-w-sm space-y-10">
+        <h2 className="text-primary mt-10 text-center text-2xl font-bold tracking-tight">
+          Forgot password
+        </h2>
 
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col gap-6"
-            >
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem className="flex-1">
-                    <FormLabel className="text-primary data-[error=true]:text-destructive">
-                      Email address
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Email address"
-                        {...field}
-                        className="bg-background text-primary focus:outline-primary block h-12 w-full rounded-md px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-destructive" />
-                  </FormItem>
-                )}
-              />
-
-              {error && (
-                <span className="text-destructive text-sm">{error}</span>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-6"
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel className="text-primary data-[error=true]:text-destructive">
+                    Email address
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Email address"
+                      {...field}
+                      className="bg-background text-primary focus:outline-primary block h-12 w-full rounded-md px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-destructive" />
+                </FormItem>
               )}
+            />
 
-              <div className="flex w-full flex-col items-center justify-between gap-4">
-                <Button
-                  className="bg-primary hover:bg-primary focus-visible:outline-primary flex h-12 w-full justify-center rounded-md px-3 py-1.5 text-sm/6 font-semibold text-white uppercase shadow-sm focus-visible:outline focus-visible:outline-offset-2"
-                  disabled={isLoading}
-                  type="submit"
+            {error && <span className="text-destructive text-sm">{error}</span>}
+
+            <div className="flex w-full flex-col items-center justify-between gap-4">
+              <Button
+                className="bg-primary hover:bg-primary focus-visible:outline-primary flex h-12 w-full justify-center rounded-md px-3 py-1.5 text-sm/6 font-semibold text-white uppercase shadow-sm focus-visible:outline focus-visible:outline-offset-2"
+                disabled={isLoading}
+                type="submit"
+              >
+                {isLoading ? (
+                  <Loader classNames="h-4 w-4 border-2 border-white/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+
+              {/* Sign Up Link */}
+              <div className="text-primary flex w-full text-sm">
+                <span className="mr-1 ml-auto font-medium">
+                  No account yet?
+                </span>
+                <Link
+                  href="/signup"
+                  className="text-primary text-sm hover:underline"
                 >
-                  {isLoading ? (
-                    <Loader classNames="h-4 w-4 border-2 border-white/80 animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
-                  ) : (
-                    "Submit"
-                  )}
-                </Button>
-
-                {/* Sign Up Link */}
-                <div className="text-primary flex w-full text-sm">
-                  <span className="mr-1 ml-auto font-medium">
-                    No account yet?
-                  </span>
-                  <Link
-                    href="/signup"
-                    className="text-primary text-sm hover:underline"
-                  >
-                    Sign up here
-                  </Link>
-                </div>
+                  Sign up here
+                </Link>
               </div>
-            </form>
-          </Form>
-        </div>
+            </div>
+          </form>
+        </Form>
       </div>
-    </>
+    </div>
   );
 };
 

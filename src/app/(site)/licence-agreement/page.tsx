@@ -1,11 +1,10 @@
-import DynamicTitle from "@/components/DynamicTitle";
 import LicenseAgreement from "@/components/LicenseAgreement";
 import { siteConfig } from "config/site";
 import React from "react";
 
 export const generateMetadata = () => {
   return {
-    title: "License Agreement | ScapCreative",
+    title: `License Agreement | ${siteConfig.name}`,
     description:
       "Review the License Agreement of ScapCreative to understand the terms of use for our Lightroom presets, including permitted uses, restrictions, and intellectual property rights.",
     keywords:
@@ -14,11 +13,6 @@ export const generateMetadata = () => {
 };
 
 const LicenseAgreementPage: React.FC = () => {
-  return (
-    <>
-      <DynamicTitle title={`Licence Agreement | ${siteConfig.name}`} />
-      <LicenseAgreement />
-    </>
-  );
+  return <LicenseAgreement />;
 };
 export default LicenseAgreementPage;

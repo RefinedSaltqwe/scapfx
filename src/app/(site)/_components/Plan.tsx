@@ -1,5 +1,6 @@
 "use client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { trackEvent } from "@/lib/fbpixels";
 import { type PresetAndChildren } from "@/types/prisma";
 import { siteConfig } from "config/site";
 import { useRouter } from "nextjs-toploader/app";
@@ -21,11 +22,27 @@ const Plan: React.FC<PlanProps> = ({ preset, selectedPreset, index }) => {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    // Ensure the event is only called once when mounted and preset matches
+    if (mounted && selectedPreset === preset.id) {
+      trackEvent("ViewContent", {
+        content_name: preset.name,
+        content_ids: [preset.id],
+        content_type: "product",
+        value: preset.price,
+        currency: siteConfig.currency,
+      }).catch((error) =>
+        console.error("Error tracking ViewContent event:", error),
+      );
+    }
+  }, [mounted, selectedPreset, preset.id, preset.name, preset.price]);
+
   const router = useRouter();
 
   const handleChange = () => {
     if (selectedPreset !== preset.id) {
       setLoading(true);
+
       router.push(`/shop/${preset.id}`);
     }
   };

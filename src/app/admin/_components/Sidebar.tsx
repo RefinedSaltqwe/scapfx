@@ -17,9 +17,11 @@ import {
   ChevronDownIcon,
   HomeIcon,
   MenuIcon,
+  MessageCircle,
   Search,
   Settings,
   ShoppingBag,
+  ShoppingBasket,
   Store,
   X,
 } from "lucide-react";
@@ -41,6 +43,18 @@ const navigation = [
     name: "Product Catalog",
     href: "/admin/product-catalog",
     icon: ShoppingBag,
+    current: false,
+  },
+  {
+    name: "Orders",
+    href: "/admin/orders",
+    icon: ShoppingBasket,
+    current: false,
+  },
+  {
+    name: "Chat Support",
+    href: "/admin/chat",
+    icon: MessageCircle,
     current: false,
   },
 ];

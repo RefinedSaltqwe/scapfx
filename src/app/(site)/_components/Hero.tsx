@@ -19,8 +19,10 @@ const Hero: React.FC<HeroProps> = ({ currentPreset }) => {
             width={4000}
             height={2667}
             priority
-            quality={100}
+            quality={90} // Reduce quality slightly for better performance
+            sizes="(max-width: 640px) 100vw, (max-width: 1200px) 80vw, 50vw"
           />
+
           {/* Bottom-to-Center Shadow Effect */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/5 to-transparent" />
         </div>

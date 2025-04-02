@@ -1,5 +1,6 @@
 "use client";
 import LicenseAgreement from "@/components/LicenseAgreement";
+import Loader from "@/components/Loader";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { env } from "@/env";
 import { useCart } from "@/hooks/stores/useCartStore";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
+import { trackEvent } from "@/lib/fbpixels";
 import { cn } from "@/lib/utils";
 import {
   Dialog,
@@ -28,11 +30,8 @@ import { Info, X, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "nextjs-toploader/app";
-import React, { lazy, useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import TermsAndConditionPage from "../../terms-and-conditions/page";
-import { trackEvent } from "@/lib/fbpixels";
-
-const Loader = lazy(() => import("@/components/Loader"));
 
 const stripePromise = loadStripe(env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 

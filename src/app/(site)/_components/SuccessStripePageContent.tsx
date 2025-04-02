@@ -1,4 +1,5 @@
 "use client";
+import Loader from "@/components/Loader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
@@ -14,10 +15,9 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import React, { lazy, Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
 import DownloadButton from "./DownloadButton";
-const Loader = lazy(() => import("@/components/Loader"));
 
 type SuccessStripePageContentProps = {
   sessionId: string;

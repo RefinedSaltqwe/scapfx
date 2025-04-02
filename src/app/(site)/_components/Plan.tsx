@@ -1,11 +1,11 @@
 "use client";
+import Loader from "@/components/Loader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { trackEvent } from "@/lib/fbpixels";
 import { type PresetAndChildren } from "@/types/prisma";
 import { siteConfig } from "config/site";
 import { useRouter } from "nextjs-toploader/app";
-import React, { lazy, useEffect, useMemo, useState } from "react";
-const Loader = lazy(() => import("@/components/Loader"));
+import React, { useEffect, useMemo, useState } from "react";
 
 type PlanProps = {
   preset: PresetAndChildren;

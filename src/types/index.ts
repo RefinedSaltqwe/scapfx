@@ -116,3 +116,15 @@ export interface MetaApiResponse {
   events_received?: number;
   error?: MetaApiError;
 }
+
+export interface MetaEventData {
+  event_name: string;
+  event_source_url: string;
+  user_agent: string;
+  value: number;
+  content_ids: string[];
+  content_name: string;
+  content_type: string;
+  email?: string;
+  user_data?: { fbclid: string }; // Add optional user_data property
+}

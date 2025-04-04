@@ -16,6 +16,9 @@ interface EventRequestBody {
   content_name?: string;
   content_type?: string;
   email?: string; // For Purchase event, email is required
+  user_data?: {
+    fbclid?: string;
+  };
 }
 
 interface MetaApiError {
@@ -33,6 +36,7 @@ interface MetaApiResponse {
 interface UserData {
   client_user_agent: string;
   em?: string[]; // Only for Purchase event
+  fbclid?: string;
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
@@ -50,6 +54,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       content_name = "",
       content_type = "product",
       email,
+      user_data: incomingUserData = {},
     } = body;
 
     // Prepare user_data based on event type
@@ -59,6 +64,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     if (event_name === "Purchase" && email) {
       user_data.em = [hashEmail(email)]; // Hash email for purchase event
+    }
+
+    // Add fbclid if present
+    if (incomingUserData.fbclid) {
+      user_data.fbclid = incomingUserData.fbclid;
     }
 
     // Prepare custom_data for the event

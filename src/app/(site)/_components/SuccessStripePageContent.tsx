@@ -18,24 +18,12 @@ import { redirect } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
 import DownloadButton from "./DownloadButton";
-import { type MetaApiResponse } from "@/types";
+import { type MetaEventData, type MetaApiResponse } from "@/types";
 import { getFBClickID } from "@/lib/utils";
 
 type SuccessStripePageContentProps = {
   sessionId: string;
 };
-
-interface MetaEventData {
-  event_name: string;
-  event_source_url: string;
-  user_agent: string;
-  value: number;
-  content_ids: string[];
-  content_name: string;
-  content_type: string;
-  email: string;
-  user_data?: { fbclid: string }; // Add optional user_data property
-}
 
 const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
   sessionId,
@@ -165,7 +153,7 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
             user_agent: navigator.userAgent,
             value: amount_paid,
             content_ids: matchedPresetIds,
-            content_name: "Presets",
+            content_name: "Scap Creative Presets",
             content_type: "product",
             email: sessionData.email,
           };

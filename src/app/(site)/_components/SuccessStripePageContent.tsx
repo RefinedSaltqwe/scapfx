@@ -19,10 +19,23 @@ import React, { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
 import DownloadButton from "./DownloadButton";
 import { type MetaApiResponse } from "@/types";
+import { getFBClickID } from "@/lib/utils";
 
 type SuccessStripePageContentProps = {
   sessionId: string;
 };
+
+interface MetaEventData {
+  event_name: string;
+  event_source_url: string;
+  user_agent: string;
+  value: number;
+  content_ids: string[];
+  content_name: string;
+  content_type: string;
+  email: string;
+  user_data?: { fbclid: string }; // Add optional user_data property
+}
 
 const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
   sessionId,
@@ -143,36 +156,44 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
           }).catch((error) =>
             console.error("Error tracking Purchase event:", error),
           );
+          setPresetCreated(true);
 
-          // Conversion API
-          const response = await fetch("/api/meta-capi", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              event_name: "Purchase",
-              event_source_url: window.location.href,
-              user_agent: navigator.userAgent,
-              value: amount_paid,
-              content_ids: matchedPresetIds,
-              content_name: "Presets",
-              content_type: "product",
-              email: sessionData.email,
-            }),
-          });
+          const fbclid = getFBClickID();
+          const eventData: MetaEventData = {
+            event_name: "Purchase",
+            event_source_url: window.location.href,
+            user_agent: navigator.userAgent,
+            value: amount_paid,
+            content_ids: matchedPresetIds,
+            content_name: "Presets",
+            content_type: "product",
+            email: sessionData.email,
+          };
 
-          // Type the response correctly to handle the data structure
-          const data: MetaApiResponse =
-            (await response.json()) as MetaApiResponse;
-
-          // Type-safe error handling
-          if (!response.ok || data.error) {
-            console.error(
-              `Error tracking Purchase event:`,
-              data.error?.message,
-            );
+          if (fbclid) {
+            eventData.user_data = { fbclid }; // Add fbclid only if it exists
           }
 
-          setPresetCreated(true);
+          try {
+            // Conversion API
+            const response = await fetch("/api/meta-capi", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(eventData),
+            });
+
+            const data: MetaApiResponse =
+              (await response.json()) as MetaApiResponse;
+
+            if (!response.ok || data.error) {
+              console.error(
+                `Error tracking Purchase event:`,
+                data.error?.message,
+              );
+            }
+          } catch (error) {
+            console.error("Error sending Purchase event to Meta:", error);
+          }
         } catch (error) {
           console.error("Error in effect:", error);
         } finally {

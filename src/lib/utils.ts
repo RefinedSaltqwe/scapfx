@@ -10,3 +10,8 @@ export const isImageUrl = (url: string): boolean => {
   const imageExtensions = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
   return imageExtensions.test(url);
 };
+
+export function getFBClickID() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get("fbclid");
+}

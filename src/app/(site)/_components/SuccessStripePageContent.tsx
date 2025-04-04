@@ -133,14 +133,17 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
           const amount_paid = await fetchTotalAmount(sessionId);
           // Pixel
           await trackEvent("Purchase", {
-            content_ids: matchedPresetIds,
-            content_type: "product",
+            event_source_url: window.location.href,
+            user_agent: navigator.userAgent,
             value: amount_paid,
             currency: siteConfig.currency,
+            content_ids: matchedPresetIds,
+            content_type: "product",
             email: sessionData.email,
           }).catch((error) =>
             console.error("Error tracking Purchase event:", error),
           );
+
           // Conversion API
           const response = await fetch("/api/meta-capi", {
             method: "POST",

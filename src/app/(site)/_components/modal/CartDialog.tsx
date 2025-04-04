@@ -81,9 +81,10 @@ const CartDialog: React.FC = () => {
     (acc, item) => {
       acc.totalPrice += item.price; // Summing prices
       acc.ids.push(item.id); // Collecting ids
+      acc.names.push(item.name); // Collecting ids
       return acc;
     },
-    { totalPrice: 0, ids: [] as string[] }, // Initial values
+    { totalPrice: 0, ids: [] as string[], names: [] as string[] }, // Initial values
   );
 
   // Stripe checkout session
@@ -93,6 +94,8 @@ const CartDialog: React.FC = () => {
 
     trackEvent("InitiateCheckout", {
       content_ids: extractedItems.ids,
+      content_name: extractedItems.names,
+      num_items: extractedItems.ids.length,
       content_type: "product",
       value: extractedItems.totalPrice,
       currency: siteConfig.currency,

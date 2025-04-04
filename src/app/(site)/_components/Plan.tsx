@@ -31,6 +31,7 @@ const Plan: React.FC<PlanProps> = ({ preset, selectedPreset, index }) => {
         content_type: "product",
         value: preset.price,
         currency: siteConfig.currency,
+        content_category: "presets",
       }).catch((error) =>
         console.error("Error tracking ViewContent event:", error),
       );

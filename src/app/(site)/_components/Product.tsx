@@ -108,12 +108,14 @@ const Product: React.FC<ProductProps> = ({
           className="mt-8 h-12 max-w-2xl"
           disabled={isPresetExists || isPresetOwned}
           onClick={() => {
-            // Handle the promise rejection gracefully
             trackEvent("AddToCart", {
-              content_ids: [currentPreset.id],
-              content_type: "product",
+              event_source_url: window.location.href,
+              user_agent: navigator.userAgent,
               value: currentPreset.price,
               currency: siteConfig.currency,
+              content_ids: [currentPreset.id],
+              content_name: currentPreset.name,
+              content_type: "product",
             }).catch((error) =>
               console.error("Error tracking AddToCart event:", error),
             );

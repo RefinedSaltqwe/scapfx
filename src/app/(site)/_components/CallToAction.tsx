@@ -52,8 +52,13 @@ const CallToAction: React.FC<CallToActionProps> = ({ currentPreset }) => {
               disabled={isPresetExists}
               onClick={() => {
                 trackEvent("AddToCart", {
+                  event_source_url: window.location.href,
+                  user_agent: navigator.userAgent,
                   value: currentPreset.price,
                   currency: siteConfig.currency,
+                  content_ids: [currentPreset.id],
+                  content_name: currentPreset.name,
+                  content_type: "product",
                 }).catch((error) =>
                   console.error("Error tracking AddToCart event:", error),
                 );

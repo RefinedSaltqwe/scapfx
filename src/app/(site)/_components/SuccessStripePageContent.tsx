@@ -18,6 +18,7 @@ import { redirect } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
 import DownloadButton from "./DownloadButton";
+import { type MetaApiResponse } from "@/types";
 
 type SuccessStripePageContentProps = {
   sessionId: string;
@@ -130,12 +131,43 @@ const SuccessStripePageContent: React.FC<SuccessStripePageContentProps> = ({
           });
 
           const amount_paid = await fetchTotalAmount(sessionId);
+          // Pixel
           await trackEvent("Purchase", {
             content_ids: matchedPresetIds,
             content_type: "product",
             value: amount_paid,
             currency: siteConfig.currency,
+            email: sessionData.email,
+          }).catch((error) =>
+            console.error("Error tracking Purchase event:", error),
+          );
+          // Conversion API
+          const response = await fetch("/api/meta-capi", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              event_name: "Purchase",
+              event_source_url: window.location.href,
+              user_agent: navigator.userAgent,
+              value: amount_paid,
+              content_ids: matchedPresetIds,
+              content_name: "Presets",
+              content_type: "product",
+              email: sessionData.email,
+            }),
           });
+
+          // Type the response correctly to handle the data structure
+          const data: MetaApiResponse =
+            (await response.json()) as MetaApiResponse;
+
+          // Type-safe error handling
+          if (!response.ok || data.error) {
+            console.error(
+              `Error tracking Purchase event:`,
+              data.error?.message,
+            );
+          }
 
           setPresetCreated(true);
         } catch (error) {

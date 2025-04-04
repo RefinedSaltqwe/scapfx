@@ -104,3 +104,15 @@ export type Gallery = {
 export interface CartItemsStripe {
   productId: string;
 }
+
+export interface MetaApiError {
+  message: string;
+  type: string;
+  code: number;
+  fbtrace_id: string;
+}
+
+export interface MetaApiResponse {
+  events_received?: number;
+  error?: MetaApiError;
+}

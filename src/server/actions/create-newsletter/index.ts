@@ -42,7 +42,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     revalidatePath("/shop", "page");
     return { data: { emailSent: emailSent, created: true } };
   } catch (error) {
-    console.error("User creation error:", error);
+    console.error("Newsletter creation error:", error);
     return { error: error instanceof Error ? error.message : "Unknown error" };
   }
 };

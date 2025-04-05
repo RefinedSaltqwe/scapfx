@@ -28,6 +28,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { type z } from "zod";
 import Loader from "@/components/Loader";
+import { trackEvent } from "@/lib/fbpixels";
 
 type NewsLetterProps = {
   x?: string;
@@ -41,9 +42,16 @@ const NewsLetter: React.FC<NewsLetterProps> = () => {
     createNewsletter,
     {
       onSuccess: (data) => {
-        console.log(data);
         if (data.emailSent === true) {
           toast.success("Email sent.");
+          trackEvent("CompleteRegistration", {
+            event_source_url: window.location.href,
+            user_agent: navigator.userAgent,
+            content_name: "Newsletter Registration",
+            value: 0.0,
+          }).catch((error) =>
+            console.error("Error tracking InitiateCheckout event:", error),
+          );
           setSubbed(true);
           setError(false);
         } else if (data.emailSent === false) {

@@ -57,7 +57,7 @@ const NewsLetterProvider: React.FC = () => {
     }
   }, [openNewsletter]);
 
-  return <div>{/* Your component JSX here */}</div>;
+  return <div></div>;
 };
 
 export default NewsLetterProvider;

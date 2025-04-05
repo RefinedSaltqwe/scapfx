@@ -38,6 +38,7 @@ const Navigation: React.FC = () => {
     pathname.includes("login") ||
     pathname.includes("signup") ||
     pathname.includes("account") ||
+    pathname.includes("free-preset") ||
     pathname.includes("create_account");
 
   const [isAtTop, setIsAtTop] = useState(true);

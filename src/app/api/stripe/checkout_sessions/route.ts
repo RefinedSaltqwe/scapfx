@@ -28,6 +28,7 @@ export async function POST(req: Request) {
     // Create stripe checkout session
     const session = await stripe.checkout.sessions.create({
       line_items: line_items,
+      allow_promotion_codes: true,
       discounts:
         line_items.length === 3 ? [{ coupon: env.STRIPE_BUNDLE_DISCOUNT }] : [],
       mode: "payment",

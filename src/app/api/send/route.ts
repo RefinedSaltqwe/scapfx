@@ -1,5 +1,6 @@
 import { DownloadLinkEmailTemplate } from "@/components/Email/DownloadLink";
 import { ForgotPasswordEmailTemplate } from "@/components/Email/ForgotPassword";
+import { NewsletterSuccessEmailTemplate } from "@/components/Email/Newsletter";
 import { env } from "@/env";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
@@ -33,6 +34,20 @@ export async function POST(req: Request) {
         forgot_password_id: items.id,
       });
       break;
+    case "newsletter":
+      emailSubject =
+        "You've Already Subscribed! Here's Your Free Preset & Discount Code";
+      template = NewsletterSuccessEmailTemplate({
+        name: items.name,
+        discountCode: items.id,
+        url: `${env.NEXT_PUBLIC_API_URL}/free-preset?email=${items.email}`,
+      });
+      break;
+    default:
+      return NextResponse.json(
+        { error: "Invalid request type" },
+        { status: 400 },
+      );
   }
 
   try {

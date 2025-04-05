@@ -15,6 +15,14 @@ export const sendEmail = async (
     case "forgot_password":
       emailBody = JSON.stringify({ what, email, name, id: forgot_password_id });
       break;
+    case "newsletter":
+      emailBody = JSON.stringify({
+        what,
+        email,
+        name,
+        id: env.NEXT_PUBLIC_STRIPE_FIRST_DISCOUNT,
+      });
+      break;
   }
   try {
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/api/send`, {

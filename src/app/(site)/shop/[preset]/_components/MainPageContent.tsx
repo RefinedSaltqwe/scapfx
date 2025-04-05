@@ -4,6 +4,7 @@ import Product from "@/app/(site)/_components/Product";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
 import dynamic from "next/dynamic";
 import React from "react";
+import NewsLetterProvider from "./NewsLetterProvider";
 const LazyGallery = dynamic(() => import("@/app/(site)/_components/Gallery"), {
   ssr: false,
 });
@@ -51,6 +52,7 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
 
   return (
     <>
+      <NewsLetterProvider />
       <Hero currentPreset={currentPreset} />
       <Product
         currentPreset={currentPreset}

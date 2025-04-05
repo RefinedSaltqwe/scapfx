@@ -66,6 +66,12 @@ model User {
   ownedPresets      PresetUser[]
 }
 
+model NewsLetter {
+  id                String @id @default(cuid())
+  email             String @unique
+  createdAt         DateTime @default(now())
+}
+
 model VerificationToken {
   identifier String
   token      String   @unique

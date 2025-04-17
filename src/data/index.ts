@@ -214,7 +214,7 @@ export const whatsIncluded = [
   {
     name: "Tools",
     description:
-      "My Preset Tools were designed to save you time and elevate your images. With features like the Mist Effect, Denoise, Linear Gradient Highlight and Shadow, and more, these tools add a dynamic, three-dimensional depth to your photos, enhancing their overall texture and visual interest.",
+      "My Preset Tools were designed to save you time and elevate your images. With features like the Mist Effect, Denoise, Light Source, Shadow, and more, these tools add a dynamic, three-dimensional depth to your photos, enhancing their overall texture and visual interest.",
   },
   {
     name: "Shooting Tips",

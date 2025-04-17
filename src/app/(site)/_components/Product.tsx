@@ -131,8 +131,8 @@ const Product: React.FC<ProductProps> = ({
         </Button>
 
         <div className="border-muted mt-10 border-t pt-10">
-          <h3 className="text-primary font-medium">
-            {`Buy 3, Get an Extra ${env.NEXT_PUBLIC_STRIPE_DISCOUNT}% Off!`}
+          <h3 className="text-primary text-xl font-semibold">
+            {`Buy 3, Get an extra ${env.NEXT_PUBLIC_STRIPE_DISCOUNT}% off!`}
           </h3>
           <h3 className="text-primary mt-6 text-sm font-medium">
             Supported Software

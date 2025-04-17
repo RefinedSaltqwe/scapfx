@@ -8,7 +8,7 @@ type HeroProps = {
 
 const Hero: React.FC<HeroProps> = ({ currentPreset }) => {
   return (
-    <section className="bg-background relative z-5 -mt-[60px]">
+    <section className="bg-background relative z-5 -mt-[56px]">
       <div className="relative bg-gray-900">
         {/* Preload Hero Image */}
         <link

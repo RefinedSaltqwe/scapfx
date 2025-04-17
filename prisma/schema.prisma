@@ -144,3 +144,13 @@ model Gallery {
 
   preset                  Preset @relation(fields: [presetId], references: [id], onDelete: Cascade)
 }
+
+model Banner {
+  id                      String @id @default(cuid())
+  bg                      String @default("000")
+  enabled                 Boolean @default(true)
+  primary                 String @default("")
+  p_text_color            String @default("fff")
+  description             String @default("")
+  d_text_color            String @default("fff")
+}

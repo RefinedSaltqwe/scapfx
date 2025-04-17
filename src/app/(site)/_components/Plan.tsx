@@ -86,7 +86,7 @@ const Plan: React.FC<PlanProps> = ({ preset, selectedPreset, index }) => {
         <span className="text-destructive ml-6 pl-1 text-sm font-semibold group-has-[:checked]:text-red-600 md:ml-0 md:pl-0 md:text-right">
           {`$${preset.price.toFixed(2)} ${siteConfig.currency}`}
         </span>
-        <span className="text-muted-foreground text-[12px] font-semibold line-through">{`$${preset.prevPrice.toFixed(2)}`}</span>
+        <span className="text-muted-foreground text-[12px] font-medium line-through">{`$${preset.prevPrice.toFixed(2)}`}</span>
       </div>
     </label>
   );

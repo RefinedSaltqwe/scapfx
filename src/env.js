@@ -47,6 +47,7 @@ export const env = createEnv({
     NEXT_PUBLIC_API_URL: z.string(),
     NEXT_PUBLIC_STRIPE_DISCOUNT: z.string(),
     NEXT_PUBLIC_STRIPE_FIRST_DISCOUNT: z.string(),
+    NEXT_PUBLIC_BANNER: z.string(),
   },
 
   /**
@@ -77,6 +78,7 @@ export const env = createEnv({
     VERCEL_API_TOKEN: process.env.VERCEL_API_TOKEN,
     VERCEL_PROJECT_ID: process.env.VERCEL_PROJECT_ID,
     ADIT: process.env.ADIT,
+    NEXT_PUBLIC_BANNER: process.env.NEXT_PUBLIC_BANNER,
     NEXT_PUBLIC_STRIPE_FIRST_DISCOUNT:
       process.env.NEXT_PUBLIC_STRIPE_FIRST_DISCOUNT,
   },

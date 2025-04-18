@@ -5,12 +5,11 @@ import { Button } from "@/components/ui/button";
 import { supportedSoftwares } from "@/data";
 import { useCart } from "@/hooks/stores/useCartStore";
 import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
+import { trackEvent } from "@/lib/fbpixels";
+import { type PresetAndChildren } from "@/types/prisma";
+import { siteConfig } from "config/site";
 import React, { useMemo } from "react";
 import Plan from "./Plan";
-import { type PresetAndChildren } from "@/types/prisma";
-import { trackEvent } from "@/lib/fbpixels";
-import { siteConfig } from "config/site";
-import { env } from "@/env";
 
 type ProductProps = {
   currentPreset: PresetAndChildren;
@@ -132,8 +131,12 @@ const Product: React.FC<ProductProps> = ({
 
         <div className="border-muted mt-10 border-t pt-10">
           <h3 className="text-primary text-xl font-semibold">
-            {`Buy 3, Get an extra ${env.NEXT_PUBLIC_STRIPE_DISCOUNT}% off!`}
+            {`Get 3 Packs for Only $15.00 CAD `}
+            {/* {`Buy 3, Get an extra ${env.NEXT_PUBLIC_STRIPE_DISCOUNT}% off!`} */}
           </h3>
+          <i className="text-muted-foreground mt-6 text-sm font-medium">
+            {`(Regularly $27.00 CAD • You Save $12.00 CAD • No Code Needed)`}
+          </i>
           <h3 className="text-primary mt-6 text-sm font-medium">
             Supported Software
           </h3>

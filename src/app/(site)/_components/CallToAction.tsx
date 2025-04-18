@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks/stores/useCartStore";
+import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
 import { trackEvent } from "@/lib/fbpixels";
 import { type PresetAndChildren } from "@/types/prisma";
 import { siteConfig } from "config/site";
@@ -14,11 +15,18 @@ const CallToAction: React.FC<CallToActionProps> = ({ currentPreset }) => {
   const onOpen = useCart((state) => state.onOpen);
   const cartPresets = useCart((state) => state.presets);
   const addPreset = useCart((state) => state.addPreset);
+  const ownedPresets = useLoggedUser((state) => state.ownedPresets);
 
   // Memoize the text color style to avoid recalculating on every render
   const textColorStyle = useMemo(
     () => ({ color: currentPreset.color }),
     [currentPreset.color],
+  );
+
+  // Check if preset is already owned by the user
+  const isPresetOwned = useMemo(
+    () => ownedPresets.includes(currentPreset.id),
+    [ownedPresets, currentPreset.id],
   );
 
   // Check if the preset already exists in the cart
@@ -49,7 +57,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ currentPreset }) => {
             <Button
               className="mt-8 h-12 w-full max-w-sm"
               variant={"secondary"}
-              disabled={isPresetExists}
+              disabled={isPresetExists || isPresetOwned}
               onClick={() => {
                 trackEvent("AddToCart", {
                   event_source_url: window.location.href,
@@ -66,7 +74,11 @@ const CallToAction: React.FC<CallToActionProps> = ({ currentPreset }) => {
                 onOpen();
               }}
             >
-              {isPresetExists ? "IN CART" : "ADD TO CART"}
+              {isPresetExists
+                ? "IN CART"
+                : isPresetOwned
+                  ? "ALREADY OWNED"
+                  : "ADD TO CART"}
             </Button>
           </div>
         </div>

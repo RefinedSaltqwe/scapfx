@@ -249,7 +249,7 @@ const CartDialog: React.FC = () => {
                           {`You've unlocked the 3-for-$15 deal.`}
                         </p>
                         <p className="text-muted-foreground text-sm">
-                          Discount applied at checkout.
+                          Discount applies automatically at checkout
                         </p>
                       </>
                     )}

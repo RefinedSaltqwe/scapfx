@@ -134,9 +134,9 @@ const Product: React.FC<ProductProps> = ({
             {`Get 3 Packs for Only $15.00 CAD `}
             {/* {`Buy 3, Get an extra ${env.NEXT_PUBLIC_STRIPE_DISCOUNT}% off!`} */}
           </h3>
-          <i className="text-muted-foreground mt-6 text-sm font-medium">
-            {`(Save an extra $12.00 CAD • No code needed • Instant savings at checkout`}
-          </i>
+          <span className="text-muted-foreground mt-6 text-sm">
+            {`Save an extra $12.00 CAD • No code needed • Instant savings at checkout`}
+          </span>
           <h3 className="text-primary mt-6 text-sm font-medium">
             Supported Software
           </h3>

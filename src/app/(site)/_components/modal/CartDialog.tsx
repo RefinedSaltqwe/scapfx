@@ -244,12 +244,12 @@ const CartDialog: React.FC = () => {
                   <div className="mt-2">
                     {presets.length === 3 && (
                       <>
-                        <p className="text-primary text-sm font-medium">
+                        <p className="text-primary font-medium">
                           {/* {`You're eligible for an extra ${env.NEXT_PUBLIC_STRIPE_DISCOUNT}% off!`} */}
                           {`You've unlocked the 3-for-$15 deal.`}
                         </p>
                         <p className="text-muted-foreground text-sm">
-                          Discount applies automatically at checkout
+                          Discount applies automatically at checkout.
                         </p>
                       </>
                     )}

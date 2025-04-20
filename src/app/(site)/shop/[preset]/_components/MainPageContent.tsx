@@ -68,12 +68,14 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
               presets.
             </h2> */}
             <h2 className="text-primary text-xl font-bold tracking-tight sm:text-2xl">
-              What you can expect your photos to look like when using my
-              presets.
+              Presets are only half the story.
             </h2>
             <p className="text-muted-foreground mt-4">
-              {`They're designed to work across different photography styles—landscapes, portraits, night scenes, and urban environments. I consistently use them in my projects.`}
+              {`Most presets fall flat—not because they're bad, but because no one teaches you how to shoot for them. Without a clear understanding of light, settings, and intentional shooting, even the best presets can miss the mark.`}
             </p>
+            {/* <p className="text-muted-foreground mt-4">
+              {`They're designed to work across different photography styles—landscapes, portraits, night scenes, and urban environments. I consistently use them in my projects.`}
+            </p> */}
           </div>
         </div>
 

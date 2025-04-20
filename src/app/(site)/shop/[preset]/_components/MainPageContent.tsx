@@ -63,6 +63,10 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
       <Container maxWidth="full" bgColor="bg-secondary">
         <div className="flex w-full flex-col items-center">
           <div className="mx-auto my-16 max-w-2xl text-center lg:max-w-4xl">
+            {/* <h2 className="text-primary text-xl font-bold tracking-tight sm:text-2xl">
+              What you can expect your photos to look like when using my
+              presets.
+            </h2> */}
             <h2 className="text-primary text-xl font-bold tracking-tight sm:text-2xl">
               What you can expect your photos to look like when using my
               presets.

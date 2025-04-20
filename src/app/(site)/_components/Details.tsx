@@ -18,7 +18,7 @@ const Details: React.FC<DetailsProps> = () => {
               {`What's included?`}
             </p>
             <p className="text-muted-foreground mt-6 text-base/7">
-              These are the items included in this pack.
+              They come with everything I wish I had starting out.
             </p>
           </div>
           <dl className="text-muted-foreground col-span-3 grid grid-cols-1 gap-x-8 gap-y-10 text-base/7 sm:grid-cols-2 lg:gap-y-16">

@@ -9,7 +9,7 @@ const Promotion: React.FC<PromotionProps> = ({ currentPreset }) => {
   return (
     <div className="bg-background">
       <div className="mx-auto max-w-7xl pt-10 pb-16 sm:px-6 lg:px-8">
-        <div className="bg-primary relative isolate overflow-hidden rounded-2xl px-6 py-16 text-center shadow-2xl sm:px-16">
+        <div className="bg-primary relative isolate overflow-hidden rounded-md px-6 py-16 text-center shadow-2xl sm:rounded-2xl sm:px-16">
           <h2 className="text-secondary text-3xl font-semibold tracking-tight text-balance sm:text-5xl">
             The Art of Shooting for the Edit
           </h2>

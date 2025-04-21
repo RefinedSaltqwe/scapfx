@@ -44,7 +44,7 @@ const CallToAction: React.FC<CallToActionProps> = ({ currentPreset }) => {
       <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h2
-            className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
+            className="text-secondary text-3xl font-semibold tracking-tight text-balance sm:text-5xl"
             style={textColorStyle}
           >
             Presets Are Powerful — With the Right Process

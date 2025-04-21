@@ -5,6 +5,7 @@ import { usePresets } from "@/hooks/stores/usePresetsStore";
 import dynamic from "next/dynamic";
 import React from "react";
 import NewsLetterProvider from "./NewsLetterProvider";
+import Promotion from "@/app/(site)/_components/Promotion";
 const LazyGallery = dynamic(() => import("@/app/(site)/_components/Gallery"), {
   ssr: false,
 });
@@ -59,23 +60,15 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
         index={currentPresetIndex}
         allPresets={allPresets}
       />
-
       <Container maxWidth="full" bgColor="bg-secondary">
         <div className="flex w-full flex-col items-center">
           <div className="mx-auto my-16 max-w-2xl text-center lg:max-w-4xl">
-            {/* <h2 className="text-primary text-xl font-bold tracking-tight sm:text-2xl">
-              What you can expect your photos to look like when using my
-              presets.
-            </h2> */}
             <h2 className="text-primary text-xl font-bold tracking-tight sm:text-2xl">
-              Presets are only half the story.
+              The results you can expect.
             </h2>
             <p className="text-muted-foreground mt-4">
-              {`Most presets fall flat—not because they're bad, but because no one teaches you how to shoot for them. Without a clear understanding of light, settings, and intentional shooting, even the best presets can miss the mark.`}
-            </p>
-            {/* <p className="text-muted-foreground mt-4">
               {`They're designed to work across different photography styles—landscapes, portraits, night scenes, and urban environments. I consistently use them in my projects.`}
-            </p> */}
+            </p>
           </div>
         </div>
 
@@ -91,6 +84,7 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
       </Container>
 
       <Container maxWidth="lg">
+        <Promotion currentPreset={currentPreset} />
         <Details />
       </Container>
       <LazyGallery currentPreset={currentPreset} />

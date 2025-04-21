@@ -42,15 +42,15 @@ const CallToAction: React.FC<CallToActionProps> = ({ currentPreset }) => {
   return (
     <div className="bg-primary relative isolate overflow-hidden">
       <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
-        <div className="mx-auto max-w-5xl text-center">
+        <div className="mx-auto max-w-3xl text-center">
           <h2
             className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
             style={textColorStyle}
           >
-            The Art of Shooting for the Edit
+            Presets Are Powerful — With the Right Process
           </h2>
-          <p className="text-secondary mx-auto mt-6 max-w-xl text-lg/8 text-pretty">
-            {`This pack gives you more than just presets—it includes guidance on light, settings, and shooting with intention. Because a great edit begins with a great shot. Nail the foundation, then let the preset bring it all together.`}
+          <p className="text-secondary mx-auto mt-6 max-w-2xl text-lg/8 text-pretty">
+            {`Most presets fall flat—not because they're bad, but because no one teaches you how to shoot for them. Without a clear understanding of light, settings, and intentional shooting, even the best presets can miss the mark.`}
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Button

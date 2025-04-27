@@ -11,13 +11,13 @@ import {
 
 type StoreType = {
   params: {
-    preset?: string;
+    preset: string;
   };
 };
 
 export async function generateMetadata({ params }: StoreType) {
-  const presetId = params?.preset;
-  const product = await getPresetById(presetId ?? "");
+  const presetId = params.preset;
+  const product = await getPresetById(presetId);
 
   if (!product) {
     return {
@@ -57,8 +57,9 @@ export async function generateMetadata({ params }: StoreType) {
 }
 
 const Store: React.FC<StoreType> = async ({ params }) => {
-  const currentPreset = params?.preset ?? "";
-  if (currentPreset === "undefined") {
+  const currentPreset = params.preset;
+
+  if (!currentPreset || currentPreset === "undefined") {
     redirect("/shop");
   }
   const queryClient = new QueryClient();

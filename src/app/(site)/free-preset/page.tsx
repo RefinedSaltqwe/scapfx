@@ -1,18 +1,14 @@
 import { db } from "@/server/db";
 import DownloadButton from "../_components/DownloadButton";
 
-interface FreePresetPageProps {
-  searchParams?: {
-    email?: string;
-  };
-}
-
 export default async function FreePresetPage({
   searchParams,
-}: FreePresetPageProps) {
-  const email = searchParams?.email;
+}: {
+  searchParams: { email: string };
+}) {
+  const { email } = searchParams;
 
-  if (!email) {
+  if (!searchParams.email) {
     return (
       <div className="flex min-h-full flex-1 flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex w-full max-w-sm flex-col items-center space-y-10 align-middle">

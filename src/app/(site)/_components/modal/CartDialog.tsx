@@ -30,7 +30,7 @@ import { Info, X, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "nextjs-toploader/app";
-import React, { useCallback, useMemo, useState, useEffect } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import TermsAndConditionPage from "../../terms-and-conditions/page";
 
 const CartDialog: React.FC = () => {
@@ -42,10 +42,9 @@ const CartDialog: React.FC = () => {
   const router = useRouter();
   const user = useLoggedUser((state) => state.user);
   const [isLegalAgreementChecked, setIsLegalAgreementChecked] = useState(false);
-  const [activeTab, setActiveTab] = useState("terms");
-  const [stripeLoaded, setStripeLoaded] = useState(false); // State to track Stripe script load
+  const [activeTab, setActiveTab] = useState("terms"); // State to control which content is displayed
 
-  // Memoize subtotal calculations
+  // Memoize subtotal calculations to avoid unnecessary recalculations
   const subTotal = useMemo(
     () =>
       presets.reduce((total, preset) => {
@@ -63,6 +62,7 @@ const CartDialog: React.FC = () => {
   );
   const cartItemsCount = presets.length;
 
+  // Memoize remove function to prevent unnecessary re-renders
   const handleRemovePreset = useCallback(
     (productId: string) => {
       removePreset(productId);
@@ -70,50 +70,24 @@ const CartDialog: React.FC = () => {
     [removePreset],
   );
 
+  // Extract productIds from presets object
   const stripeProductIds = presets.map((item) => ({
     productId: item.productId,
   }));
 
   const extractedItems = presets.reduce(
     (acc, item) => {
-      acc.totalPrice += item.price;
-      acc.ids.push(item.id);
-      acc.names.push(item.name);
+      acc.totalPrice += item.price; // Summing prices
+      acc.ids.push(item.id); // Collecting ids
+      acc.names.push(item.name); // Collecting ids
       return acc;
     },
-    { totalPrice: 0, ids: [] as string[], names: [] as string[] },
+    { totalPrice: 0, ids: [] as string[], names: [] as string[] }, // Initial values
   );
 
-  // Dynamically load Stripe script when the page is fully loaded
-  useEffect(() => {
-    const loadStripeScript = () => {
-      if (window.Stripe) return; // If Stripe is already loaded, do nothing
-      const script = document.createElement("script");
-      script.src = "https://js.stripe.com/v3/";
-      script.async = true;
-      script.onload = () => {
-        setStripeLoaded(true); // Mark Stripe as loaded
-        console.log("Stripe JS loaded");
-      };
-      document.body.appendChild(script);
-    };
-
-    window.onload = loadStripeScript;
-
-    return () => {
-      window.onload = null; // Cleanup the onload listener
-    };
-  }, []);
-
-  // Handle Stripe checkout when Stripe is loaded
+  // Stripe checkout session
   const handleCheckout = async () => {
     if (cartItemsCount === 0) return;
-
-    if (!stripeLoaded) {
-      console.log("Stripe not loaded yet.");
-      return; // Prevent checkout if Stripe is not loaded
-    }
-
     setLoading(true);
 
     trackEvent("InitiateCheckout", {
@@ -134,10 +108,11 @@ const CartDialog: React.FC = () => {
         items: stripeProductIds,
         email: user?.email,
         legalAgreement: isLegalAgreementChecked,
-      }),
+      }), // Send data to api
     });
 
     const data = (await res.json()) as { sessionId: string };
+
     const { sessionId }: { sessionId: string } = data;
 
     if (!sessionId) {

@@ -1,12 +1,16 @@
 import { db } from "@/server/db";
 import DownloadButton from "../_components/DownloadButton";
 
+interface FreePresetPageProps {
+  searchParams?: {
+    email?: string;
+  };
+}
+
 export default async function FreePresetPage({
   searchParams,
-}: {
-  searchParams: { email: string };
-}) {
-  const { email } = searchParams;
+}: FreePresetPageProps) {
+  const email = searchParams?.email;
 
   if (!email) {
     return (

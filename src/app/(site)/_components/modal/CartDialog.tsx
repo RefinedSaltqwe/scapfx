@@ -200,7 +200,7 @@ const CartDialog: React.FC = () => {
                             <li key={product.productId} className="flex py-6">
                               <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
                                 <Image
-                                  src={product.heroImg}
+                                  src={`/assets/images/preset-hero/${product.heroImg}`}
                                   alt={product.name}
                                   width={24}
                                   height={24}

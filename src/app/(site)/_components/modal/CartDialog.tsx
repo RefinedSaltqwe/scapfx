@@ -24,7 +24,6 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import { loadStripe } from "@stripe/stripe-js";
 import { siteConfig } from "config/site";
 import { Info, X, XIcon } from "lucide-react";
 import Image from "next/image";
@@ -118,7 +117,7 @@ const CartDialog: React.FC = () => {
     if (!sessionId) {
       throw new Error("Session ID is missing in the response.");
     }
-
+    const { loadStripe } = await import("@stripe/stripe-js");
     const stripe = await loadStripe(env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
     await stripe?.redirectToCheckout({ sessionId });
     setLoading(false);

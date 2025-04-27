@@ -30,12 +30,13 @@ const Hero: React.FC<HeroProps> = ({ currentPreset }) => {
         <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
           <Image
             alt="Preset Hero Image"
-            src={currentPreset.heroImg} // Ensure it's a WebP image if available
+            src={`/assets/images/preset-hero/${currentPreset.heroImg}`}
+            // src=
             className="size-full object-cover"
             width={1920} // Adjust width to a reasonable value based on your design
             height={1280} // Adjust height accordingly
             priority
-            quality={85} // Slightly reduce quality for better performance
+            quality={75} // Slightly reduce quality for better performance
             sizes="(max-width: 640px) 100vw, (max-width: 1200px) 80vw, 50vw" // Use appropriate sizes
           />
           {/* Bottom-to-Center Shadow Effect */}

@@ -187,7 +187,7 @@ const PresetForm: React.FC<PresetFormProps> = ({ productId, type }) => {
                     {/* Display Hero Image */}
                     <Image
                       alt=""
-                      src={hero} // Use the hero state here
+                      src={`/assets/images/preset-hero/${hero}`}
                       className="mb-6 h-64 w-full flex-none rounded-lg bg-gray-800 object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       width={24}

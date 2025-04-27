@@ -4,7 +4,7 @@ import Image from "next/image";
 // Generate metadata dynamically based on preset name (without fetching)
 export async function generateMetadata() {
   return {
-    title: `About Me | ${siteConfig.name}`,
+    title: `About Me | ${siteConfig.name} - Lightroom Presets`,
     description:
       "Learn about ScapCreative, a brand dedicated to providing high-quality, customizable Lightroom presets. Founded by Stephen Pelagio, our presets are designed to transform your photos with cinematic depth, film tones, and silky finishes. Discover how our presets can elevate your photography and help you achieve your desired aesthetic effortlessly.",
 

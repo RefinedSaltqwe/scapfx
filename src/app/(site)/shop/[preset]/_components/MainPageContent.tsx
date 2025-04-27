@@ -39,7 +39,17 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
   const presetNav = usePresets((state) => state.presetNav);
   const isLoading = !allPresets || allPresets.length === 0;
 
-  // Fetch presets once user data is fetched
+  const presetExists = allPresets.some(
+    (existingPreset) => existingPreset.id === current_preset,
+  );
+
+  const currentPreset =
+    allPresets?.find((preset) => preset.id === current_preset) ?? null;
+
+  const currentPresetIndex = currentPreset
+    ? allPresets.findIndex((preset) => preset.id === current_preset) + 1
+    : 1;
+
   const {
     data: presetData,
     isLoading: presetsLoading,
@@ -49,31 +59,28 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
     queryKey: ["get_preset_by_id", current_preset],
     staleTime: 300_000, // 5 minutes
     gcTime: 300_000, // 5 minutes
-    enabled: !!current_preset,
+    enabled: !!current_preset && !presetExists,
   });
 
   useEffect(() => {
-    // Once presets are fetched, trigger the relevant actions
-    const presetExists = allPresets.some(
-      (existingPreset) => existingPreset.id === presetData!.id,
-    );
     if (!presetsLoading && !presetsError && presetData && !presetExists) {
       addPreset(presetData);
     }
-  }, [presetsLoading, presetsError, addPreset, presetData, allPresets]);
-
-  // Find the current preset
-  const currentPreset =
-    allPresets?.find((preset) => preset.id === current_preset) ?? null;
-  const currentPresetIndex = currentPreset
-    ? allPresets.findIndex((preset) => preset.id === current_preset) + 1
-    : 1;
+  }, [presetsLoading, presetsError, presetData, presetExists, addPreset]);
 
   // If loading, show loader
   if (isLoading || !currentPreset) {
     return (
       <div className="flex h-[85vh] items-center justify-center">
         <Loader classNames="h-8 w-8 border-3 border-primary animate-[spin_.5s_linear_infinite] brightness-100 saturate-200 !border-r-transparent" />
+      </div>
+    );
+  }
+
+  if (presetsError) {
+    return (
+      <div className="flex h-[85vh] items-center justify-center">
+        <p className="text-red-500">Failed to load preset. Please refresh.</p>
       </div>
     );
   }

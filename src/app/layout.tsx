@@ -2,13 +2,14 @@ import DataProvider from "@/components/providers/DataProvider";
 import QueryProvider from "@/components/providers/QueryProvider";
 import { env } from "@/env";
 import { cn } from "@/lib/utils";
-import { getPresets } from "@/server/queries/fetch-presets";
+import { getPresetNav } from "@/server/queries/fetch-presets-nav";
 import "@/styles/globals.css";
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "config/site";
 import { type Metadata } from "next";
 import { type Session } from "next-auth";
@@ -16,7 +17,6 @@ import { SessionProvider } from "next-auth/react";
 import { Poppins } from "next/font/google";
 import Head from "next/head";
 import Script from "next/script";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { lazy } from "react";
 
 const Toaster = lazy(() =>
@@ -60,10 +60,9 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode; session: Session }>) {
   const queryClient = new QueryClient();
 
-  // Prefetch presets once
   await queryClient.prefetchQuery({
-    queryFn: getPresets,
-    queryKey: ["all_presets"],
+    queryFn: getPresetNav,
+    queryKey: ["preset_nav"],
   });
 
   return (

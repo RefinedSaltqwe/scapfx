@@ -10,11 +10,12 @@ import { type PresetAndChildren } from "@/types/prisma";
 import { siteConfig } from "config/site";
 import React, { useMemo } from "react";
 import Plan from "./Plan";
+import { type PresetNav } from "@/hooks/stores/usePresetsStore";
 
 type ProductProps = {
   currentPreset: PresetAndChildren;
   index: number;
-  allPresets: PresetAndChildren[];
+  allPresets: PresetNav[];
 };
 
 const Product: React.FC<ProductProps> = ({

@@ -1,14 +1,16 @@
 "use client";
 import Loader from "@/components/Loader";
 import { Skeleton } from "@/components/ui/skeleton";
+import { usePresets, type PresetNav } from "@/hooks/stores/usePresetsStore";
 import { trackEvent } from "@/lib/fbpixels";
-import { type PresetAndChildren } from "@/types/prisma";
+import { getPresetById } from "@/server/queries/fetch-preset";
+import { useQuery } from "@tanstack/react-query";
 import { siteConfig } from "config/site";
 import { useRouter } from "nextjs-toploader/app";
 import React, { useEffect, useMemo, useState } from "react";
 
 type PlanProps = {
-  preset: PresetAndChildren;
+  preset: PresetNav;
   selectedPreset: string;
   index: number;
 };
@@ -17,6 +19,20 @@ const Plan: React.FC<PlanProps> = ({ preset, selectedPreset, index }) => {
   // Ensure state only applies on the client after mounting
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const addPreset = usePresets((state) => state.addPreset);
+  const allPresets = usePresets((state) => state.presets);
+
+  const {
+    data: presetData,
+    isLoading: presetsLoading,
+    isError: presetsError,
+  } = useQuery({
+    queryFn: () => getPresetById(preset.id),
+    queryKey: ["get_preset_by_id", preset.id],
+    staleTime: 300_000, // 5 minutes
+    gcTime: 300_000, // 5 minutes
+    enabled: !!preset.id,
+  });
 
   useEffect(() => {
     setMounted(true);
@@ -44,6 +60,13 @@ const Plan: React.FC<PlanProps> = ({ preset, selectedPreset, index }) => {
     if (selectedPreset !== preset.id) {
       setLoading(true);
 
+      const presetExists = allPresets.some(
+        (existingPreset) => existingPreset.id === presetData!.id,
+      );
+
+      if (!presetsLoading && !presetsError && presetData && !presetExists) {
+        addPreset(presetData);
+      }
       router.push(`/shop/${preset.id}`);
     }
   };

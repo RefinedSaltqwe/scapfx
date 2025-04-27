@@ -3,9 +3,11 @@ import Hero from "@/app/(site)/_components/Hero";
 import Product from "@/app/(site)/_components/Product";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
 import dynamic from "next/dynamic";
-import React from "react";
+import React, { useEffect } from "react";
 import NewsLetterProvider from "./NewsLetterProvider";
 import Promotion from "@/app/(site)/_components/Promotion";
+import { useQuery } from "@tanstack/react-query";
+import { getPresetById } from "@/server/queries/fetch-preset";
 const LazyGallery = dynamic(() => import("@/app/(site)/_components/Gallery"), {
   ssr: false,
 });
@@ -33,7 +35,32 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
   current_preset,
 }) => {
   const allPresets = usePresets((state) => state.presets);
+  const addPreset = usePresets((state) => state.addPreset);
+  const presetNav = usePresets((state) => state.presetNav);
   const isLoading = !allPresets || allPresets.length === 0;
+
+  // Fetch presets once user data is fetched
+  const {
+    data: presetData,
+    isLoading: presetsLoading,
+    isError: presetsError,
+  } = useQuery({
+    queryFn: () => getPresetById(current_preset),
+    queryKey: ["get_preset_by_id", current_preset],
+    staleTime: 300_000, // 5 minutes
+    gcTime: 300_000, // 5 minutes
+    enabled: !!current_preset,
+  });
+
+  useEffect(() => {
+    // Once presets are fetched, trigger the relevant actions
+    const presetExists = allPresets.some(
+      (existingPreset) => existingPreset.id === presetData!.id,
+    );
+    if (!presetsLoading && !presetsError && presetData && !presetExists) {
+      addPreset(presetData);
+    }
+  }, [presetsLoading, presetsError, addPreset, presetData, allPresets]);
 
   // Find the current preset
   const currentPreset =
@@ -58,7 +85,7 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
       <Product
         currentPreset={currentPreset}
         index={currentPresetIndex}
-        allPresets={allPresets}
+        allPresets={presetNav}
       />
       <Container maxWidth="full" bgColor="bg-secondary">
         <div className="flex w-full flex-col items-center">

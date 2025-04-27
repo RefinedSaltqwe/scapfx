@@ -2,7 +2,7 @@
 import { useLoggedUser } from "@/hooks/stores/useLoggedUserStore";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
 import { initFacebookPixel, trackPageView } from "@/lib/fbpixels";
-import { getPresets } from "@/server/queries/fetch-presets";
+import { getPresetNav } from "@/server/queries/fetch-presets-nav";
 import { getUser } from "@/server/queries/fetch-user";
 import { type CurrentUserPrisma } from "@/types/prisma";
 import { useQuery } from "@tanstack/react-query";
@@ -18,10 +18,8 @@ type DataProviderProps = {
 const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
   const { data: session } = useSession();
   const addLoggedUser = useLoggedUser((state) => state.addUser);
-  const addAllPresets = usePresets((state) => state.addPresets);
+  const addNav = usePresets((state) => state.addPresetNav);
   const pathname = usePathname();
-
-  const [isUserDataFetched, setIsUserDataFetched] = useState(false);
   const [isPresetsFetched, setIsPresetsFetched] = useState(false);
   const isSessionInitialized = useRef(false);
 
@@ -36,16 +34,10 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
     enabled: !!session,
   });
 
-  // Fetch presets once user data is fetched
-  const {
-    data: allPresets,
-    isLoading: presetsLoading,
-    isError: presetsError,
-  } = useQuery({
-    queryFn: getPresets,
-    queryKey: ["all_presets"],
+  const { data: preset_nav } = useQuery({
+    queryFn: getPresetNav,
+    queryKey: ["preset_nav"],
     staleTime: 300_000, // 5 minutes
-    enabled: isUserDataFetched, // Only fetch presets after user data is fetched
   });
 
   useEffect(() => {
@@ -53,18 +45,17 @@ const DataProvider: React.FC<DataProviderProps> = ({ children, pixel_id }) => {
     if (!userLoading && !userError && user && !isSessionInitialized.current) {
       const presetIds = user.ownedPresets.map((p) => p.presetId);
       addLoggedUser(user, presetIds);
-      setIsUserDataFetched(true);
       isSessionInitialized.current = true;
     }
   }, [user, userLoading, userError, addLoggedUser]);
 
   useEffect(() => {
     // Once presets are fetched, trigger the relevant actions
-    if (!presetsLoading && !presetsError && allPresets) {
-      addAllPresets(allPresets);
+    if (preset_nav) {
+      addNav(preset_nav);
       setIsPresetsFetched(true);
     }
-  }, [allPresets, presetsLoading, presetsError, addAllPresets]);
+  }, [addNav, preset_nav]);
 
   // Track page view on pathname change
   useEffect(() => {

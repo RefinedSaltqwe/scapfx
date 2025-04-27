@@ -3,6 +3,11 @@ import MainPageContent from "./_components/MainPageContent";
 import { redirect } from "next/navigation";
 import { getPresetById } from "@/server/queries/fetch-preset";
 import { siteConfig } from "config/site";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 
 type StoreType = {
   params: {
@@ -56,8 +61,18 @@ const Store: React.FC<StoreType> = async ({ params }) => {
   if (currentPreset === "undefined") {
     redirect("/shop");
   }
+  const queryClient = new QueryClient();
 
-  return <MainPageContent current_preset={currentPreset} />;
+  await queryClient.prefetchQuery({
+    queryFn: () => getPresetById(currentPreset),
+    queryKey: ["get_preset_by_id", currentPreset],
+  });
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <MainPageContent current_preset={currentPreset} />
+    </HydrationBoundary>
+  );
 };
 
 export default Store;

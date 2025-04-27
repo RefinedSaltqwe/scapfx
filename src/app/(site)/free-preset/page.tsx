@@ -8,7 +8,7 @@ export default async function FreePresetPage({
 }) {
   const { email } = searchParams;
 
-  if (!searchParams.email) {
+  if (!email) {
     return (
       <div className="flex min-h-full flex-1 flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex w-full max-w-sm flex-col items-center space-y-10 align-middle">

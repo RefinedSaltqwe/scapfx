@@ -1,9 +1,8 @@
 "use server";
 import { db } from "@/server/db";
 
-export const getPresetById = async (id: string) => {
-  const response = await db.preset.findUnique({
-    where: { id },
+export const getFirstPreset = async () => {
+  const response = await db.preset.findFirst({
     include: {
       beforeAfterImages: true,
       inclusions: true,
@@ -12,6 +11,9 @@ export const getPresetById = async (id: string) => {
           sequence: "asc",
         },
       },
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 

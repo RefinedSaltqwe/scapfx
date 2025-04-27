@@ -47,7 +47,7 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
     allPresets?.find((preset) => preset.id === current_preset) ?? null;
 
   const currentPresetIndex = currentPreset
-    ? allPresets.findIndex((preset) => preset.id === current_preset) + 1
+    ? presetNav.findIndex((preset) => preset.id === current_preset) + 1
     : 1;
 
   const {

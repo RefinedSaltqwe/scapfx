@@ -1,6 +1,4 @@
-import NextTopLoaderWrapper from "@/components/NextTopLoaderWrapper";
 import DataProvider from "@/components/providers/DataProvider";
-import ModalProvider from "@/components/providers/ModalProvider";
 import QueryProvider from "@/components/providers/QueryProvider";
 import { env } from "@/env";
 import { cn } from "@/lib/utils";
@@ -18,9 +16,25 @@ import { SessionProvider } from "next-auth/react";
 import { Poppins } from "next/font/google";
 import Head from "next/head";
 import Script from "next/script";
-import { Toaster } from "sonner";
-import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { lazy } from "react";
+
+const Toaster = lazy(() =>
+  import("sonner").then((module) => ({
+    default: module.Toaster,
+  })),
+);
+const Analytics = lazy(() =>
+  import("@vercel/analytics/react").then((module) => ({
+    default: module.Analytics,
+  })),
+);
+const ModalProvider = lazy(
+  () => import("@/components/providers/ModalProvider"),
+);
+const NextTopLoaderWrapper = lazy(
+  () => import("@/components/NextTopLoaderWrapper"),
+);
 
 const poppins = Poppins({
   subsets: ["latin"],

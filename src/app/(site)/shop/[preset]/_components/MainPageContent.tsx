@@ -1,13 +1,12 @@
 "use client";
 import Hero from "@/app/(site)/_components/Hero";
 import Product from "@/app/(site)/_components/Product";
+import Promotion from "@/app/(site)/_components/Promotion";
 import { usePresets } from "@/hooks/stores/usePresetsStore";
+import { getPresetById } from "@/server/queries/fetch-preset";
+import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
-import NewsLetterProvider from "./NewsLetterProvider";
-import Promotion from "@/app/(site)/_components/Promotion";
-import { useQuery } from "@tanstack/react-query";
-import { getPresetById } from "@/server/queries/fetch-preset";
 const LazyGallery = dynamic(() => import("@/app/(site)/_components/Gallery"), {
   ssr: false,
 });
@@ -87,7 +86,7 @@ const MainPageContent: React.FC<MainPageContentProps> = ({
 
   return (
     <>
-      <NewsLetterProvider />
+      {/* <NewsLetterProvider /> */}
       <Hero currentPreset={currentPreset} />
       <Product
         currentPreset={currentPreset}

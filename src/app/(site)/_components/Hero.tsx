@@ -41,8 +41,8 @@ const Hero: React.FC<HeroProps> = ({ currentPreset }) => {
 
         {/* Text Content */}
         <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center sm:pt-64 sm:pb-36 lg:px-0">
-          <h1 className="text-2xl font-medium tracking-tight text-white lg:text-5xl">
-            {/* @scapranger */}
+          <h1 className="bg-foreground/30 text-primary-foreground rounded-md px-3 py-1 text-center font-semibold backdrop-blur-xs lg:text-2xl">
+            {/* Filmic Silk Tones */}
           </h1>
         </div>
       </div>

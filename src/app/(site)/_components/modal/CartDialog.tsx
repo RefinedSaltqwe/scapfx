@@ -140,7 +140,10 @@ const CartDialog: React.FC = () => {
               <div className="bg-popover flex h-full flex-col overflow-y-scroll shadow-xl">
                 <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                   <div className="flex items-start justify-between">
-                    <DialogTitle className="text-popover-foreground text-lg font-medium">
+                    <DialogTitle
+                      id="gtm-trigger"
+                      className="text-popover-foreground text-lg font-medium"
+                    >
                       Cart
                     </DialogTitle>
                     <div className="ml-3 flex h-7 items-center">

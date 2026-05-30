@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation";
 import React from "react";
 import Banner from "./_components/Banner";
 import { env } from "@/env";
+import Script from "next/script";
 
 type SiteLayoutProps = {
   children: React.ReactNode;
@@ -15,6 +16,12 @@ const SiteLayout: React.FC<SiteLayoutProps> = ({ children }) => {
       <Navigation />
       {children}
       <Footer />
+
+      <Script
+        src="https://syntra-agent.vercel.app/embed/embed.min.js"
+        data-workflow-id="6a11ed0e5bbe3c234f918138"
+        strategy="afterInteractive"
+      />
     </>
   );
 };

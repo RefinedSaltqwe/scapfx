@@ -19,7 +19,7 @@ const SiteLayout: React.FC<SiteLayoutProps> = ({ children }) => {
 
       <Script
         src="https://syntra-agent.vercel.app/embed/embed.min.js"
-        data-workflow-id="6a11ed0e5bbe3c234f918138"
+        data-workflow-id="6a1b4d224c97a8ade2180b37"
         strategy="afterInteractive"
       />
     </>
